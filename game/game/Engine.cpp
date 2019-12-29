@@ -8,7 +8,9 @@ Game game;
 
 void InitGame() {
     srand((unsigned)time(NULL)); // Necesario para hacer el mapa y mostrar las "piedras"
+
     FASG::InitConsole(game.CONSOLE_WIDTH, game.CONSOLE_HEIGHT);
+
     GetConsoleCenter();
 
     InitPlayer();
