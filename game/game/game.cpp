@@ -1,6 +1,8 @@
 #include <iostream>
 
+bool gameOver = false;
+
 int main()
 {
-    std::cout << "Hello World!\n";
+    while(!gameOver){}
 }
