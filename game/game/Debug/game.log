@@ -1,0 +1,4 @@
+﻿  game.cpp
+game.obj : error LNK2019: símbolo externo "void __cdecl FASG::InitConsole(int,int)" (?InitConsole@FASG@@YAXHH@Z) sin resolver al que se hace referencia en la función _main
+game.obj : error LNK2019: símbolo externo "void __cdecl FASG::DestroyConsole(void)" (?DestroyConsole@FASG@@YAXXZ) sin resolver al que se hace referencia en la función _main
+C:\Users\erikp\Documents\GitHub\Actividad2\game\Debug\game.exe : fatal error LNK1120: 2 externos sin resolver

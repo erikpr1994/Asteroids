@@ -1,17 +1,11 @@
-#include <iostream>
 #include "FAriasSimpleGraphics.h"
+#include "Engine.h"
 
-// Constantes y variables del juego
-const int CONSOLE_WIDTH = 200, CONSOLE_HEIGHT = 50;
-bool gameOver = false;
-
-using namespace FASG;
+HANDLE hndl;
 
 int main()
 {
-    InitConsole(CONSOLE_WIDTH, CONSOLE_HEIGHT);
+    InitGame();
 
-    while(!gameOver){}
-
-    DestroyConsole();
+    EndGame();
 }
