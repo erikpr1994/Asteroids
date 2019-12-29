@@ -1,5 +1,4 @@
 ﻿  Engine.cpp
-  game.cpp
-  Generando código...
-FAriasSimpleGraphicsDBG64.lib(FAriasSimpleGraphics.obj) : warning LNK4099: no se encontr¾ PDB 'FAriasSimpleGraphics.pdb' con 'FAriasSimpleGraphicsDBG64.lib(FAriasSimpleGraphics.obj)' o en 'C:\Users\erikp\Documents\GitHub\Actividad2\game\x64\Debug\FAriasSimpleGraphics.pdb'; se vincularß el objeto sin tener en cuenta informaci¾n de depuraci¾n
+C:\Users\erikp\Documents\GitHub\Actividad2\game\game\Engine.cpp(26,46): warning C4244: '=': conversión de 'double' a 'float'; posible pérdida de datos
+C:\Users\erikp\Documents\GitHub\Actividad2\game\game\Engine.cpp(27,47): warning C4244: '=': conversión de 'double' a 'float'; posible pérdida de datos
   game.vcxproj -> C:\Users\erikp\Documents\GitHub\Actividad2\game\x64\Debug\game.exe
