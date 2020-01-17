@@ -16,6 +16,8 @@ void InitGame() {
     InitPlayer();
 
     while (!game.gameOver) {
+		InputPlayer();
+		UpdatePlayer();
         DrawPlayer();
 
         FASG::RenderFrame();

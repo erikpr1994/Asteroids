@@ -4,7 +4,7 @@
 using namespace FASG;
 
 struct Game {
-	float const CONSOLE_WIDTH = 200, CONSOLE_HEIGHT = 50;
+	float const CONSOLE_WIDTH = 150, CONSOLE_HEIGHT = 80;
 	bool gameOver = false;
 	Vector2 screenCenter;
 };
