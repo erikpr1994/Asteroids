@@ -12,5 +12,3 @@ struct Game {
 void InitGame();
 
 void EndGame();
-
-void GetConsoleCenter();

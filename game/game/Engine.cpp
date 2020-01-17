@@ -5,12 +5,11 @@
 #include "Player.h"
 
 Game game;
-
+void GetConsoleCenter();
 void InitGame() {
     srand((unsigned)time(NULL)); // Necesario para hacer el mapa y mostrar las "piedras"
-
     FASG::InitConsole(game.CONSOLE_WIDTH, game.CONSOLE_HEIGHT);
-
+	FASG::ShowConsoleCursor(false);
     GetConsoleCenter();
 
     InitPlayer();
