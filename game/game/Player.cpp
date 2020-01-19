@@ -20,17 +20,17 @@ void InitPlayer() {
 }
 
 char GetAnyKeyPressed(){
-	if (FASG::IsKeyPressed('W') && FASG::IsKeyPressed('D')) { // ESTO NO FUNCIONA, PERO TAMPOCO DA ERRORES. Cuando consigamos que funcione, hacerlo para los demás casos tambien
+	if (FASG::IsKeyPressed('W') && FASG::IsKeyPressed('D')) {
 		return 'E';
 	}
 
-	if (FASG::IsKeyPressed('W') && FASG::IsKeyPressed('A')) { // ESTO NO FUNCIONA, PERO TAMPOCO DA ERRORES. Cuando consigamos que funcione, hacerlo para los demás casos tambien
+	if (FASG::IsKeyPressed('W') && FASG::IsKeyPressed('A')) {
 		return 'Q';
 	}
-	if (FASG::IsKeyPressed('S') && FASG::IsKeyPressed('D')) { // ESTO NO FUNCIONA, PERO TAMPOCO DA ERRORES. Cuando consigamos que funcione, hacerlo para los demás casos tambien
+	if (FASG::IsKeyPressed('S') && FASG::IsKeyPressed('D')) {
 		return 'Z';
 	}
-	if (FASG::IsKeyPressed('S') && FASG::IsKeyPressed('A')) { // ESTO NO FUNCIONA, PERO TAMPOCO DA ERRORES. Cuando consigamos que funcione, hacerlo para los demás casos tambien
+	if (FASG::IsKeyPressed('S') && FASG::IsKeyPressed('A')) {
 		return 'X';
 	}
 	if (FASG::IsKeyPressed('W')) {
