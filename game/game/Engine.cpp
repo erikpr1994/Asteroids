@@ -3,20 +3,27 @@
 #include "Engine.h"
 #include "FAriasSimpleGraphics.h"
 #include "Player.h"
+#include "Camera.h"
 
 Game game;
+
 void GetConsoleCenter();
+
 void InitGame() {
     srand((unsigned)time(NULL)); // Necesario para hacer el mapa y mostrar las "piedras"
     FASG::InitConsole(game.CONSOLE_WIDTH, game.CONSOLE_HEIGHT);
 	FASG::ShowConsoleCursor(false);
     GetConsoleCenter();
 
+    InitCamera();
+
     InitPlayer();
 
     while (!game.gameOver) {
 		InputPlayer();
+        MoveCamera();
 		UpdatePlayer();
+        CheckPlayerDeath();
         DrawPlayer();
 
         FASG::RenderFrame();

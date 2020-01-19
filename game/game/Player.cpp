@@ -1,6 +1,7 @@
 #include "FAriasSimpleGraphics.h"
 #include "Player.h"
 #include "Engine.h"
+#include "Camera.h"
 
 #include <iostream>
 #include <conio.h>
@@ -8,6 +9,7 @@
 Player player;
 
 extern Game game;
+extern Camera camera;
 
 char GetAnyKeyPressed();
 
@@ -88,6 +90,23 @@ void InputPlayer() {
 	default:
 		player.lastInputPlayer = EInputPlayer::STILL;
 		break;
+	}
+}
+
+void CheckPlayerDeath() {
+	if (player.sprite.Location.y >= camera.cameraYStart) {
+		player.sprite.Location.y = camera.cameraYStart -1;
+	}
+
+	if (player.sprite.Location.y <= camera.cameraYEnd) {
+		player.sprite.Location.y = camera.cameraYEnd+1;
+	}
+
+	if (player.sprite.Location.x <= camera.cameraXStart) {
+		player.sprite.Location.x = camera.cameraXStart+1;
+	}
+	if (player.sprite.Location.x >= camera.cameraXEnd) {
+		player.sprite.Location.x = camera.cameraXEnd-1;
 	}
 }
 

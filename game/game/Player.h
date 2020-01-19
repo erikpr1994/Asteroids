@@ -19,3 +19,5 @@ void InputPlayer();
 void UpdatePlayer();
 
 void DrawPlayer();
+
+void CheckPlayerDeath();

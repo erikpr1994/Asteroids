@@ -1,2 +1,6 @@
 
 *.opendb
+*.ipch
+game/.vs/game/v16/ipch/AutoPCH/60f4d9fabf260f3e/PLAYER.ipch
+game/.vs/game/v16/.suo
+*.db
