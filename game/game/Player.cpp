@@ -23,6 +23,16 @@ char GetAnyKeyPressed(){
 	if (FASG::IsKeyPressed('W') && FASG::IsKeyPressed('D')) { // ESTO NO FUNCIONA, PERO TAMPOCO DA ERRORES. Cuando consigamos que funcione, hacerlo para los demás casos tambien
 		return 'E';
 	}
+
+	if (FASG::IsKeyPressed('W') && FASG::IsKeyPressed('A')) { // ESTO NO FUNCIONA, PERO TAMPOCO DA ERRORES. Cuando consigamos que funcione, hacerlo para los demás casos tambien
+		return 'Q';
+	}
+	if (FASG::IsKeyPressed('S') && FASG::IsKeyPressed('D')) { // ESTO NO FUNCIONA, PERO TAMPOCO DA ERRORES. Cuando consigamos que funcione, hacerlo para los demás casos tambien
+		return 'Z';
+	}
+	if (FASG::IsKeyPressed('S') && FASG::IsKeyPressed('A')) { // ESTO NO FUNCIONA, PERO TAMPOCO DA ERRORES. Cuando consigamos que funcione, hacerlo para los demás casos tambien
+		return 'X';
+	}
 	if (FASG::IsKeyPressed('W')) {
 		return 'W';
 	}
@@ -50,6 +60,16 @@ void InputPlayer() {
 	{
 	case 'E':
 		player.lastInputPlayer = EInputPlayer::UPRIGTH;
+		break;
+	case 'Q':
+		player.lastInputPlayer = EInputPlayer::UPLEFT;
+		break;
+	case 'Z':
+		player.lastInputPlayer = EInputPlayer::DOWNRIGHT;
+		break;
+	case 'X':
+		player.lastInputPlayer = EInputPlayer::DOWNLEFT;
+		break;
 	case 'W':
 		player.lastInputPlayer = EInputPlayer::UP;
 		break;
@@ -77,6 +97,18 @@ void UpdatePlayer() {
 	case EInputPlayer::UPRIGTH:
 		player.sprite.Location.y -= player.diagonalVelocity * FASG::GetDeltaTime();
 		player.sprite.Location.x += player.diagonalVelocity * FASG::GetDeltaTime();
+		break;
+	case EInputPlayer::UPLEFT:
+		player.sprite.Location.y -= player.diagonalVelocity * FASG::GetDeltaTime();
+		player.sprite.Location.x -= player.diagonalVelocity * FASG::GetDeltaTime();
+		break;
+	case EInputPlayer::DOWNRIGHT:
+		player.sprite.Location.y += player.diagonalVelocity * FASG::GetDeltaTime();
+		player.sprite.Location.x += player.diagonalVelocity * FASG::GetDeltaTime();
+		break;
+	case EInputPlayer::DOWNLEFT:
+		player.sprite.Location.y += player.diagonalVelocity * FASG::GetDeltaTime();
+		player.sprite.Location.x -= player.diagonalVelocity * FASG::GetDeltaTime();
 		break;
 	case EInputPlayer::UP:
 		player.sprite.Location.y -= player.velocity * FASG::GetDeltaTime();
