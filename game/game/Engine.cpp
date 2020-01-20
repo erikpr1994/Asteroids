@@ -4,6 +4,7 @@
 #include "FAriasSimpleGraphics.h"
 #include "Player.h"
 #include "Camera.h"
+#include "Map.h"
 
 Game game;
 
@@ -15,16 +16,19 @@ void InitGame() {
 	FASG::ShowConsoleCursor(false);
     GetConsoleCenter();
 
-    InitCamera();
+	InitMap();
+
+    // InitCamera();
 
     InitPlayer();
 
     while (!game.gameOver) {
 		InputPlayer();
-        MoveCamera();
+        // MoveCamera();
 		UpdatePlayer();
-        CheckPlayerDeath();
+        // CheckPlayerDeath();
         DrawPlayer();
+		PaintMap();
 
         FASG::RenderFrame();
     }

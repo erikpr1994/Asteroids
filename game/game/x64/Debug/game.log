@@ -1,6 +1,5 @@
-﻿  Engine.cpp
-C:\Users\erikp\Documents\GitHub\Actividad2\game\game\Engine.cpp(14,47): warning C4244: 'argumento': conversión de 'const float' a 'int'; posible pérdida de datos
-C:\Users\erikp\Documents\GitHub\Actividad2\game\game\Engine.cpp(14,27): warning C4244: 'argumento': conversión de 'const float' a 'int'; posible pérdida de datos
-C:\Users\erikp\Documents\GitHub\Actividad2\game\game\Engine.cpp(38,46): warning C4244: '=': conversión de 'double' a 'float'; posible pérdida de datos
-C:\Users\erikp\Documents\GitHub\Actividad2\game\game\Engine.cpp(39,47): warning C4244: '=': conversión de 'double' a 'float'; posible pérdida de datos
-  game.vcxproj -> C:\Users\erikp\Documents\GitHub\Actividad2\game\x64\Debug\game.exe
+﻿  Map.cpp
+C:\Users\Alumno\Documents\GitHub\Actividad2\game\game\Map.cpp(49,63): warning C4553:  "==": el resultado de la expresión no se usa. ¿Quiso decir "="?
+C:\Users\Alumno\Documents\GitHub\Actividad2\game\game\Map.cpp(71,63): warning C4553:  "==": el resultado de la expresión no se usa. ¿Quiso decir "="?
+FAriasSimpleGraphicsDBG64.lib(FAriasSimpleGraphics.obj) : warning LNK4099: no se encontr¾ PDB '' con 'FAriasSimpleGraphicsDBG64.lib(FAriasSimpleGraphics.obj)' o en ''; se vincularß el objeto sin tener en cuenta informaci¾n de depuraci¾n
+  game.vcxproj -> C:\Users\Alumno\Documents\GitHub\Actividad2\game\x64\Debug\game.exe
