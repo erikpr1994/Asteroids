@@ -1,1 +1,15 @@
-﻿  game.vcxproj -> E:\IFP\GitHub\Actividad2\game\x64\Debug\game.exe
+﻿  Asteroid.cpp
+F:\IFP\GitHub\Actividad2\game\game\Asteroid.cpp(24,78): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
+  Engine.cpp
+F:\IFP\GitHub\Actividad2\game\game\Asteroid.cpp(24,50): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
+F:\IFP\GitHub\Actividad2\game\game\Engine.cpp(12,47): warning C4244: 'argumento': conversión de 'const float' a 'int'; posible pérdida de datos
+F:\IFP\GitHub\Actividad2\game\game\Engine.cpp(12,27): warning C4244: 'argumento': conversión de 'const float' a 'int'; posible pérdida de datos
+F:\IFP\GitHub\Actividad2\game\game\Engine.cpp(34,46): warning C4244: '=': conversión de 'double' a 'float'; posible pérdida de datos
+  Player.cpp
+F:\IFP\GitHub\Actividad2\game\game\Engine.cpp(35,47): warning C4244: '=': conversión de 'double' a 'float'; posible pérdida de datos
+F:\IFP\GitHub\Actividad2\game\game\Player.cpp(19,44): warning C4244: '=': conversión de 'double' a 'float'; posible pérdida de datos
+F:\IFP\GitHub\Actividad2\game\game\Player.cpp(131,74): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
+  game.cpp
+  Generando código...
+F:\IFP\GitHub\Actividad2\game\game\Player.cpp(131,48): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
+  game.vcxproj -> F:\IFP\GitHub\Actividad2\game\x64\Debug\game.exe

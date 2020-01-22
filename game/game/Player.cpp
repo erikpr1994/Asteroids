@@ -15,15 +15,14 @@ void InitPlayer() {
 	player.sprite.LoadSprite("Player.txt");
 	player.sprite.Location.x = game.screenCenter.x;
 	player.sprite.Location.y = game.screenCenter.y;
-	player.velocity = 30.f;
+	player.velocity = 70.f;
 	player.diagonalVelocity = player.velocity / (sqrt(2));
 }
 
-char GetAnyKeyPressed(){
+char GetAnyKeyPressed(){ // Que devuelve según que tecla presionemos
 	if (FASG::IsKeyPressed('W') && FASG::IsKeyPressed('D')) {
 		return 'E';
 	}
-
 	if (FASG::IsKeyPressed('W') && FASG::IsKeyPressed('A')) {
 		return 'Q';
 	}
@@ -53,7 +52,7 @@ char GetAnyKeyPressed(){
 	}
 }
 
-void InputPlayer() {
+void InputPlayer() { // Que estado genera según lo que recibe de la tecla presionada
 	char key = GetAnyKeyPressed();
 
 	switch (key)
@@ -91,7 +90,7 @@ void InputPlayer() {
 	}
 }
 
-void UpdatePlayer() {
+void UpdatePlayer() { // Que hace cada estado 
 	switch (player.lastInputPlayer)
 	{
 	case EInputPlayer::UPRIGTH:
@@ -128,6 +127,6 @@ void UpdatePlayer() {
 	}
 }
 
-void DrawPlayer(){
+void DrawPlayer(){ // Dibuja al jugador, diciendo posicion X e Y y el sprite a utilizar
 	FASG::WriteSpriteBuffer(player.sprite.Location.x, player.sprite.Location.y, player.sprite);
 }

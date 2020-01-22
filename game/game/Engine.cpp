@@ -3,6 +3,7 @@
 #include "Engine.h"
 #include "FAriasSimpleGraphics.h"
 #include "Player.h"
+#include "Asteroid.h"
 
 Game game;
 void GetConsoleCenter();
@@ -19,6 +20,7 @@ void InitGame() {
 		InputPlayer();
 		UpdatePlayer();
         DrawPlayer();
+		DrawAsteroid();
 
         FASG::RenderFrame();
     }
