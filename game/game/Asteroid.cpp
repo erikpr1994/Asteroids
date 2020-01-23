@@ -11,8 +11,8 @@ extern Game game;
 
 void InitAsteroid() {
 	asteroid.sprite.LoadSprite("Asteroid.txt");
-	asteroid.sprite.Location.x = game.screenCenter.x;
-	asteroid.sprite.Location.y = game.screenCenter.y;
+	asteroid.sprite.Location.x = game.zoneSpawn.x;
+	asteroid.sprite.Location.y = game.zoneSpawn.y;
 }
 
 void CreateAsteroid()

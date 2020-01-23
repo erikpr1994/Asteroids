@@ -7,6 +7,8 @@
 
 Game game;
 void GetConsoleCenter();
+void ZoneSpawn();
+
 void InitGame() {
     srand((unsigned)time(NULL)); // Necesario para hacer el mapa y mostrar las "piedras"
     FASG::InitConsole(game.CONSOLE_WIDTH, game.CONSOLE_HEIGHT);
@@ -14,13 +16,16 @@ void InitGame() {
 	FASG::SetFontSizeRatio(FASG::ConsoleFontRatios::_8x8);
     GetConsoleCenter();
 
+	InitAsteroid();
     InitPlayer();
 
     while (!game.gameOver) {
 		InputPlayer();
 		UpdatePlayer();
         DrawPlayer();
+		
 		DrawAsteroid();
+
 
         FASG::RenderFrame();
     }
@@ -33,4 +38,11 @@ void EndGame() {
 void GetConsoleCenter() {
     game.screenCenter.x = game.CONSOLE_WIDTH * 0.5;
     game.screenCenter.y = game.CONSOLE_HEIGHT * 0.5;
+}
+
+void ZoneSpawn() {
+	srand(time(NULL));
+
+	game.zoneSpawn.x = (rand() % (game.CONSOLE_WIDTH - 5)) + 5;
+	game.zoneSpawn.y = game.CONSOLE_HEIGHT;
 }
