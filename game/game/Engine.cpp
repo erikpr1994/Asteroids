@@ -41,6 +41,6 @@ void GetConsoleCenter() {
 }
 
 void ZoneSpawn() {
-	game.zoneSpawn.x = (rand() % (game.CONSOLE_WIDTH - 5)) + 5;
+	game.zoneSpawn.x = (rand() % (game.CONSOLE_WIDTH - 35)) + 35;
 	game.zoneSpawn.y = 0;
 }
