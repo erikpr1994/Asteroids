@@ -17,6 +17,8 @@ void InitPlayer() {
 	player.sprite.Location.y = game.screenCenter.y;
 	player.velocity = 70.f;
 	player.diagonalVelocity = player.velocity / (sqrt(2));
+
+	Sprite::AddToCollisionSystem(player.sprite, "Player");
 }
 
 char GetAnyKeyPressed(){ // Que devuelve según que tecla presionemos

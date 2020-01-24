@@ -10,6 +10,8 @@ struct Game {
 	Vector2 zoneSpawn;
 };
 
+
+
 void InitGame();
 
 void EndGame();

@@ -13,6 +13,8 @@ void InitAsteroid() {
 	asteroid.sprite.LoadSprite("Asteroid.txt");
 	asteroid.sprite.Location.x = game.zoneSpawn.x;
 	asteroid.sprite.Location.y = game.zoneSpawn.y;
+
+	Sprite::AddToCollisionSystem(asteroid.sprite, "Asteroid1");
 }
 
 void CreateAsteroid()
