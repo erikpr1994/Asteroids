@@ -24,9 +24,9 @@ void InitGame() {
 
     while (!game.gameOver) {
 		InputPlayer();
-        // MoveCamera();
+       // MoveCamera();
 		UpdatePlayer();
-        // CheckPlayerDeath();
+        CheckPlayerDeath();
         DrawPlayer();
 		PaintMap();
 

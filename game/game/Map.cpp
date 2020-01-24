@@ -7,9 +7,11 @@
 
 extern Game game;
 
-int const mapHeight = 1000, mapWidth = 80;
+int const mapHeight = 1000, mapWidth = 150;
 int const MAX_STONE_PART_LENGTH = 30;
 bool map[mapHeight][mapWidth];
+int lastLeftXPosition = 3;
+int lastXPosition = mapWidth;
 
 int IncreaseOrDecrease();
 int PaintLeftPart(int mapHeigthPosition);
@@ -36,39 +38,47 @@ void InitMap() {
 
 int PaintLeftPart(int mapHeigthPosition) {
 	int increaseOrDecrease = IncreaseOrDecrease();
-	int lastXPosition = 0;
-	for (lastXPosition; lastXPosition < MAX_STONE_PART_LENGTH; lastXPosition++) {
-		if (lastXPosition <= 2) {
-			for (int j = 0; j < 2; j++) {
-				map[mapHeigthPosition][j] = true;
-				continue;
-			}
+	lastLeftXPosition += increaseOrDecrease;
+	int startLine = 0;
+	if (startLine < 2) {
+		for (int j = 0; j < 2; j++) {
+			map[mapHeigthPosition][j] = true;
+			startLine++;
 		}
+	}
+	if (lastLeftXPosition > MAX_STONE_PART_LENGTH) {
+		lastLeftXPosition = MAX_STONE_PART_LENGTH;
+	}
 
-		if (map[mapHeigthPosition][lastXPosition+1] == false) {
-			map[mapHeigthPosition][lastXPosition + increaseOrDecrease] == true;
-			lastXPosition += increaseOrDecrease;
+	for (startLine; startLine < lastLeftXPosition; startLine++) {
+
+		if (map[mapHeigthPosition][startLine +1] == false) {
+			map[mapHeigthPosition][startLine + increaseOrDecrease] = true;
+			lastLeftXPosition = startLine+increaseOrDecrease;
 			break;
 		}
 	}
 
-	return lastXPosition+1;
+	for (int i = lastLeftXPosition; i > 1; i--) {
+		map[mapHeigthPosition][i] = true;
+	}
+
+	return lastLeftXPosition +1;
 }
 
 int PaintRightPart(int mapHeigthPosition){
 	int increaseOrDecrease = IncreaseOrDecrease();
-	int lastXPosition = mapWidth;
 	int maxRightStones = mapWidth - MAX_STONE_PART_LENGTH;
 	for (lastXPosition; lastXPosition > maxRightStones; lastXPosition--) {
-		if (lastXPosition >= 77) {
-			for (int j = 79; j > 77; j--) {
+		if (lastXPosition > 148) {
+			for (int j = 149; j > 147; j--) {
 				map[mapHeigthPosition][j] = true;
 				continue;
 			}
 		}
 
 		if (map[mapHeigthPosition][lastXPosition + -1] == false) {
-			map[mapHeigthPosition][lastXPosition + increaseOrDecrease] == true;
+			map[mapHeigthPosition][lastXPosition + increaseOrDecrease] = true;
 			lastXPosition += increaseOrDecrease;
 			break;
 		}
@@ -84,6 +94,6 @@ void setFalseParts(int mapHeigthPosition, int startEmptyMapPoint, int endEmptyMa
 }
 
 int IncreaseOrDecrease() {
-	int randomNumber = rand()%3-1;
+	int randomNumber = rand()%5-1;
 	return randomNumber;
 }

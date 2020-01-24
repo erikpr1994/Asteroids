@@ -1,5 +1,2 @@
 ﻿  Map.cpp
-C:\Users\Alumno\Documents\GitHub\Actividad2\game\game\Map.cpp(49,63): warning C4553:  "==": el resultado de la expresión no se usa. ¿Quiso decir "="?
-C:\Users\Alumno\Documents\GitHub\Actividad2\game\game\Map.cpp(71,63): warning C4553:  "==": el resultado de la expresión no se usa. ¿Quiso decir "="?
-FAriasSimpleGraphicsDBG64.lib(FAriasSimpleGraphics.obj) : warning LNK4099: no se encontr¾ PDB '' con 'FAriasSimpleGraphicsDBG64.lib(FAriasSimpleGraphics.obj)' o en ''; se vincularß el objeto sin tener en cuenta informaci¾n de depuraci¾n
-  game.vcxproj -> C:\Users\Alumno\Documents\GitHub\Actividad2\game\x64\Debug\game.exe
+  game.vcxproj -> C:\Users\Alumno\GitHub\Actividad2\game\x64\Debug\game.exe
