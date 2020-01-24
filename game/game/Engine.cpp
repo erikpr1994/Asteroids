@@ -48,10 +48,10 @@ void InitGame() {
 		DrawAsteroid();
 		DrawHUD();
 
-		
+		/*
 		while (_kbhit > 0)
 			_getch();
-		
+		*/
 
         FASG::RenderFrame();
     }
