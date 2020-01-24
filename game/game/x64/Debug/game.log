@@ -1,6 +1,6 @@
 ﻿  Engine.cpp
-E:\IFP\GitHub\Actividad2\game\game\Engine.cpp(46,46): warning C4244:  '=': conversión de 'double' a 'float'; posible pérdida de datos
-E:\IFP\GitHub\Actividad2\game\game\Engine.cpp(47,47): warning C4244:  '=': conversión de 'double' a 'float'; posible pérdida de datos
-E:\IFP\GitHub\Actividad2\game\game\Engine.cpp(51,58): warning C4244:  '=': conversión de 'int' a 'float'; posible pérdida de datos
-E:\IFP\GitHub\Actividad2\game\game\Engine.cpp(65,43): warning C4244:  'argumento': conversión de 'float' a 'int'; posible pérdida de datos
+E:\IFP\GitHub\Actividad2\game\game\Engine.cpp(60,46): warning C4244:  '=': conversión de 'double' a 'float'; posible pérdida de datos
+E:\IFP\GitHub\Actividad2\game\game\Engine.cpp(61,47): warning C4244:  '=': conversión de 'double' a 'float'; posible pérdida de datos
+E:\IFP\GitHub\Actividad2\game\game\Engine.cpp(65,58): warning C4244:  '=': conversión de 'int' a 'float'; posible pérdida de datos
+E:\IFP\GitHub\Actividad2\game\game\Engine.cpp(82,43): warning C4244:  'argumento': conversión de 'float' a 'int'; posible pérdida de datos
   game.vcxproj -> E:\IFP\GitHub\Actividad2\game\x64\Debug\game.exe

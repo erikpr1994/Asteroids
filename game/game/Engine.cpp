@@ -4,8 +4,12 @@
 #include "FAriasSimpleGraphics.h"
 #include "Player.h"
 #include "Asteroid.h"
+#include <conio.h>
 
 Game game;
+
+extern Player player;
+
 void GetConsoleCenter();
 void ZoneSpawn();
 void miColision(std::string tag1, std::string tag2);
@@ -13,6 +17,13 @@ void DrawHUD();
 
 std::string HUDMessage;
 
+bool GetGameOver() {
+	return game.gameOver;
+}
+
+void SetGameOver(bool gameOver) {
+	game.gameOver = gameOver;
+}
 
 void InitGame() {
     srand((unsigned)time(NULL)); // Necesario para hacer el mapa y mostrar las "piedras"
@@ -20,6 +31,9 @@ void InitGame() {
 	FASG::ShowConsoleCursor(false);
 	//FASG::SetFontSizeRatio(FASG::ConsoleFontRatios::_8x8);
     GetConsoleCenter();
+
+	// para la portada*********************************************************
+
 	ZoneSpawn();
 	InitAsteroid();
     InitPlayer();
@@ -27,11 +41,17 @@ void InitGame() {
 	Sprite::SetCollisionCallback(miColision);
 
     while (!game.gameOver) {
+		IsPlayerDeath();
 		InputPlayer();
 		UpdatePlayer();
         DrawPlayer();
 		DrawAsteroid();
 		DrawHUD();
+
+		
+		while (_kbhit > 0)
+			_getch();
+		
 
         FASG::RenderFrame();
     }
@@ -53,7 +73,10 @@ void ZoneSpawn() {
 }
 
 void miColision(std::string tag1, std::string tag2) {
+	player.lastInputPlayer = EInputPlayer::DEATH;
+	//HUDMessage = "Colision de " + tag1 + " y " + tag2;
 	HUDMessage = "Colision de " + tag1 + " y " + tag2;
+
 }
 
 void DrawHUD()

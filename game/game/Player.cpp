@@ -18,7 +18,7 @@ void InitPlayer() {
 	player.velocity = 70.f;
 	player.diagonalVelocity = player.velocity / (sqrt(2));
 
-	Sprite::AddToCollisionSystem(player.sprite, "Player");
+	Sprite::AddToCollisionSystem(player.sprite, " La Nave Omega");
 }
 
 char GetAnyKeyPressed(){ // Que devuelve según que tecla presionemos
@@ -122,10 +122,20 @@ void UpdatePlayer() { // Que hace cada estado
 		break;
 	case EInputPlayer::RIGHT:
 		player.sprite.Location.x += player.velocity * FASG::GetDeltaTime();
-	case EInputPlayer::SHOOT:
+	case EInputPlayer::SHOOT: // insertar animación*****************
 		break;
 	case EInputPlayer::STILL:
 		break;
+	}
+}
+
+void IsPlayerDeath() {
+	bool gameOver = false;
+	gameOver = GetGameOver();
+	
+	if (player.lastInputPlayer == EInputPlayer::DEATH) {
+		gameOver = true;
+		SetGameOver(gameOver);
 	}
 }
 

@@ -10,7 +10,9 @@ struct Game {
 	Vector2 zoneSpawn;
 };
 
+bool GetGameOver();
 
+void SetGameOver(bool gameOver);
 
 void InitGame();
 

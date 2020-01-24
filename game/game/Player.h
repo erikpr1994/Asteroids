@@ -2,7 +2,7 @@
 #include "FAriasSimpleGraphics.h"
 
 enum EInputPlayer {
-	LEFT, RIGHT, UP, DOWN, SHOOT, STILL, UPRIGTH, UPLEFT, DOWNRIGHT, DOWNLEFT
+	LEFT, RIGHT, UP, DOWN, SHOOT, STILL, UPRIGTH, UPLEFT, DOWNRIGHT, DOWNLEFT, DEATH
 };
 
 struct Player {
@@ -19,3 +19,5 @@ void InputPlayer();
 void UpdatePlayer();
 
 void DrawPlayer();
+
+void IsPlayerDeath();
