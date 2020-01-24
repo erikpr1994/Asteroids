@@ -15,7 +15,7 @@ void InitGame() {
 	FASG::ShowConsoleCursor(false);
 	FASG::SetFontSizeRatio(FASG::ConsoleFontRatios::_8x8);
     GetConsoleCenter();
-
+	ZoneSpawn();
 	InitAsteroid();
     InitPlayer();
 
@@ -41,8 +41,6 @@ void GetConsoleCenter() {
 }
 
 void ZoneSpawn() {
-	srand(time(NULL));
-
 	game.zoneSpawn.x = (rand() % (game.CONSOLE_WIDTH - 5)) + 5;
-	game.zoneSpawn.y = game.CONSOLE_HEIGHT;
+	game.zoneSpawn.y = 0;
 }
