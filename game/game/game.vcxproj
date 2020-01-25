@@ -164,9 +164,10 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="Asteroid.txt" />
+    <Text Include="Menu.txt" />
     <Text Include="Player.txt" />
-    <Text Include="Player_death.txt" />
-    <Text Include="Player_propeller.txt" />
+    <Text Include="Player_down.txt" />
+    <Text Include="Player_up.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

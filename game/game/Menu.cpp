@@ -1,7 +1,7 @@
 #include "Menu.h"
 #include "FAriasSimpleGraphics.h"
 #include "Engine.h"
-
+/*
 Menu menu;
 
 extern Game game;
@@ -18,6 +18,9 @@ void DrawMenu();
 void InitMenu() {
 	menu.sprite.LoadSprite("Menu.txt");
 	menu.inMenu = true;
+
+	//menu.sprite.Location.x = game.screenCenter.x;
+	//menu.sprite.Location.y = game.screenCenter.y;
 }
 
 void ShowMenu() {
@@ -69,6 +72,7 @@ void UpdateMenu() { // Que hace cada estado
 
 void DrawMenu() {
 	//DIBUJAR********************************
-	//menu.sprite.Location.x = game.screenCenter.x;
-	//menu.sprite.Location.y = game.screenCenter.y;
+	FASG::WriteSpriteBuffer(menu.sprite.Location.x, menu.sprite.Location.y, menu.sprite);
 }
+
+*/

@@ -1,6 +1,6 @@
 #pragma once
 #include "FAriasSimpleGraphics.h"
-
+/*
 
 enum EInputMenu {
 	PLAY, EXIT
@@ -16,4 +16,4 @@ void ShowMenu();
 
 void InitMenu();
 
-
+*/

@@ -51,7 +51,8 @@
   <ItemGroup>
     <Text Include="Player.txt" />
     <Text Include="Asteroid.txt" />
-    <Text Include="Player_propeller.txt" />
-    <Text Include="Player_death.txt" />
+    <Text Include="Player_down.txt" />
+    <Text Include="Player_up.txt" />
+    <Text Include="Menu.txt" />
   </ItemGroup>
 </Project>

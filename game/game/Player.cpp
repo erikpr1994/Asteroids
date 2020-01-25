@@ -13,9 +13,9 @@ char GetAnyKeyPressed();
 
 void InitPlayer() {
 	player.sprite1.LoadSprite("Player.txt");
-	player.sprite2.LoadSprite("Player_propeller.txt");
-	//player.sprite3.LoadSprite("Player_propeller.txt");
-	player.sprite4.LoadSprite("Player_death.txt");
+	player.sprite2.LoadSprite("Player_up.txt");
+	player.sprite3.LoadSprite("Player_down.txt");
+	//player.sprite4.LoadSprite("Player_death.txt");
 	
 	player.sprite1.Location.x = game.screenCenter.x;
 	player.sprite1.Location.y = game.screenCenter.y;
@@ -133,8 +133,8 @@ void UpdatePlayer() { // Que hace cada estado
 		break;
 	}
 
-	player.sprite2.Location.y = player.sprite3.Location.y = player.sprite1.Location.y;
-	player.sprite2.Location.x = player.sprite3.Location.x = player.sprite1.Location.x;
+	player.sprite1.Location.y = player.sprite2.Location.y = player.sprite3.Location.y;
+	player.sprite1.Location.x = player.sprite2.Location.x = player.sprite3.Location.x;
 }
 
 void IsPlayerDeath() {
@@ -152,13 +152,13 @@ void DrawPlayer(){ // Dibuja al jugador, diciendo posicion X e Y y el sprite a u
 	switch (player.lastInputPlayer)
 	{
 	case EInputPlayer::UP: case EInputPlayer::UPRIGTH: case EInputPlayer::UPLEFT:
-			FASG::WriteSpriteBuffer(player.sprite2.Location.x, player.sprite2.Location.y, player.sprite2);
-			break;
-		/*case EInputPlayer::DOWN:
-
-			break;*/
-		default:
-			FASG::WriteSpriteBuffer(player.sprite1.Location.x, player.sprite1.Location.y, player.sprite1);
-			break;
+		FASG::WriteSpriteBuffer(player.sprite2.Location.x, player.sprite2.Location.y, player.sprite2);
+		break;
+	case EInputPlayer::DOWN: case EInputPlayer::DOWNRIGHT: case EInputPlayer::DOWNLEFT:
+		FASG::WriteSpriteBuffer(player.sprite3.Location.x, player.sprite3.Location.y, player.sprite3);
+		break;
+	default:
+		FASG::WriteSpriteBuffer(player.sprite1.Location.x, player.sprite1.Location.y, player.sprite1);
+		break;
 	}
-}//MODIFICAR TAMAÑO NAVE
+}

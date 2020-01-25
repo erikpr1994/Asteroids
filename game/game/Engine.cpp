@@ -33,8 +33,8 @@ void InitGame() {
 	//FASG::SetFontSizeRatio(FASG::ConsoleFontRatios::_8x8);
     GetConsoleCenter();
 
-	InitMenu();
-	ShowMenu();
+	//InitMenu();
+	//ShowMenu();
 	// para la portada*********************************************************
 
 	ZoneSpawn();
