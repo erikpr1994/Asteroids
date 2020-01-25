@@ -1,10 +1,9 @@
-﻿  Engine.cpp
-F:\IFP\GitHub\Actividad2\game\game\Engine.cpp(70,46): warning C4244: '=': conversión de 'double' a 'float'; posible pérdida de datos
-F:\IFP\GitHub\Actividad2\game\game\Engine.cpp(71,47): warning C4244: '=': conversión de 'double' a 'float'; posible pérdida de datos
-F:\IFP\GitHub\Actividad2\game\game\Engine.cpp(75,58): warning C4244: '=': conversión de 'int' a 'float'; posible pérdida de datos
-  Menu.cpp
-F:\IFP\GitHub\Actividad2\game\game\Engine.cpp(92,43): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
-F:\IFP\GitHub\Actividad2\game\game\Menu.cpp(77,70): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
-  Generando código...
-F:\IFP\GitHub\Actividad2\game\game\Menu.cpp(77,46): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
-  game.vcxproj -> F:\IFP\GitHub\Actividad2\game\x64\Debug\game.exe
+﻿  Player.cpp
+C:\Users\erikp\Documents\GitHub\Actividad2\game\game\Player.cpp(23,44): warning C4244: '=': conversión de 'double' a 'float'; posible pérdida de datos
+C:\Users\erikp\Documents\GitHub\Actividad2\game\game\Player.cpp(157,77): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
+C:\Users\erikp\Documents\GitHub\Actividad2\game\game\Player.cpp(157,50): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
+C:\Users\erikp\Documents\GitHub\Actividad2\game\game\Player.cpp(160,77): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
+C:\Users\erikp\Documents\GitHub\Actividad2\game\game\Player.cpp(160,50): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
+C:\Users\erikp\Documents\GitHub\Actividad2\game\game\Player.cpp(163,77): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
+C:\Users\erikp\Documents\GitHub\Actividad2\game\game\Player.cpp(163,50): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
+  game.vcxproj -> C:\Users\erikp\Documents\GitHub\Actividad2\game\x64\Debug\game.exe

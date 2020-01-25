@@ -18,14 +18,14 @@ void DrawMenu();
 void InitMenu() {
 	menu.sprite.LoadSprite("Menu.txt");
 	menu.inMenu = true;
+	menu.lastInputMenu = EInputMenu::NONE;
 
 	//menu.sprite.Location.x = game.screenCenter.x;
 	//menu.sprite.Location.y = game.screenCenter.y;
 }
 
 void ShowMenu() {
-	while (!menu.inMenu) {
-		GetAnyKeyPressedInMenu();
+	while (menu.inMenu) {
 		InputMenu();
 		UpdateMenu();
 		DrawMenu();
@@ -67,14 +67,16 @@ void UpdateMenu() { // Que hace cada estado
 	case EInputMenu::EXIT:
 		game.gameOver = true;
 		break;
+	case EInputMenu::NONE:
+		break;
 	}
 }
 
 void DrawMenu() {
-	menu.sprite.Location.x = game.screenCenter.x;
-	menu.sprite.Location.y = game.screenCenter.y;
+	menu.sprite.Location.x = game.screenCenter.x - (64/2);
+	menu.sprite.Location.y = game.screenCenter.y - 17;
 	
 	FASG::WriteSpriteBuffer(menu.sprite.Location.x, menu.sprite.Location.y, menu.sprite);
 	
+	FASG::RenderFrame();
 }
-

@@ -6,6 +6,7 @@
 #include <iostream>
 #include <string>
 #include <map>
+#include <mmsystem.h>
 
 namespace FASG
 {
@@ -20,22 +21,22 @@ namespace FASG
 
 	enum class EBackColor : unsigned short
 	{
-		Black = 0x00, // 0
-		Red = BACKGROUND_RED, // 1
-		Green = BACKGROUND_GREEN, // 2
-		Yellow = BACKGROUND_RED | BACKGROUND_GREEN, // 3
-		Blue = BACKGROUND_BLUE, // 4
-		Magenta = BACKGROUND_RED | BACKGROUND_BLUE, // 5
-		Cyan = BACKGROUND_BLUE | BACKGROUND_GREEN, // 6
-		White = BACKGROUND_BLUE | BACKGROUND_RED | BACKGROUND_GREEN, // 7
-		LightBlack = Black | BACKGROUND_INTENSITY, // 8
-		LightRed = Red | BACKGROUND_INTENSITY, // 9
-		LightGreen = Green | BACKGROUND_INTENSITY, // A
-		LightYellow = Yellow | BACKGROUND_INTENSITY, // B
-		LightBlue = Blue | BACKGROUND_INTENSITY, // C
-		LightMagenta = Magenta | BACKGROUND_INTENSITY, // D
-		LightCyan = Cyan | BACKGROUND_INTENSITY, // E
-		LightWhite = White | BACKGROUND_INTENSITY, // F
+		Black = 0x00,
+		Red = BACKGROUND_RED,
+		Green = BACKGROUND_GREEN,
+		Yellow = BACKGROUND_RED | BACKGROUND_GREEN,
+		Blue = BACKGROUND_BLUE,
+		Magenta = BACKGROUND_RED | BACKGROUND_BLUE,
+		Cyan = BACKGROUND_BLUE | BACKGROUND_GREEN,
+		White = BACKGROUND_BLUE | BACKGROUND_RED | BACKGROUND_GREEN,
+		LightBlack = Black | BACKGROUND_INTENSITY,
+		LightRed = Red | BACKGROUND_INTENSITY,
+		LightGreen = Green | BACKGROUND_INTENSITY,
+		LightYellow = Yellow | BACKGROUND_INTENSITY,
+		LightBlue = Blue | BACKGROUND_INTENSITY,
+		LightMagenta = Magenta | BACKGROUND_INTENSITY,
+		LightCyan = Cyan | BACKGROUND_INTENSITY,
+		LightWhite = White | BACKGROUND_INTENSITY,
 		Alpha0 = 0b100000000
 	};
 
@@ -134,5 +135,38 @@ namespace FASG
 		static void CheckCollisions();
 
 		friend void RenderFrame();
+	};
+
+
+
+	class MIDISound
+	{
+		std::string ID;
+	public:
+
+		void LoadSound(std::string file);
+
+		void Play();
+		void Loop();
+		void Pause();
+		void Resume();
+		void Stop();
+
+	private:
+		std::string MakeSimpleCommand(std::string command);
+	};
+
+	class WAVESound
+	{
+		std::string ID;
+	public:
+		void LoadSound(std::string file);
+
+		void Play();
+		void Pause();
+		void Resume();
+		void Stop();
+	private:
+		std::string MakeSimpleCommand(std::string command);
 	};
 }

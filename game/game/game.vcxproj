@@ -169,6 +169,11 @@
     <Text Include="Player_down.txt" />
     <Text Include="Player_up.txt" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="DOF.mid" />
+    <None Include="SW.mid" />
+    <None Include="SWM.mid" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

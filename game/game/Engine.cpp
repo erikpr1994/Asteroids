@@ -41,7 +41,7 @@ void InitGame() {
 	ZoneSpawn();
 	InitAsteroid();
     InitPlayer();
-
+	
 	Sprite::SetCollisionCallback(miColision);
 
     while (!game.gameOver) {

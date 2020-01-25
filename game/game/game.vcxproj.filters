@@ -55,4 +55,9 @@
     <Text Include="Player_up.txt" />
     <Text Include="Menu.txt" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="SW.mid" />
+    <None Include="SWM.mid" />
+    <None Include="DOF.mid" />
+  </ItemGroup>
 </Project>

@@ -3,7 +3,7 @@
 
 
 enum EInputMenu {
-	PLAY, EXIT
+	PLAY, EXIT, NONE
 };
 
 struct Menu {
