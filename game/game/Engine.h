@@ -8,6 +8,8 @@ struct Game {
 	bool gameOver = false;
 	Vector2 screenCenter;
 	Vector2 zoneSpawn;
+
+	float gravity = 10.f;
 };
 
 bool GetGameOver();
@@ -17,3 +19,5 @@ void SetGameOver(bool gameOver);
 void InitGame();
 
 void EndGame();
+
+void GravityForce();

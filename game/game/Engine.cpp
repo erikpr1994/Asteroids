@@ -10,6 +10,7 @@
 Game game;
 
 extern Player player;
+extern Asteroid asteroid;
 
 void GetConsoleCenter();
 void ZoneSpawn();
@@ -33,8 +34,8 @@ void InitGame() {
 	//FASG::SetFontSizeRatio(FASG::ConsoleFontRatios::_8x8);
     GetConsoleCenter();
 
-	//InitMenu();
-	//ShowMenu();
+	InitMenu();
+	ShowMenu();
 	// para la portada*********************************************************
 
 	ZoneSpawn();
@@ -90,4 +91,10 @@ void DrawHUD()
 
 	FASG::WriteStringBuffer(game.screenCenter.y, FASG::EAligned::CENTER, HUDMessage, EForeColor::Green);
 	HUDMessage = "";
+}
+
+void GravityForce()
+{
+	asteroid.currentSpeed += game.gravity * FASG::GetDeltaTime();
+	asteroid.sprite.Location.y += asteroid.currentSpeed * FASG::GetDeltaTime() * 0.5f;
 }

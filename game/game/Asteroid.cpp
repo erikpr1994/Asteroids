@@ -22,6 +22,12 @@ void CreateAsteroid()
 	
 }
 
+void MoveAsteroid() {
+
+	GravityForce();
+	
+}
+
 void DrawAsteroid() {
 	FASG::WriteSpriteBuffer(asteroid.sprite.Location.x, asteroid.sprite.Location.y, asteroid.sprite);
 }
