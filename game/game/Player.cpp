@@ -16,9 +16,6 @@ void InitPlayer() {
 	player.sprite2.LoadSprite("Player_up.txt");
 	player.sprite3.LoadSprite("Player_down.txt");
 		
-	//player.sprite1.Location.x = game.screenCenter.x;
-	//player.sprite1.Location.y = game.screenCenter.y;
-
 	player.sprite1.Location.y = player.sprite2.Location.y = player.sprite3.Location.y = game.screenCenter.y;
 	player.sprite1.Location.x = player.sprite2.Location.x = player.sprite3.Location.x = game.screenCenter.x;
 

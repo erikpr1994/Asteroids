@@ -17,8 +17,7 @@ void InitAsteroid() {
 	Sprite::AddToCollisionSystem(asteroid.sprite, "el asteroide");
 }
 
-void CreateAsteroid()
-{
+void CreateAsteroid(){
 	
 }
 

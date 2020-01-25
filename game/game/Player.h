@@ -9,7 +9,6 @@ struct Player {
 	FASG::Sprite sprite1; // Quieto
 	FASG::Sprite sprite2; // Hacia arriba
 	FASG::Sprite sprite3; // Hacia abajo
-	//FASG::Sprite sprite4; 
 
 	EInputPlayer lastInputPlayer;
 	float velocity;
