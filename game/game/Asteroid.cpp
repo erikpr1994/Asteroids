@@ -14,7 +14,7 @@ void InitAsteroid() {
 	asteroid.sprite.Location.x = game.zoneSpawn.x;
 	asteroid.sprite.Location.y = game.zoneSpawn.y;
 
-	Sprite::AddToCollisionSystem(asteroid.sprite, "asteroide");
+	Sprite::AddToCollisionSystem(asteroid.sprite, "el asteroide");
 }
 
 void CreateAsteroid()

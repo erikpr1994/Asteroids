@@ -79,7 +79,7 @@ void ZoneSpawn() {
 void miColision(std::string tag1, std::string tag2) {
 	player.lastInputPlayer = EInputPlayer::DEATH;
 	//HUDMessage = "Colision de " + tag1 + " y " + tag2;
-	HUDMessage = "Colision de " + tag1 + " y " + tag2;
+	HUDMessage = tag1 + " ha colisionado con " + tag2;
 
 }
 

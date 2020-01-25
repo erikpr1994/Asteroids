@@ -33,11 +33,11 @@ void ShowMenu() {
 }
 
 char GetAnyKeyPressedInMenu() { // Que devuelve según la tecla presionada
-	if (FASG::IsKeyPressed('Z')) {
-		return 'Z';
+	if (FASG::IsKeyPressed('A')) {
+		return 'A';
 	}
-	if (FASG::IsKeyPressed('X')) {
-		return 'X';
+	if (FASG::IsKeyPressed('S')) {
+		return 'S';
 	}
 	else {
 		return '\0';
@@ -49,10 +49,10 @@ void InputMenu() { // Que estado genera según lo que recibe de la tecla presiona
 
 	switch (key)
 	{
-	case 'Z':
+	case 'A':
 		menu.lastInputMenu = EInputMenu::PLAY;
 		break;
-	case 'X':
+	case 'S':
 		menu.lastInputMenu = EInputMenu::EXIT;
 		break;
 	}
@@ -71,6 +71,10 @@ void UpdateMenu() { // Que hace cada estado
 }
 
 void DrawMenu() {
+	menu.sprite.Location.x = game.screenCenter.x;
+	menu.sprite.Location.y = game.screenCenter.y;
+	
 	FASG::WriteSpriteBuffer(menu.sprite.Location.x, menu.sprite.Location.y, menu.sprite);
+	
 }
 
