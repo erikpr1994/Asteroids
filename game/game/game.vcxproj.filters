@@ -27,6 +27,9 @@
     <ClCompile Include="Asteroid.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
+    <ClCompile Include="Menu.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FAriasSimpleGraphics.h">
@@ -41,9 +44,14 @@
     <ClInclude Include="Asteroid.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
+    <ClInclude Include="Menu.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="Player.txt" />
     <Text Include="Asteroid.txt" />
+    <Text Include="Player_propeller.txt" />
+    <Text Include="Player_death.txt" />
   </ItemGroup>
 </Project>

@@ -152,17 +152,21 @@
     <ClCompile Include="Asteroid.cpp" />
     <ClCompile Include="Engine.cpp" />
     <ClCompile Include="game.cpp" />
+    <ClCompile Include="Menu.cpp" />
     <ClCompile Include="Player.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Asteroid.h" />
     <ClInclude Include="Engine.h" />
     <ClInclude Include="FAriasSimpleGraphics.h" />
+    <ClInclude Include="Menu.h" />
     <ClInclude Include="Player.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Asteroid.txt" />
     <Text Include="Player.txt" />
+    <Text Include="Player_death.txt" />
+    <Text Include="Player_propeller.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

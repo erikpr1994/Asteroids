@@ -12,13 +12,18 @@ extern Game game;
 char GetAnyKeyPressed();
 
 void InitPlayer() {
-	player.sprite.LoadSprite("Player.txt");
-	player.sprite.Location.x = game.screenCenter.x;
-	player.sprite.Location.y = game.screenCenter.y;
+	player.sprite1.LoadSprite("Player.txt");
+	player.sprite2.LoadSprite("Player_propeller.txt");
+	//player.sprite3.LoadSprite("Player_propeller.txt");
+	player.sprite4.LoadSprite("Player_death.txt");
+	
+	player.sprite1.Location.x = game.screenCenter.x;
+	player.sprite1.Location.y = game.screenCenter.y;
 	player.velocity = 70.f;
 	player.diagonalVelocity = player.velocity / (sqrt(2));
 
-	Sprite::AddToCollisionSystem(player.sprite, " La Nave Omega");
+	Sprite::AddToCollisionSystem(player.sprite1, " La Nave Omega");
+	
 }
 
 char GetAnyKeyPressed(){ // Que devuelve según que tecla presionemos
@@ -96,37 +101,40 @@ void UpdatePlayer() { // Que hace cada estado
 	switch (player.lastInputPlayer)
 	{
 	case EInputPlayer::UPRIGTH:
-		player.sprite.Location.y -= player.diagonalVelocity * FASG::GetDeltaTime();
-		player.sprite.Location.x += player.diagonalVelocity * FASG::GetDeltaTime();
+		player.sprite1.Location.y -= player.diagonalVelocity * FASG::GetDeltaTime();
+		player.sprite1.Location.x += player.diagonalVelocity * FASG::GetDeltaTime();
 		break;
 	case EInputPlayer::UPLEFT:
-		player.sprite.Location.y -= player.diagonalVelocity * FASG::GetDeltaTime();
-		player.sprite.Location.x -= player.diagonalVelocity * FASG::GetDeltaTime();
+		player.sprite1.Location.y -= player.diagonalVelocity * FASG::GetDeltaTime();
+		player.sprite1.Location.x -= player.diagonalVelocity * FASG::GetDeltaTime();
 		break;
 	case EInputPlayer::DOWNRIGHT:
-		player.sprite.Location.y += player.diagonalVelocity * FASG::GetDeltaTime();
-		player.sprite.Location.x += player.diagonalVelocity * FASG::GetDeltaTime();
+		player.sprite1.Location.y += player.diagonalVelocity * FASG::GetDeltaTime();
+		player.sprite1.Location.x += player.diagonalVelocity * FASG::GetDeltaTime();
 		break;
 	case EInputPlayer::DOWNLEFT:
-		player.sprite.Location.y += player.diagonalVelocity * FASG::GetDeltaTime();
-		player.sprite.Location.x -= player.diagonalVelocity * FASG::GetDeltaTime();
+		player.sprite1.Location.y += player.diagonalVelocity * FASG::GetDeltaTime();
+		player.sprite1.Location.x -= player.diagonalVelocity * FASG::GetDeltaTime();
 		break;
 	case EInputPlayer::UP:
-		player.sprite.Location.y -= player.velocity * FASG::GetDeltaTime();
+		player.sprite1.Location.y -= player.velocity * FASG::GetDeltaTime();
 		break;
 	case EInputPlayer::DOWN:
-		player.sprite.Location.y += player.velocity * FASG::GetDeltaTime();
+		player.sprite1.Location.y += player.velocity * FASG::GetDeltaTime();
 		break;
 	case EInputPlayer::LEFT:
-		player.sprite.Location.x -= player.velocity * FASG::GetDeltaTime();
+		player.sprite1.Location.x -= player.velocity * FASG::GetDeltaTime();
 		break;
 	case EInputPlayer::RIGHT:
-		player.sprite.Location.x += player.velocity * FASG::GetDeltaTime();
+		player.sprite1.Location.x += player.velocity * FASG::GetDeltaTime();
 	case EInputPlayer::SHOOT: // insertar animación*****************
 		break;
 	case EInputPlayer::STILL:
 		break;
 	}
+
+	player.sprite2.Location.y = player.sprite3.Location.y = player.sprite1.Location.y;
+	player.sprite2.Location.x = player.sprite3.Location.x = player.sprite1.Location.x;
 }
 
 void IsPlayerDeath() {
@@ -140,5 +148,17 @@ void IsPlayerDeath() {
 }
 
 void DrawPlayer(){ // Dibuja al jugador, diciendo posicion X e Y y el sprite a utilizar
-	FASG::WriteSpriteBuffer(player.sprite.Location.x, player.sprite.Location.y, player.sprite);
-}
+	
+	switch (player.lastInputPlayer)
+	{
+	case EInputPlayer::UP: case EInputPlayer::UPRIGTH: case EInputPlayer::UPLEFT:
+			FASG::WriteSpriteBuffer(player.sprite2.Location.x, player.sprite2.Location.y, player.sprite2);
+			break;
+		/*case EInputPlayer::DOWN:
+
+			break;*/
+		default:
+			FASG::WriteSpriteBuffer(player.sprite1.Location.x, player.sprite1.Location.y, player.sprite1);
+			break;
+	}
+}//MODIFICAR TAMAÑO NAVE

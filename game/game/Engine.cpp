@@ -4,6 +4,7 @@
 #include "FAriasSimpleGraphics.h"
 #include "Player.h"
 #include "Asteroid.h"
+#include "Menu.h"
 #include <conio.h>
 
 Game game;
@@ -32,6 +33,8 @@ void InitGame() {
 	//FASG::SetFontSizeRatio(FASG::ConsoleFontRatios::_8x8);
     GetConsoleCenter();
 
+	InitMenu();
+	ShowMenu();
 	// para la portada*********************************************************
 
 	ZoneSpawn();
