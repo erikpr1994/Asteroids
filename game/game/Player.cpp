@@ -1,29 +1,152 @@
 #include "FAriasSimpleGraphics.h"
 #include "Player.h"
 #include "Engine.h"
+#include "Menu.h"
 
 #include <iostream>
 #include <conio.h>
 
 Player player;
 
-extern Game game;
+float const MIN_TIEMPO_ENTRE_DISPAROS = 0.1f;
+int const NUMERO_DISPAROS_A_LA_VEZ = 5;
+Disparo disparo[NUMERO_DISPAROS_A_LA_VEZ];
+float coolDownBetweenDisparos = 0.f;
+bool disparosActivos[NUMERO_DISPAROS_A_LA_VEZ];
 
 char GetAnyKeyPressed();
 
 void InitPlayer() {
-	player.sprite.LoadSprite("Player.txt");
-	player.sprite.Location.x = game.screenCenter.x;
-	player.sprite.Location.y = game.screenCenter.y;
-	player.velocity = 30.f;
+	player.sprite1.LoadSprite("Player.txt");
+	player.sprite2.LoadSprite("Player_up.txt");
+	player.sprite3.LoadSprite("Player_down.txt");
+		
+	player.sprite1.Location.y = player.sprite2.Location.y = player.sprite3.Location.y = GetScreenCenterY();
+	player.sprite1.Location.x = player.sprite2.Location.x = player.sprite3.Location.x = GetScreenCenterX();
+
+	player.velocity = 70.f;
 	player.diagonalVelocity = player.velocity / (sqrt(2));
+
+	Sprite::AddToCollisionSystem(player.sprite1, "nave");
+
+	player.life = 100.f;
+
+	player.isDeath = false;
+	player.isDeathByOutside = false;
+	player.isDeadByCollisionWithAsteroid = false;
+	player.isDeadByShip = false;
+	player.lastInputPlayer = EInputPlayer::STILL;
+}
+
+void disparos() {
+	if (coolDownBetweenDisparos <= 0) {
+		coolDownBetweenDisparos = MIN_TIEMPO_ENTRE_DISPAROS;
+		for (int i = 0; i < NUMERO_DISPAROS_A_LA_VEZ; i++) {
+			if (!disparosActivos[i]) {
+				disparo[i].sprite.LoadSprite("Shoot.txt");
+				disparo[i].sprite.Location.x = player.sprite1.Location.x + 6;
+				disparo[i].sprite.Location.y = player.sprite1.Location.y+1;
+				disparo[i].shootSpeed = 100.f;
+				Sprite::AddToCollisionSystem(disparo[i].sprite, "disparo" + i);
+				disparosActivos[i] = true;
+				break;
+			}
+		}
+	}
+	for (int i = 0; i < NUMERO_DISPAROS_A_LA_VEZ; i++) {
+		if (disparo[i].sprite.Location.y <= 0) {
+			disparosActivos[i] = false;
+		}
+	}
+}
+
+void InitShoots() {
+	for (int i = 0; i < NUMERO_DISPAROS_A_LA_VEZ; i++) {
+		disparosActivos[i] = false;
+		disparo[i].sprite.Location.y = rand() % 10000 + 100000;
+		disparo[i].sprite.Location.x = rand() % 10000 + 100000;
+	}
+}
+
+void MoveShoot() {
+	for (int i = 0; i < NUMERO_DISPAROS_A_LA_VEZ; i++) {
+		if (disparosActivos[i]) {
+			disparo[i].sprite.Location.y -= disparo[i].shootSpeed * FASG::GetDeltaTime() * 0.5f;
+			if (disparo[i].sprite.Location.y >= GetScreenEndConsoleY()) {
+				disparo[i].sprite.Location.y = rand() % 10000 + 100000;
+				disparo[i].sprite.Location.x = rand() % 10000 + 100000;
+			}
+		}
+	}
+}
+
+void DrawShoots() {
+	for (int i = 0; i < NUMERO_DISPAROS_A_LA_VEZ; i++) {
+		if (disparosActivos[i]) {
+			FASG::WriteSpriteBuffer(disparo[i].sprite.Location.x, disparo[i].sprite.Location.y, disparo[i].sprite);
+		}
+	}
+}
+
+void SetShootLocation(float x, float y, int number) {
+	disparo[number].sprite.Location.x = x;
+	disparo[number].sprite.Location.y = y;
+}
+
+// GETTERS
+bool IsPlayerDead() {
+	return player.isDeath;
+}
+
+bool IsPlayerDeadByGoOutsideScreen() {
+	return player.isDeathByOutside;
+}
+
+bool IsPlayerDeadByCollisionWithAsteroid() {
+	return player.isDeadByCollisionWithAsteroid;
+}
+
+bool IsPlayerDeadByShip() {
+	return player.isDeadByShip;
+}
+
+int GetMaxNumberOfShoots() {
+	return NUMERO_DISPAROS_A_LA_VEZ;
+}
+
+float GetPlayerLife() {
+	return player.life;
+}
+
+// SETTERS
+void SetPlayerDead(bool value) {
+	player.isDeath = value;
+}
+
+void SetPlayerDeadByGoOutsideScreen(bool value) {
+	player.isDeathByOutside = value;
+}
+
+void SetPlayerDeadByShip(bool value) {
+	player.isDeadByShip = value;
+}
+
+void SetPlayerDeadByCollisionWithAsteroid(bool value) {
+	player.isDeadByCollisionWithAsteroid = value;
+}
+
+void SetLastInputPlayer(EInputPlayer value) {
+	player.lastInputPlayer = value;
+}
+
+void SetPlayerLife(float number) {
+	player.life = number;
 }
 
 char GetAnyKeyPressed(){
 	if (FASG::IsKeyPressed('W') && FASG::IsKeyPressed('D')) {
 		return 'E';
 	}
-
 	if (FASG::IsKeyPressed('W') && FASG::IsKeyPressed('A')) {
 		return 'Q';
 	}
@@ -83,7 +206,7 @@ void InputPlayer() {
 		player.lastInputPlayer = EInputPlayer::DOWN;
 		break;
 	case ' ':
-		player.lastInputPlayer = EInputPlayer::SHOOT;
+    	player.lastInputPlayer = EInputPlayer::SHOOT;
 		break;
 	default:
 		player.lastInputPlayer = EInputPlayer::STILL;
@@ -92,42 +215,100 @@ void InputPlayer() {
 }
 
 void UpdatePlayer() {
+	coolDownBetweenDisparos -= FASG::GetDeltaTime();
+
 	switch (player.lastInputPlayer)
 	{
 	case EInputPlayer::UPRIGTH:
-		player.sprite.Location.y -= player.diagonalVelocity * FASG::GetDeltaTime();
-		player.sprite.Location.x += player.diagonalVelocity * FASG::GetDeltaTime();
+		player.sprite1.Location.y -= player.diagonalVelocity * FASG::GetDeltaTime();
+		player.sprite1.Location.x += player.diagonalVelocity * FASG::GetDeltaTime();
 		break;
 	case EInputPlayer::UPLEFT:
-		player.sprite.Location.y -= player.diagonalVelocity * FASG::GetDeltaTime();
-		player.sprite.Location.x -= player.diagonalVelocity * FASG::GetDeltaTime();
+		player.sprite1.Location.y -= player.diagonalVelocity * FASG::GetDeltaTime();
+		player.sprite1.Location.x -= player.diagonalVelocity * FASG::GetDeltaTime();
 		break;
 	case EInputPlayer::DOWNRIGHT:
-		player.sprite.Location.y += player.diagonalVelocity * FASG::GetDeltaTime();
-		player.sprite.Location.x += player.diagonalVelocity * FASG::GetDeltaTime();
+		player.sprite1.Location.y += player.diagonalVelocity * FASG::GetDeltaTime();
+		player.sprite1.Location.x += player.diagonalVelocity * FASG::GetDeltaTime();
 		break;
 	case EInputPlayer::DOWNLEFT:
-		player.sprite.Location.y += player.diagonalVelocity * FASG::GetDeltaTime();
-		player.sprite.Location.x -= player.diagonalVelocity * FASG::GetDeltaTime();
+		player.sprite1.Location.y += player.diagonalVelocity * FASG::GetDeltaTime();
+		player.sprite1.Location.x -= player.diagonalVelocity * FASG::GetDeltaTime();
 		break;
 	case EInputPlayer::UP:
-		player.sprite.Location.y -= player.velocity * FASG::GetDeltaTime();
+		player.sprite1.Location.y -= player.velocity * FASG::GetDeltaTime();
 		break;
 	case EInputPlayer::DOWN:
-		player.sprite.Location.y += player.velocity * FASG::GetDeltaTime();
+		player.sprite1.Location.y += player.velocity * FASG::GetDeltaTime();	
 		break;
 	case EInputPlayer::LEFT:
-		player.sprite.Location.x -= player.velocity * FASG::GetDeltaTime();
+		player.sprite1.Location.x -= player.velocity * FASG::GetDeltaTime();
 		break;
 	case EInputPlayer::RIGHT:
-		player.sprite.Location.x += player.velocity * FASG::GetDeltaTime();
+		player.sprite1.Location.x += player.velocity * FASG::GetDeltaTime();
+		break;
 	case EInputPlayer::SHOOT:
+		disparos();
 		break;
 	case EInputPlayer::STILL:
 		break;
 	}
+
+	player.sprite2.Location.y = player.sprite1.Location.y;
+	player.sprite2.Location.x = player.sprite1.Location.x;
+	player.sprite3.Location.y = player.sprite1.Location.y;
+	player.sprite3.Location.x = player.sprite1.Location.x;
+}
+
+void IsPlayerDeath() {
+	if (player.life <= 0.f) {
+		player.isDeadByShip = true;
+		player.isDeath = true;
+		SetLastInputPlayer(EInputPlayer::DEATH);
+	}
+
+	if (player.lastInputPlayer == EInputPlayer::DEATH) {
+		SetInMenu(true);
+	}
 }
 
 void DrawPlayer(){
-	FASG::WriteSpriteBuffer(player.sprite.Location.x, player.sprite.Location.y, player.sprite);
+	
+	switch (player.lastInputPlayer)
+	{
+	case EInputPlayer::UP: case EInputPlayer::UPRIGTH: case EInputPlayer::UPLEFT:
+		FASG::WriteSpriteBuffer(player.sprite2.Location.x, player.sprite2.Location.y, player.sprite2);
+		break;
+	case EInputPlayer::DOWN: case EInputPlayer::DOWNRIGHT: case EInputPlayer::DOWNLEFT:
+		FASG::WriteSpriteBuffer(player.sprite3.Location.x, player.sprite3.Location.y, player.sprite3);
+		break;
+	default:
+		FASG::WriteSpriteBuffer(player.sprite1.Location.x, player.sprite1.Location.y, player.sprite1);
+		break;
+	}
+}
+
+bool InMapRanged(int x, int y) {
+	if ((x >= 0) && (x < GetScreenEndConsoleX()) && (y >= 0) && (y < GetScreenEndConsoleY())) {
+		return true;
+	}
+	return false;
+}
+
+void Outside() {
+	if (!InMapRanged(player.sprite1.Location.x, player.sprite1.Location.y))
+	{
+		if (player.sprite1.Location.y <= 0) {
+			player.sprite1.Location.y = 1;
+		}
+		else {
+			player.sprite2.Location.y = player.sprite1.Location.y;
+			player.sprite2.Location.x = player.sprite1.Location.x;
+			player.sprite3.Location.y = player.sprite1.Location.y;
+			player.sprite3.Location.x = player.sprite1.Location.x;
+			SetPlayerDead(true); // USAR SETTER
+			SetPlayerDeadByGoOutsideScreen(true); // USAR SETTER
+			player.lastInputPlayer = EInputPlayer::DEATH;
+		}
+	}
 }

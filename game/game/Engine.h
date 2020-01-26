@@ -4,11 +4,30 @@
 using namespace FASG;
 
 struct Game {
-	float const CONSOLE_WIDTH = 150, CONSOLE_HEIGHT = 80;
-	bool gameOver = false;
+	int const CONSOLE_WIDTH = 150, CONSOLE_HEIGHT = 70; // WIDTH -> ancho // HEIGHT -> alto
+	bool isGameClosed = false;
 	Vector2 screenCenter;
+	Vector2 zoneSpawn;
+	float puntuacion;
+	float gravity = 10.f;
 };
+
+bool GetIsGameClosed();
+
+void SetIsGameClosed(bool value);
 
 void InitGame();
 
 void EndGame();
+
+// GETTERS Y SETTERS
+int GetScreenCenterX();
+int GetScreenCenterY();
+int GetScreenEndConsoleX();
+int GetScreenStartConsoleX();
+int GetScreenEndConsoleY();
+int GetScreenStartConsoleY();
+int GetZoneSpawnX();
+int GetZoneSpawnY();
+float GetPuntuation();
+void SetPuntuation(float value);

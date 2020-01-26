@@ -6,6 +6,7 @@
 #include <iostream>
 #include <string>
 #include <map>
+#include <mmsystem.h>
 
 namespace FASG
 {
@@ -134,5 +135,38 @@ namespace FASG
 		static void CheckCollisions();
 
 		friend void RenderFrame();
+	};
+
+
+
+	class MIDISound
+	{
+		std::string ID;
+	public:
+
+		void LoadSound(std::string file);
+
+		void Play();
+		void Loop();
+		void Pause();
+		void Resume();
+		void Stop();
+
+	private:
+		std::string MakeSimpleCommand(std::string command);
+	};
+
+	class WAVESound
+	{
+		std::string ID;
+	public:
+		void LoadSound(std::string file);
+
+		void Play();
+		void Pause();
+		void Resume();
+		void Stop();
+	private:
+		std::string MakeSimpleCommand(std::string command);
 	};
 }

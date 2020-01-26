@@ -149,17 +149,35 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Asteroid.cpp" />
+    <ClCompile Include="Enemies.cpp" />
     <ClCompile Include="Engine.cpp" />
     <ClCompile Include="game.cpp" />
+    <ClCompile Include="Menu.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="Stars.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Asteroid.h" />
+    <ClInclude Include="Enemies.h" />
     <ClInclude Include="Engine.h" />
     <ClInclude Include="FAriasSimpleGraphics.h" />
+    <ClInclude Include="Menu.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="Stars.h" />
   </ItemGroup>
   <ItemGroup>
+    <Text Include="Asteroid.txt" />
+    <Text Include="Menu.txt" />
     <Text Include="Player.txt" />
+    <Text Include="Player_down.txt" />
+    <Text Include="Player_up.txt" />
+    <Text Include="Shoot.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="DOF.mid" />
+    <None Include="SW.mid" />
+    <None Include="SWM.mid" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
