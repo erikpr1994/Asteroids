@@ -263,6 +263,7 @@ void UpdatePlayer() {
 void IsPlayerDeath() {
 	if (player.life <= 0.f) {
 		player.isDeadByShip = true;
+		player.isDeath = true;
 		SetLastInputPlayer(EInputPlayer::DEATH);
 	}
 
