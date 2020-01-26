@@ -54,6 +54,7 @@
     <Text Include="Player_down.txt" />
     <Text Include="Player_up.txt" />
     <Text Include="Menu.txt" />
+    <Text Include="Shoot.txt" />
   </ItemGroup>
   <ItemGroup>
     <None Include="SW.mid" />

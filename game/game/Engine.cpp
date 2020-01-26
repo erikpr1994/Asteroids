@@ -9,15 +9,7 @@
 
 Game game;
 
-bool isDeath = false;
-bool isDeathByOutside = false;
-bool isDeathByChoqueConAsteroide = false;
-bool isDeathByNaveCabrona = false;
-
-extern Player player;
-extern Asteroid asteroid;
-
-void GetConsoleCenter();
+void CalcConsoleCenter();
 void ZoneSpawn();
 bool InMapRanged(int x, int y);
 void Outside();
@@ -28,12 +20,12 @@ void paintDeath();
 std::string HUDMessage;
 
 // Todo el tema de gameOver cambiarlo a nombre de ExitGame
-bool GetGameOver() {
-	return game.gameOver;
+bool GetIsGameClosed() {
+	return game.isGameClosed;
 }
 
-void SetGameOver(bool gameOver) {
-	game.gameOver = gameOver;
+void SetIsGameClosed(bool value) {
+	game.isGameClosed = value;
 }
 
 void InitGame() {
@@ -41,7 +33,8 @@ void InitGame() {
     FASG::InitConsole(game.CONSOLE_WIDTH, game.CONSOLE_HEIGHT);
 	FASG::ShowConsoleCursor(false);
 	//FASG::SetFontSizeRatio(FASG::ConsoleFontRatios::_8x8);
-    GetConsoleCenter();
+    CalcConsoleCenter();
+	SetIsGameClosed(false);
 
 	InitMenu();
 
@@ -49,7 +42,7 @@ void InitGame() {
 	
 	Sprite::SetCollisionCallback(MiColision);
 
-    while (!game.gameOver) {
+    while (!GetIsGameClosed()) {
 		ShowMenu();
 		Outside();
 		IsPlayerDeath();
@@ -60,27 +53,28 @@ void InitGame() {
 		Asteroids();
 		MoveAsteroid();
 		DrawAsteroid();
+		MoveShoot();
+		DrawShoots();
 		DrawHUD();
 
 		FASG::RenderFrame();
 
-		while (isDeath) {
+		while (IsPlayerDead()) {
 			paintDeath();
-			InitAsteroids();
-
+			
 			FASG::RenderFrame();
 			while (_kbhit()){
 				_getch();
 
 				if(FASG::IsKeyDown(' ')){
-					isDeath = false;
-					isDeathByOutside = false;
-					isDeathByChoqueConAsteroide = false;
+					SetPlayerDead(false);
+					SetPlayerDeadByCollisionWithAsteroid(false);
+					SetPlayerDeadByGoOutsideScreen(false);
+					SetPlayerDeadByShip(false);
 				}
 			}
 		}
     }
-
 }
 
 
@@ -88,9 +82,41 @@ void EndGame() {
     FASG::DestroyConsole();
 }
 
-void GetConsoleCenter() {
+void CalcConsoleCenter() {
     game.screenCenter.x = game.CONSOLE_WIDTH * 0.5;
     game.screenCenter.y = game.CONSOLE_HEIGHT * 0.5;
+}
+
+int GetScreenCenterX() {
+	return game.screenCenter.x;
+}
+
+int GetScreenCenterY() {
+	return game.screenCenter.y;
+}
+
+int GetScreenEndConsoleX() {
+	return game.CONSOLE_WIDTH;
+}
+
+int GetScreenStartConsoleX() {
+	return 0;
+}
+
+int GetScreenEndConsoleY() {
+	return game.CONSOLE_HEIGHT;
+}
+
+int GetScreenStartConsoleY() {
+	return 0;
+}
+
+int GetZoneSpawnX() {
+	return game.zoneSpawn.x;
+}
+
+int GetZoneSpawnY() {
+	return game.zoneSpawn.y;
 }
 
 void ZoneSpawn() {
@@ -98,59 +124,45 @@ void ZoneSpawn() {
 	game.zoneSpawn.y = 0;
 }
 
-bool InMapRanged(int x, int y) {
-	if ((x >= 0) && (x < game.CONSOLE_WIDTH-13) && (y >= 0) && (y < game.CONSOLE_HEIGHT-7)) {
-		return true;
-	}
-	return false;
-}
-
-void Outside() {
-	if (!InMapRanged(player.sprite1.Location.x, player.sprite1.Location.y))
-	{
-		if (player.sprite1.Location.y <= 0) {
-			player.sprite1.Location.y = 1;
-		}
-		else {
-			player.sprite2.Location.y = player.sprite1.Location.y;
-			player.sprite2.Location.x = player.sprite1.Location.x;
-			player.sprite3.Location.y = player.sprite1.Location.y;
-			player.sprite3.Location.x = player.sprite1.Location.x;
-			isDeath = true;
-			isDeathByOutside = true;
-			player.lastInputPlayer = EInputPlayer::DEATH;
-		}
-	}
-}
 
 void paintDeath() {
-	if (isDeathByOutside) {
-		FASG::WriteStringBuffer(game.CONSOLE_HEIGHT * 0.5f - 5, FASG::EAligned::CENTER, "GAME OVER: Te has salido de la pantalla", FASG::EForeColor::LightRed);
-		FASG::WriteStringBuffer(game.CONSOLE_HEIGHT * 0.5f - 4, FASG::EAligned::CENTER, "PRESIONA ESPACIO PARA VOLVER AL MENU", FASG::EForeColor::LightCyan);
+	if (IsPlayerDeadByGoOutsideScreen()) {
+		FASG::WriteStringBuffer(GetScreenEndConsoleY() * 0.5f - 5, FASG::EAligned::CENTER, "GAME OVER: Te has perdido en el espacio", FASG::EForeColor::LightRed);
+		FASG::WriteStringBuffer(GetScreenEndConsoleY() * 0.5f - 4, FASG::EAligned::CENTER, "PRESIONA ESPACIO PARA VOLVER AL MENU", FASG::EForeColor::LightCyan);
 	}
-	if (isDeathByChoqueConAsteroide) {
-		FASG::WriteStringBuffer(game.CONSOLE_HEIGHT * 0.5f - 5, FASG::EAligned::CENTER, "GAME OVER: Te has chocado con un meteorito", FASG::EForeColor::LightRed);
-		FASG::WriteStringBuffer(game.CONSOLE_HEIGHT * 0.5f - 4, FASG::EAligned::CENTER, "PRESIONA 2 VECES ESPACIO PARA VOLVER AL MENU", FASG::EForeColor::LightCyan);
+	if (IsPlayerDeadByCollisionWithAsteroid()) {
+		FASG::WriteStringBuffer(GetScreenEndConsoleY() * 0.5f - 5, FASG::EAligned::CENTER, "GAME OVER: Te has chocado con un meteorito", FASG::EForeColor::LightRed);
+		FASG::WriteStringBuffer(GetScreenEndConsoleY() * 0.5f - 4, FASG::EAligned::CENTER, "PRESIONA 2 VECES ESPACIO PARA VOLVER AL MENU", FASG::EForeColor::LightCyan);
 	}
-	if(isDeathByNaveCabrona){
-		FASG::WriteStringBuffer(game.CONSOLE_HEIGHT * 0.5f - 5, FASG::EAligned::CENTER, "GAME OVER: Una nave te ha matado", FASG::EForeColor::LightRed);
-		FASG::WriteStringBuffer(game.CONSOLE_HEIGHT * 0.5f - 4, FASG::EAligned::CENTER, "PRESIONA ESPACIO PARA VOLVER AL MENU", FASG::EForeColor::LightCyan);
+	if(IsPlayerDeadByShip()){
+		FASG::WriteStringBuffer(GetScreenEndConsoleY() * 0.5f - 5, FASG::EAligned::CENTER, "GAME OVER: Una nave te ha destruido", FASG::EForeColor::LightRed);
+		FASG::WriteStringBuffer(GetScreenEndConsoleY() * 0.5f - 4, FASG::EAligned::CENTER, "PRESIONA ESPACIO PARA VOLVER AL MENU", FASG::EForeColor::LightCyan);
 	}
 }
 
 void MiColision(std::string tag1, std::string tag2) {
-	isDeath = true;
-	isDeathByChoqueConAsteroide = true;
-	player.lastInputPlayer = EInputPlayer::DEATH;
+	for(int i = 0; i < GetMaxNumberOfAsteroids() ;i++){
+		if(tag1 == "asteroid"+i && tag2 == "nave" || tag1 == "nave" && tag2 == "asteroid"+i){
+			SetPlayerDead(true);
+			SetPlayerDeadByCollisionWithAsteroid(true);
+			SetLastInputPlayer(EInputPlayer::DEATH);
+		}
+	}
+
+	for (int i = 0; i < GetMaxNumberOfAsteroids(); i++) {
+		for(int j = 0; j < GetMaxNumberOfShoots();j++){
+			if (tag1 == "asteroid" + i && tag2 == "disparo"+j || tag1 == "disparo"+j && tag2 == "asteroid" + i) {
+				SetAsteroidLocation(9452, 9452, i);
+				SetShootLocation(-8000, -8000, j);
+			}
+		}
+	}
 }
 
+// Lo queremos mostrar así o diferente?
 void DrawHUD()
 {
 	FASG::WriteStringBuffer(0, 0, "FPS: " + std::to_string(1 / FASG::GetDeltaTime()), FASG::EForeColor::LightRed);
-	FASG::WriteStringBuffer(0, 2, "Mueve la nave (WASD) para detectar la colision con los asteroides", FASG::EForeColor::LightWhite);
-	FASG::WriteStringBuffer(0, 3, "X: para salir ordenadamente del programa", FASG::EForeColor::LightCyan);
 
-	FASG::WriteStringBuffer(game.screenCenter.y, FASG::EAligned::CENTER, HUDMessage, EForeColor::Green);
-	HUDMessage = "";
+	FASG::WriteStringBuffer(GetScreenCenterY(), FASG::EAligned::CENTER, HUDMessage, EForeColor::Green);
 }
-

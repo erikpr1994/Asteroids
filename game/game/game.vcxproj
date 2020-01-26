@@ -168,6 +168,7 @@
     <Text Include="Player.txt" />
     <Text Include="Player_down.txt" />
     <Text Include="Player_up.txt" />
+    <Text Include="Shoot.txt" />
   </ItemGroup>
   <ItemGroup>
     <None Include="DOF.mid" />

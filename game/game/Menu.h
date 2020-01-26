@@ -16,4 +16,7 @@ void ShowMenu();
 
 void InitMenu();
 
+// GETTERS Y SETTERS
+bool GetInMenu();
 
+void SetInMenu(bool value);

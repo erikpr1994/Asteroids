@@ -18,3 +18,7 @@ void DrawAsteroid();
 //void GravityForce();
 
 void InitAsteroids();
+
+int GetMaxNumberOfAsteroids();
+
+void SetAsteroidLocation(float x, float y, int number);

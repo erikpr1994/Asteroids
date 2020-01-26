@@ -11,12 +11,11 @@ int const MAX_NUMBER_OF_ASTEROIDS = 10;
 Asteroid asteroid[MAX_NUMBER_OF_ASTEROIDS];
 bool activeAsteroids[MAX_NUMBER_OF_ASTEROIDS];
 
-extern Game game;
-
 void InitAsteroids() {
 	for (int i = 0; i < MAX_NUMBER_OF_ASTEROIDS; i++) {
 		activeAsteroids[i] = false;
-		asteroid[i].sprite.Location.y=game.CONSOLE_HEIGHT;
+		asteroid[i].sprite.Location.y = rand() % 10000 + 100000;
+		asteroid[i].sprite.Location.x = rand() % 10000 + 100000;
 	}
 }
 
@@ -27,17 +26,17 @@ void Asteroids() {
 		for (int i = 0; i < MAX_NUMBER_OF_ASTEROIDS; i++) {
 			if(!activeAsteroids[i]){
 				asteroid[i].sprite.LoadSprite("Asteroid.txt");
-				asteroid[i].sprite.Location.x = rand()%game.CONSOLE_WIDTH-10;
-				asteroid[i].sprite.Location.y = game.zoneSpawn.y;
+				asteroid[i].sprite.Location.x = rand()% (GetScreenEndConsoleX ()-10)+10;
+				asteroid[i].sprite.Location.y = GetZoneSpawnY();
 				asteroid[i].currentSpeed = rand()%30+20;
-				Sprite::AddToCollisionSystem(asteroid[i].sprite, "EL ASTEROIDE"+i);
+				Sprite::AddToCollisionSystem(asteroid[i].sprite, "asteroid"+i);
 				activeAsteroids[i] = true;
 				break;
 			}
 		}
 	}
 	for (int i = 0; i < MAX_NUMBER_OF_ASTEROIDS; i++) {
-		if (asteroid[i].sprite.Location.y >= game.CONSOLE_HEIGHT) {
+		if (asteroid[i].sprite.Location.y >= GetScreenEndConsoleY()) {
 			activeAsteroids[i] = false;
 		}
 	}
@@ -55,6 +54,19 @@ void MoveAsteroid() {
 	for (int i = 0; i < MAX_NUMBER_OF_ASTEROIDS; i++) {
 		if (activeAsteroids[i]) {
 			asteroid[i].sprite.Location.y += asteroid[i].currentSpeed * FASG::GetDeltaTime() * 0.5f;
+			if(asteroid[i].sprite.Location.y >= GetScreenEndConsoleY()) {
+				asteroid[i].sprite.Location.y = rand() % 10000 + 100000;
+				asteroid[i].sprite.Location.x = rand() % 10000 + 100000;
+			}
 		}
 	}
+}
+
+int GetMaxNumberOfAsteroids() {
+	return MAX_NUMBER_OF_ASTEROIDS;
+}
+
+void SetAsteroidLocation(float x, float y, int number) {
+	asteroid[number].sprite.Location.x = x;
+	asteroid[number].sprite.Location.y = y;
 }

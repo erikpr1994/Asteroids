@@ -6,8 +6,6 @@
 
 Menu menu;
 
-extern Game game;
-
 char GetAnyKeyPressedInMenu();
 
 void InputMenu();
@@ -21,24 +19,28 @@ void InitMenu() {
 	menu.sprite.LoadSprite("Menu.txt");
 	menu.inMenu = true;
 	menu.lastInputMenu = EInputMenu::NONE;
-
-	//menu.sprite.Location.x = game.screenCenter.x;
-	//menu.sprite.Location.y = game.screenCenter.y;
 }
 
-void ShowMenu() {
+bool GetInMenu() {
+	return menu.inMenu;
+}
+
+void SetInMenu(bool value) {
+	menu.inMenu = value;
+}
+
+void ShowMenu() {;
 	if (menu.inMenu) {
 		InitPlayer();
+		InitAsteroids();
+		InitShoots();
 	}
 	while (menu.inMenu) {
 		menu.lastInputMenu = EInputMenu::NONE;
 		InputMenu();
 		UpdateMenu();
 		DrawMenu();
-		
-	}
-
-	
+	}	
 }
 
 char GetAnyKeyPressedInMenu() { // Que devuelve según la tecla presionada
@@ -71,10 +73,10 @@ void UpdateMenu() { // Que hace cada estado
 	switch (menu.lastInputMenu)
 	{
 	case EInputMenu::PLAY:
-		menu.inMenu = false;
+		SetInMenu(false);
 		break;
 	case EInputMenu::EXIT:
-		game.gameOver = true;
+		SetIsGameClosed(true);
 		break;
 	case EInputMenu::NONE:
 		break;
@@ -82,8 +84,8 @@ void UpdateMenu() { // Que hace cada estado
 }
 
 void DrawMenu() {
-	menu.sprite.Location.x = game.screenCenter.x - (64/2);
-	menu.sprite.Location.y = game.screenCenter.y - 17;
+	menu.sprite.Location.x = GetScreenCenterX() - (64/2);
+	menu.sprite.Location.y = GetScreenCenterY() - 17;
 	
 	FASG::WriteSpriteBuffer(menu.sprite.Location.x, menu.sprite.Location.y, menu.sprite);
 	

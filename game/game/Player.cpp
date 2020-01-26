@@ -8,8 +8,11 @@
 
 Player player;
 
-extern Game game;
-extern Menu menu;
+float const MIN_TIEMPO_ENTRE_DISPAROS = 0.1f;
+int const NUMERO_DISPAROS_A_LA_VEZ = 5;
+Disparo disparo[NUMERO_DISPAROS_A_LA_VEZ];
+float coolDownBetweenShoots = 0.f;
+bool activeShoots[NUMERO_DISPAROS_A_LA_VEZ];
 
 char GetAnyKeyPressed();
 
@@ -18,16 +21,119 @@ void InitPlayer() {
 	player.sprite2.LoadSprite("Player_up.txt");
 	player.sprite3.LoadSprite("Player_down.txt");
 		
-	player.sprite1.Location.y = player.sprite2.Location.y = player.sprite3.Location.y = game.screenCenter.y;
-	player.sprite1.Location.x = player.sprite2.Location.x = player.sprite3.Location.x = game.screenCenter.x;
+	player.sprite1.Location.y = player.sprite2.Location.y = player.sprite3.Location.y = GetScreenCenterY();
+	player.sprite1.Location.x = player.sprite2.Location.x = player.sprite3.Location.x = GetScreenCenterX();
 
 	player.velocity = 70.f;
 	player.diagonalVelocity = player.velocity / (sqrt(2));
 
-	Sprite::AddToCollisionSystem(player.sprite1, "LA NAVE");
+	Sprite::AddToCollisionSystem(player.sprite1, "nave");
+
+	player.isDeath = false;
+	player.isDeathByOutside = false;
+	player.isDeadByCollisionWithAsteroid = false;
+	player.isDeadByShip = false;
+	player.lastInputPlayer = EInputPlayer::STILL;
 }
 
-char GetAnyKeyPressed(){ // Que devuelve según que tecla presionemos
+void disparos() {
+	if (coolDownBetweenShoots <= 0) {
+		coolDownBetweenShoots = MIN_TIEMPO_ENTRE_DISPAROS;
+		for (int i = 0; i < NUMERO_DISPAROS_A_LA_VEZ; i++) {
+			if (!activeShoots[i]) {
+				disparo[i].sprite.LoadSprite("Shoot.txt");
+				disparo[i].sprite.Location.x = player.sprite1.Location.x + 6;
+				disparo[i].sprite.Location.y = player.sprite1.Location.y+1;
+				disparo[i].shootSpeed = 100.f;
+				Sprite::AddToCollisionSystem(disparo[i].sprite, "disparo" + i);
+				activeShoots[i] = true;
+				break;
+			}
+		}
+	}
+	for (int i = 0; i < NUMERO_DISPAROS_A_LA_VEZ; i++) {
+		if (disparo[i].sprite.Location.y <= 0) {
+			activeShoots[i] = false;
+		}
+	}
+}
+
+void InitShoots() {
+	for (int i = 0; i < NUMERO_DISPAROS_A_LA_VEZ; i++) {
+		activeShoots[i] = false;
+		disparo[i].sprite.Location.y = rand() % 10000 + 100000;
+		disparo[i].sprite.Location.x = rand() % 10000 + 100000;
+	}
+}
+
+void MoveShoot() {
+	for (int i = 0; i < NUMERO_DISPAROS_A_LA_VEZ; i++) {
+		if (activeShoots[i]) {
+			disparo[i].sprite.Location.y -= disparo[i].shootSpeed * FASG::GetDeltaTime() * 0.5f;
+			if (disparo[i].sprite.Location.y >= GetScreenEndConsoleY()) {
+				disparo[i].sprite.Location.y = rand() % 10000 + 100000;
+				disparo[i].sprite.Location.x = rand() % 10000 + 100000;
+			}
+		}
+	}
+}
+
+void DrawShoots() {
+	for (int i = 0; i < NUMERO_DISPAROS_A_LA_VEZ; i++) {
+		if (activeShoots[i]) {
+			FASG::WriteSpriteBuffer(disparo[i].sprite.Location.x, disparo[i].sprite.Location.y, disparo[i].sprite);
+		}
+	}
+}
+
+void SetShootLocation(float x, float y, int number) {
+	disparo[number].sprite.Location.x = x;
+	disparo[number].sprite.Location.y = y;
+}
+
+// GETTERS
+bool IsPlayerDead() {
+	return player.isDeath;
+}
+
+bool IsPlayerDeadByGoOutsideScreen() {
+	return player.isDeathByOutside;
+}
+
+bool IsPlayerDeadByCollisionWithAsteroid() {
+	return player.isDeadByCollisionWithAsteroid;
+}
+
+bool IsPlayerDeadByShip() {
+	return player.isDeadByShip;
+}
+
+int GetMaxNumberOfShoots() {
+	return NUMERO_DISPAROS_A_LA_VEZ;
+}
+
+// SETTERS
+void SetPlayerDead(bool value) {
+	player.isDeath = value;
+}
+
+void SetPlayerDeadByGoOutsideScreen(bool value) {
+	player.isDeathByOutside = value;
+}
+
+void SetPlayerDeadByShip(bool value) {
+	player.isDeadByShip = value;
+}
+
+void SetPlayerDeadByCollisionWithAsteroid(bool value) {
+	player.isDeadByCollisionWithAsteroid = value;
+}
+
+void SetLastInputPlayer(EInputPlayer value) {
+	player.lastInputPlayer = value;
+}
+
+char GetAnyKeyPressed(){
 	if (FASG::IsKeyPressed('W') && FASG::IsKeyPressed('D')) {
 		return 'E';
 	}
@@ -60,7 +166,7 @@ char GetAnyKeyPressed(){ // Que devuelve según que tecla presionemos
 	}
 }
 
-void InputPlayer() { // Que estado genera según lo que recibe de la tecla presionada
+void InputPlayer() {
 	char key = GetAnyKeyPressed();
 
 	switch (key)
@@ -90,7 +196,7 @@ void InputPlayer() { // Que estado genera según lo que recibe de la tecla presio
 		player.lastInputPlayer = EInputPlayer::DOWN;
 		break;
 	case ' ':
-		player.lastInputPlayer = EInputPlayer::SHOOT;
+    	player.lastInputPlayer = EInputPlayer::SHOOT;
 		break;
 	default:
 		player.lastInputPlayer = EInputPlayer::STILL;
@@ -98,7 +204,8 @@ void InputPlayer() { // Que estado genera según lo que recibe de la tecla presio
 	}
 }
 
-void UpdatePlayer() { // Que hace cada estado 
+void UpdatePlayer() {
+	coolDownBetweenShoots -= FASG::GetDeltaTime();
 	switch (player.lastInputPlayer)
 	{
 	case EInputPlayer::UPRIGTH:
@@ -130,6 +237,7 @@ void UpdatePlayer() { // Que hace cada estado
 		player.sprite1.Location.x += player.velocity * FASG::GetDeltaTime();
 		break;
 	case EInputPlayer::SHOOT:
+		disparos();
 		break;
 	case EInputPlayer::STILL:
 		break;
@@ -141,17 +249,13 @@ void UpdatePlayer() { // Que hace cada estado
 	player.sprite3.Location.x = player.sprite1.Location.x;
 }
 
-void IsPlayerDeath() {
-	bool gameOver = false;
-	gameOver = GetGameOver();
-	
+void IsPlayerDeath() {	
 	if (player.lastInputPlayer == EInputPlayer::DEATH) {
-		menu.inMenu = true;
-		SetGameOver(gameOver);
+		SetInMenu(true);
 	}
 }
 
-void DrawPlayer(){ // Dibuja al jugador, diciendo posicion X e Y y el sprite a utilizar
+void DrawPlayer(){
 	
 	switch (player.lastInputPlayer)
 	{
@@ -164,5 +268,30 @@ void DrawPlayer(){ // Dibuja al jugador, diciendo posicion X e Y y el sprite a u
 	default:
 		FASG::WriteSpriteBuffer(player.sprite1.Location.x, player.sprite1.Location.y, player.sprite1);
 		break;
+	}
+}
+
+bool InMapRanged(int x, int y) {
+	if ((x >= 0) && (x < GetScreenEndConsoleX()) && (y >= 0) && (y < GetScreenEndConsoleY())) {
+		return true;
+	}
+	return false;
+}
+
+void Outside() {
+	if (!InMapRanged(player.sprite1.Location.x, player.sprite1.Location.y))
+	{
+		if (player.sprite1.Location.y <= 0) {
+			player.sprite1.Location.y = 1;
+		}
+		else {
+			player.sprite2.Location.y = player.sprite1.Location.y;
+			player.sprite2.Location.x = player.sprite1.Location.x;
+			player.sprite3.Location.y = player.sprite1.Location.y;
+			player.sprite3.Location.x = player.sprite1.Location.x;
+			SetPlayerDead(true); // USAR SETTER
+			SetPlayerDeadByGoOutsideScreen(true); // USAR SETTER
+			player.lastInputPlayer = EInputPlayer::DEATH;
+		}
 	}
 }

@@ -13,6 +13,15 @@ struct Player {
 	EInputPlayer lastInputPlayer;
 	float velocity;
 	float diagonalVelocity;
+	bool isDeath;
+	bool isDeathByOutside;
+	bool isDeadByCollisionWithAsteroid;
+	bool isDeadByShip;
+};
+
+struct Disparo{
+	FASG::Sprite sprite;
+	float shootSpeed;
 };
 
 void InitPlayer();
@@ -25,3 +34,23 @@ void DrawPlayer();
 
 void IsPlayerDeath();
 
+void DrawShoots();
+
+void MoveShoot();
+
+void InitShoots();
+
+// GETTERS Y SETTERS
+
+bool IsPlayerDead();
+bool IsPlayerDeadByGoOutsideScreen();
+bool IsPlayerDeadByCollisionWithAsteroid();
+bool IsPlayerDeadByShip();
+int GetMaxNumberOfShoots();
+
+void SetPlayerDead(bool value);
+void SetPlayerDeadByGoOutsideScreen(bool value);
+void SetPlayerDeadByShip(bool value);
+void SetPlayerDeadByCollisionWithAsteroid(bool value);
+void SetLastInputPlayer(EInputPlayer value);
+void SetShootLocation(float x, float y, int number);
