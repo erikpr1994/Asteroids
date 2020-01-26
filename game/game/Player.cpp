@@ -11,8 +11,8 @@ Player player;
 float const MIN_TIEMPO_ENTRE_DISPAROS = 0.1f;
 int const NUMERO_DISPAROS_A_LA_VEZ = 5;
 Disparo disparo[NUMERO_DISPAROS_A_LA_VEZ];
-float coolDownBetweenShoots = 0.f;
-bool activeShoots[NUMERO_DISPAROS_A_LA_VEZ];
+float coolDownBetweenDisparos = 0.f;
+bool disparosActivos[NUMERO_DISPAROS_A_LA_VEZ];
 
 char GetAnyKeyPressed();
 
@@ -29,6 +29,8 @@ void InitPlayer() {
 
 	Sprite::AddToCollisionSystem(player.sprite1, "nave");
 
+	player.life = 100.f;
+
 	player.isDeath = false;
 	player.isDeathByOutside = false;
 	player.isDeadByCollisionWithAsteroid = false;
@@ -37,30 +39,30 @@ void InitPlayer() {
 }
 
 void disparos() {
-	if (coolDownBetweenShoots <= 0) {
-		coolDownBetweenShoots = MIN_TIEMPO_ENTRE_DISPAROS;
+	if (coolDownBetweenDisparos <= 0) {
+		coolDownBetweenDisparos = MIN_TIEMPO_ENTRE_DISPAROS;
 		for (int i = 0; i < NUMERO_DISPAROS_A_LA_VEZ; i++) {
-			if (!activeShoots[i]) {
+			if (!disparosActivos[i]) {
 				disparo[i].sprite.LoadSprite("Shoot.txt");
 				disparo[i].sprite.Location.x = player.sprite1.Location.x + 6;
 				disparo[i].sprite.Location.y = player.sprite1.Location.y+1;
 				disparo[i].shootSpeed = 100.f;
 				Sprite::AddToCollisionSystem(disparo[i].sprite, "disparo" + i);
-				activeShoots[i] = true;
+				disparosActivos[i] = true;
 				break;
 			}
 		}
 	}
 	for (int i = 0; i < NUMERO_DISPAROS_A_LA_VEZ; i++) {
 		if (disparo[i].sprite.Location.y <= 0) {
-			activeShoots[i] = false;
+			disparosActivos[i] = false;
 		}
 	}
 }
 
 void InitShoots() {
 	for (int i = 0; i < NUMERO_DISPAROS_A_LA_VEZ; i++) {
-		activeShoots[i] = false;
+		disparosActivos[i] = false;
 		disparo[i].sprite.Location.y = rand() % 10000 + 100000;
 		disparo[i].sprite.Location.x = rand() % 10000 + 100000;
 	}
@@ -68,7 +70,7 @@ void InitShoots() {
 
 void MoveShoot() {
 	for (int i = 0; i < NUMERO_DISPAROS_A_LA_VEZ; i++) {
-		if (activeShoots[i]) {
+		if (disparosActivos[i]) {
 			disparo[i].sprite.Location.y -= disparo[i].shootSpeed * FASG::GetDeltaTime() * 0.5f;
 			if (disparo[i].sprite.Location.y >= GetScreenEndConsoleY()) {
 				disparo[i].sprite.Location.y = rand() % 10000 + 100000;
@@ -80,7 +82,7 @@ void MoveShoot() {
 
 void DrawShoots() {
 	for (int i = 0; i < NUMERO_DISPAROS_A_LA_VEZ; i++) {
-		if (activeShoots[i]) {
+		if (disparosActivos[i]) {
 			FASG::WriteSpriteBuffer(disparo[i].sprite.Location.x, disparo[i].sprite.Location.y, disparo[i].sprite);
 		}
 	}
@@ -112,6 +114,10 @@ int GetMaxNumberOfShoots() {
 	return NUMERO_DISPAROS_A_LA_VEZ;
 }
 
+float GetPlayerLife() {
+	return player.life;
+}
+
 // SETTERS
 void SetPlayerDead(bool value) {
 	player.isDeath = value;
@@ -131,6 +137,10 @@ void SetPlayerDeadByCollisionWithAsteroid(bool value) {
 
 void SetLastInputPlayer(EInputPlayer value) {
 	player.lastInputPlayer = value;
+}
+
+void SetPlayerLife(float number) {
+	player.life = number;
 }
 
 char GetAnyKeyPressed(){
@@ -205,7 +215,8 @@ void InputPlayer() {
 }
 
 void UpdatePlayer() {
-	coolDownBetweenShoots -= FASG::GetDeltaTime();
+	coolDownBetweenDisparos -= FASG::GetDeltaTime();
+
 	switch (player.lastInputPlayer)
 	{
 	case EInputPlayer::UPRIGTH:
@@ -249,7 +260,12 @@ void UpdatePlayer() {
 	player.sprite3.Location.x = player.sprite1.Location.x;
 }
 
-void IsPlayerDeath() {	
+void IsPlayerDeath() {
+	if (player.life <= 0.f) {
+		player.isDeadByShip = true;
+		SetLastInputPlayer(EInputPlayer::DEATH);
+	}
+
 	if (player.lastInputPlayer == EInputPlayer::DEATH) {
 		SetInMenu(true);
 	}

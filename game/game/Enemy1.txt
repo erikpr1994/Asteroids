@@ -1,0 +1,8 @@
+13,7
+D....DDD....D
+C...DDDDD...C
+D..DDDDDDD..D
+CDDD9DDD9DDDC
+D..DD999DD..D
+C...DD9DD...C
+D....DDD....D

@@ -26,9 +26,10 @@ void Asteroids() {
 		for (int i = 0; i < MAX_NUMBER_OF_ASTEROIDS; i++) {
 			if(!activeAsteroids[i]){
 				asteroid[i].sprite.LoadSprite("Asteroid.txt");
-				asteroid[i].sprite.Location.x = rand()% (GetScreenEndConsoleX ()-10)+10;
+				asteroid[i].sprite.Location.x = rand()% (GetScreenEndConsoleX ()-10);
 				asteroid[i].sprite.Location.y = GetZoneSpawnY();
 				asteroid[i].currentSpeed = rand()%30+20;
+				asteroid[i].puntuation = asteroid[i].currentSpeed / 10;
 				Sprite::AddToCollisionSystem(asteroid[i].sprite, "asteroid"+i);
 				activeAsteroids[i] = true;
 				break;
@@ -69,4 +70,8 @@ int GetMaxNumberOfAsteroids() {
 void SetAsteroidLocation(float x, float y, int number) {
 	asteroid[number].sprite.Location.x = x;
 	asteroid[number].sprite.Location.y = y;
+}
+
+float GetAsteroidDeadPuntuation(int number) {
+	return asteroid[number].puntuation;
 }

@@ -5,6 +5,8 @@
 #include "Player.h"
 #include "Asteroid.h"
 #include "Menu.h"
+#include "Stars.h"
+#include "Enemies.h"
 #include <conio.h>
 
 Game game;
@@ -17,8 +19,6 @@ void MiColision(std::string tag1, std::string tag2);
 void DrawHUD();
 void paintDeath();
 
-std::string HUDMessage;
-
 // Todo el tema de gameOver cambiarlo a nombre de ExitGame
 bool GetIsGameClosed() {
 	return game.isGameClosed;
@@ -28,11 +28,25 @@ void SetIsGameClosed(bool value) {
 	game.isGameClosed = value;
 }
 
+float GetPuntuation() {
+	return game.puntuacion;
+}
+
+void UpdatePuntuation() {
+	float puntuation = GetPuntuation();
+	puntuation += FASG::GetDeltaTime()*0.1f;
+	SetPuntuation(puntuation);
+}
+
+void SetPuntuation(float value) {
+	game.puntuacion = value;
+}
+
 void InitGame() {
     srand((unsigned)time(NULL)); // Necesario para hacer el mapa y mostrar las "piedras"
     FASG::InitConsole(game.CONSOLE_WIDTH, game.CONSOLE_HEIGHT);
 	FASG::ShowConsoleCursor(false);
-	//FASG::SetFontSizeRatio(FASG::ConsoleFontRatios::_8x8);
+	// FASG::SetFontSizeRatio(FASG::ConsoleFontRatios::_8x8);
     CalcConsoleCenter();
 	SetIsGameClosed(false);
 
@@ -42,19 +56,27 @@ void InitGame() {
 	
 	Sprite::SetCollisionCallback(MiColision);
 
-    while (!GetIsGameClosed()) {
+	while (!GetIsGameClosed()) {
 		ShowMenu();
 		Outside();
 		IsPlayerDeath();
 
 		InputPlayer();
 		UpdatePlayer();
-        DrawPlayer();
+		DrawPlayer();
 		Asteroids();
 		MoveAsteroid();
 		DrawAsteroid();
+		Enemies();
+		MoveEnemies();
+		DrawEnemies();
+		MoveEnemyShoots();
+		DrawEnemyShoots();
 		MoveShoot();
 		DrawShoots();
+		MoveStars();
+		DrawStars();
+		UpdatePuntuation();
 		DrawHUD();
 
 		FASG::RenderFrame();
@@ -71,10 +93,11 @@ void InitGame() {
 					SetPlayerDeadByCollisionWithAsteroid(false);
 					SetPlayerDeadByGoOutsideScreen(false);
 					SetPlayerDeadByShip(false);
+					SetPuntuation(0);
 				}
 			}
 		}
-    }
+	} 
 }
 
 
@@ -154,15 +177,50 @@ void MiColision(std::string tag1, std::string tag2) {
 			if (tag1 == "asteroid" + i && tag2 == "disparo"+j || tag1 == "disparo"+j && tag2 == "asteroid" + i) {
 				SetAsteroidLocation(9452, 9452, i);
 				SetShootLocation(-8000, -8000, j);
+				float puntuation = GetPuntuation() + GetAsteroidDeadPuntuation(i);
+				SetPuntuation(puntuation);
 			}
 		}
+	}
+
+	for (int i = 0; i < GetMaxNumberOfEnemies(); i++) {
+		for (int j = 0; j < GetMaxNumberOfShoots(); j++) {
+			if (tag1 == "enemy" + i && tag2 == "disparo" + j || tag1 == "disparo" + j && tag2 == "enemy" + i) {
+				SetEnemyLocation(9452, 9452, i);
+				SetShootLocation(-8000, -8000, j);
+				float puntuation = GetPuntuation() + GetEnemyPoints(i);
+				SetPuntuation(puntuation);
+				SetCoolDownBetweenShoots(5.f);
+			}
+		}
+	}
+
+	for (int i = 0; i < GetMaxNumberOfEnemiesShoots(); i++) {
+		for(int j = 0; j < GetMaxNumberOfEnemies();j++){
+			int shipWhoShoot = getWhoShoot(i, j);
+			if (tag1 == "nave" && tag2 == "enemyShoot" + i || tag1 == "enemyShoot" + i && tag2 == "nave") {
+			switch (shipWhoShoot)
+				{
+				case 0:
+					SetPlayerLife(GetPlayerLife() - GetDamage(0));
+					break;
+				case 1:
+					SetPlayerLife(GetPlayerLife() - GetDamage(1));
+					break;
+				case 2:
+					SetPlayerLife(GetPlayerLife() - GetDamage(2));
+					break;
+				}
+				SetShootEnemyLocation(8000, 8000, i);
+			}
+		}
+		break;
 	}
 }
 
 // Lo queremos mostrar así o diferente?
 void DrawHUD()
 {
-	FASG::WriteStringBuffer(0, 0, "FPS: " + std::to_string(1 / FASG::GetDeltaTime()), FASG::EForeColor::LightRed);
-
-	FASG::WriteStringBuffer(GetScreenCenterY(), FASG::EAligned::CENTER, HUDMessage, EForeColor::Green);
+	FASG::WriteStringBuffer(0, 0, "Puntuacion: " + std::to_string(GetPuntuation()), FASG::EForeColor::LightRed);
+	FASG::WriteStringBuffer(0, 1, "Vida: " + std::to_string(GetPlayerLife()), FASG::EForeColor::LightRed);
 }

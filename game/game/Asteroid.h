@@ -5,6 +5,7 @@ struct Asteroid {
 	FASG::Sprite sprite;
 
 	float currentSpeed;
+	float puntuation;
 };
 
 void Asteroids();
@@ -22,3 +23,5 @@ void InitAsteroids();
 int GetMaxNumberOfAsteroids();
 
 void SetAsteroidLocation(float x, float y, int number);
+
+float GetAsteroidDeadPuntuation(int number);

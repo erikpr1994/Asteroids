@@ -8,7 +8,7 @@ struct Game {
 	bool isGameClosed = false;
 	Vector2 screenCenter;
 	Vector2 zoneSpawn;
-
+	float puntuacion;
 	float gravity = 10.f;
 };
 
@@ -29,3 +29,5 @@ int GetScreenEndConsoleY();
 int GetScreenStartConsoleY();
 int GetZoneSpawnX();
 int GetZoneSpawnY();
+float GetPuntuation();
+void SetPuntuation(float value);

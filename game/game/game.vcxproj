@@ -150,17 +150,21 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Asteroid.cpp" />
+    <ClCompile Include="Enemies.cpp" />
     <ClCompile Include="Engine.cpp" />
     <ClCompile Include="game.cpp" />
     <ClCompile Include="Menu.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="Stars.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Asteroid.h" />
+    <ClInclude Include="Enemies.h" />
     <ClInclude Include="Engine.h" />
     <ClInclude Include="FAriasSimpleGraphics.h" />
     <ClInclude Include="Menu.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="Stars.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Asteroid.txt" />

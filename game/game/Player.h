@@ -13,6 +13,8 @@ struct Player {
 	EInputPlayer lastInputPlayer;
 	float velocity;
 	float diagonalVelocity;
+	float life;
+
 	bool isDeath;
 	bool isDeathByOutside;
 	bool isDeadByCollisionWithAsteroid;
@@ -54,3 +56,5 @@ void SetPlayerDeadByShip(bool value);
 void SetPlayerDeadByCollisionWithAsteroid(bool value);
 void SetLastInputPlayer(EInputPlayer value);
 void SetShootLocation(float x, float y, int number);
+void SetPlayerLife(float life);
+float GetPlayerLife();

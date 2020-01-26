@@ -3,6 +3,8 @@
 #include "Engine.h"
 #include "Asteroid.h"
 #include "Player.h"
+#include "Stars.h"
+#include "Enemies.h"
 
 Menu menu;
 
@@ -34,6 +36,9 @@ void ShowMenu() {;
 		InitPlayer();
 		InitAsteroids();
 		InitShoots();
+		InitStars();
+		InitEnemies();
+		InitEnemyShoots();
 	}
 	while (menu.inMenu) {
 		menu.lastInputMenu = EInputMenu::NONE;
@@ -76,6 +81,7 @@ void UpdateMenu() { // Que hace cada estado
 		SetInMenu(false);
 		break;
 	case EInputMenu::EXIT:
+		SetInMenu(false);
 		SetIsGameClosed(true);
 		break;
 	case EInputMenu::NONE:
