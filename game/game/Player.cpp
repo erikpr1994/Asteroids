@@ -1,6 +1,7 @@
 #include "FAriasSimpleGraphics.h"
 #include "Player.h"
 #include "Engine.h"
+#include "Menu.h"
 
 #include <iostream>
 #include <conio.h>
@@ -8,6 +9,7 @@
 Player player;
 
 extern Game game;
+extern Menu menu;
 
 char GetAnyKeyPressed();
 
@@ -22,7 +24,7 @@ void InitPlayer() {
 	player.velocity = 70.f;
 	player.diagonalVelocity = player.velocity / (sqrt(2));
 
-	Sprite::AddToCollisionSystem(player.sprite1, " La nave");
+	Sprite::AddToCollisionSystem(player.sprite1, "LA NAVE");
 }
 
 char GetAnyKeyPressed(){ // Que devuelve según que tecla presionemos
@@ -144,7 +146,7 @@ void IsPlayerDeath() {
 	gameOver = GetGameOver();
 	
 	if (player.lastInputPlayer == EInputPlayer::DEATH) {
-		gameOver = true;
+		menu.inMenu = true;
 		SetGameOver(gameOver);
 	}
 }

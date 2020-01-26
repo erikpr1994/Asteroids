@@ -1,6 +1,8 @@
 #include "Menu.h"
 #include "FAriasSimpleGraphics.h"
 #include "Engine.h"
+#include "Asteroid.h"
+#include "Player.h"
 
 Menu menu;
 
@@ -25,19 +27,26 @@ void InitMenu() {
 }
 
 void ShowMenu() {
+	if (menu.inMenu) {
+		InitPlayer();
+	}
 	while (menu.inMenu) {
+		menu.lastInputMenu = EInputMenu::NONE;
 		InputMenu();
 		UpdateMenu();
 		DrawMenu();
+		
 	}
+
+	
 }
 
 char GetAnyKeyPressedInMenu() { // Que devuelve según la tecla presionada
-	if (FASG::IsKeyPressed('A')) {
-		return 'A';
+	if (FASG::IsKeyPressed('Z')) {
+		return 'Z';
 	}
-	if (FASG::IsKeyPressed('S')) {
-		return 'S';
+	if (FASG::IsKeyPressed('X')) {
+		return 'X';
 	}
 	else {
 		return '\0';
@@ -49,10 +58,10 @@ void InputMenu() { // Que estado genera según lo que recibe de la tecla presiona
 
 	switch (key)
 	{
-	case 'A':
+	case 'Z':
 		menu.lastInputMenu = EInputMenu::PLAY;
 		break;
-	case 'S':
+	case 'X':
 		menu.lastInputMenu = EInputMenu::EXIT;
 		break;
 	}

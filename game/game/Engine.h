@@ -19,5 +19,3 @@ void SetGameOver(bool gameOver);
 void InitGame();
 
 void EndGame();
-
-void GravityForce();

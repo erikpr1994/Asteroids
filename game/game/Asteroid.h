@@ -4,14 +4,17 @@
 struct Asteroid {
 	FASG::Sprite sprite;
 
-	float currentSpeed = 2.f;
+	float currentSpeed;
 };
 
-void InitAsteroid();
+void Asteroids();
 
-void CreateAsteroid();
+//void CreateAsteroid();
 
 void MoveAsteroid();
 
 void DrawAsteroid();
 
+//void GravityForce();
+
+void InitAsteroids();

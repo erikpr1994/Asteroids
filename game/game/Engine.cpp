@@ -9,6 +9,11 @@
 
 Game game;
 
+bool isDeath = false;
+bool isDeathByOutside = false;
+bool isDeathByChoqueConAsteroide = false;
+bool isDeathByNaveCabrona = false;
+
 extern Player player;
 extern Asteroid asteroid;
 
@@ -18,10 +23,11 @@ bool InMapRanged(int x, int y);
 void Outside();
 void MiColision(std::string tag1, std::string tag2);
 void DrawHUD();
-
+void paintDeath();
 
 std::string HUDMessage;
 
+// Todo el tema de gameOver cambiarlo a nombre de ExitGame
 bool GetGameOver() {
 	return game.gameOver;
 }
@@ -38,31 +44,43 @@ void InitGame() {
     GetConsoleCenter();
 
 	InitMenu();
-	ShowMenu();
-	// para la portada*********************************************************
 
 	ZoneSpawn();
-	InitAsteroid();
-    InitPlayer();
 	
 	Sprite::SetCollisionCallback(MiColision);
 
     while (!game.gameOver) {
+		ShowMenu();
 		Outside();
 		IsPlayerDeath();
+
 		InputPlayer();
 		UpdatePlayer();
         DrawPlayer();
+		Asteroids();
+		MoveAsteroid();
 		DrawAsteroid();
 		DrawHUD();
 
-		/*
-		while (_kbhit > 0)
-			_getch();
-		*/
+		FASG::RenderFrame();
 
-        FASG::RenderFrame();
+		while (isDeath) {
+			paintDeath();
+			InitAsteroids();
+
+			FASG::RenderFrame();
+			while (_kbhit()){
+				_getch();
+
+				if(FASG::IsKeyDown(' ')){
+					isDeath = false;
+					isDeathByOutside = false;
+					isDeathByChoqueConAsteroide = false;
+				}
+			}
+		}
     }
+
 }
 
 
@@ -81,51 +99,49 @@ void ZoneSpawn() {
 }
 
 bool InMapRanged(int x, int y) {
-	if ((x >= 0) && (x < game.CONSOLE_WIDTH) && (y >= 0) && (y < game.CONSOLE_HEIGHT)) {
+	if ((x >= 0) && (x < game.CONSOLE_WIDTH-13) && (y >= 0) && (y < game.CONSOLE_HEIGHT-7)) {
 		return true;
 	}
 	return false;
 }
 
 void Outside() {
-	if (!InMapRanged(player.sprite1.Location.x, player.sprite1.Location.y + 1))
+	if (!InMapRanged(player.sprite1.Location.x, player.sprite1.Location.y))
 	{
-		if (player.sprite1.Location.y >= game.CONSOLE_HEIGHT - 1) {
-			FASG::WriteStringBuffer(game.CONSOLE_HEIGHT * 0.5f - 5, FASG::EAligned::CENTER, "GAME OVER", FASG::EForeColor::LightRed);
-			FASG::WriteStringBuffer(game.CONSOLE_HEIGHT * 0.5f - 4, FASG::EAligned::CENTER, "presiona cualquier tecla para salir", FASG::EForeColor::LightCyan);
-
+		if (player.sprite1.Location.y <= 0) {
+			player.sprite1.Location.y = 1;
+		}
+		else {
+			player.sprite2.Location.y = player.sprite1.Location.y;
+			player.sprite2.Location.x = player.sprite1.Location.x;
+			player.sprite3.Location.y = player.sprite1.Location.y;
+			player.sprite3.Location.x = player.sprite1.Location.x;
+			isDeath = true;
+			isDeathByOutside = true;
 			player.lastInputPlayer = EInputPlayer::DEATH;
 		}
-		if (player.sprite1.Location.y <= game.CONSOLE_HEIGHT - 1) {
-			FASG::WriteStringBuffer(game.CONSOLE_HEIGHT * 0.5f - 5, FASG::EAligned::CENTER, "GAME OVER", FASG::EForeColor::LightRed);
-			FASG::WriteStringBuffer(game.CONSOLE_HEIGHT * 0.5f - 4, FASG::EAligned::CENTER, "presiona cualquier tecla para salir", FASG::EForeColor::LightCyan);
+	}
+}
 
-			player.lastInputPlayer = EInputPlayer::DEATH;
-		}
-		if (player.sprite1.Location.x >= game.CONSOLE_WIDTH - 1) {
-			FASG::WriteStringBuffer(game.CONSOLE_HEIGHT * 0.5f - 5, FASG::EAligned::CENTER, "GAME OVER", FASG::EForeColor::LightRed);
-			FASG::WriteStringBuffer(game.CONSOLE_HEIGHT * 0.5f - 4, FASG::EAligned::CENTER, "presiona cualquier tecla para salir", FASG::EForeColor::LightCyan);
-
-			player.lastInputPlayer = EInputPlayer::DEATH;
-		}
-		if (player.sprite1.Location.x <= game.CONSOLE_WIDTH - 1) {
-			FASG::WriteStringBuffer(game.CONSOLE_HEIGHT * 0.5f - 5, FASG::EAligned::CENTER, "GAME OVER", FASG::EForeColor::LightRed);
-			FASG::WriteStringBuffer(game.CONSOLE_HEIGHT * 0.5f - 4, FASG::EAligned::CENTER, "presiona cualquier tecla para salir", FASG::EForeColor::LightCyan);
-
-			player.lastInputPlayer = EInputPlayer::DEATH;
-		}
-
-		player.sprite2.Location.y = player.sprite1.Location.y;
-		player.sprite2.Location.x = player.sprite1.Location.x;
-		player.sprite3.Location.y = player.sprite1.Location.y;
-		player.sprite3.Location.x = player.sprite1.Location.x;
+void paintDeath() {
+	if (isDeathByOutside) {
+		FASG::WriteStringBuffer(game.CONSOLE_HEIGHT * 0.5f - 5, FASG::EAligned::CENTER, "GAME OVER: Te has salido de la pantalla", FASG::EForeColor::LightRed);
+		FASG::WriteStringBuffer(game.CONSOLE_HEIGHT * 0.5f - 4, FASG::EAligned::CENTER, "PRESIONA ESPACIO PARA VOLVER AL MENU", FASG::EForeColor::LightCyan);
+	}
+	if (isDeathByChoqueConAsteroide) {
+		FASG::WriteStringBuffer(game.CONSOLE_HEIGHT * 0.5f - 5, FASG::EAligned::CENTER, "GAME OVER: Te has chocado con un meteorito", FASG::EForeColor::LightRed);
+		FASG::WriteStringBuffer(game.CONSOLE_HEIGHT * 0.5f - 4, FASG::EAligned::CENTER, "PRESIONA 2 VECES ESPACIO PARA VOLVER AL MENU", FASG::EForeColor::LightCyan);
+	}
+	if(isDeathByNaveCabrona){
+		FASG::WriteStringBuffer(game.CONSOLE_HEIGHT * 0.5f - 5, FASG::EAligned::CENTER, "GAME OVER: Una nave te ha matado", FASG::EForeColor::LightRed);
+		FASG::WriteStringBuffer(game.CONSOLE_HEIGHT * 0.5f - 4, FASG::EAligned::CENTER, "PRESIONA ESPACIO PARA VOLVER AL MENU", FASG::EForeColor::LightCyan);
 	}
 }
 
 void MiColision(std::string tag1, std::string tag2) {
+	isDeath = true;
+	isDeathByChoqueConAsteroide = true;
 	player.lastInputPlayer = EInputPlayer::DEATH;
-	HUDMessage = tag1 + " ha colisionado con " + tag2;
-
 }
 
 void DrawHUD()
@@ -138,8 +154,3 @@ void DrawHUD()
 	HUDMessage = "";
 }
 
-void GravityForce()
-{
-	asteroid.currentSpeed += game.gravity * FASG::GetDeltaTime();
-	asteroid.sprite.Location.y += asteroid.currentSpeed * FASG::GetDeltaTime() * 0.5f;
-}
