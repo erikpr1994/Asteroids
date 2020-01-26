@@ -24,3 +24,4 @@ void UpdatePlayer();
 void DrawPlayer();
 
 void IsPlayerDeath();
+

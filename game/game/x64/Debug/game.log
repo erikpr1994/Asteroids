@@ -1,1 +1,16 @@
-﻿  game.vcxproj -> F:\IFP\GitHub\Actividad2\game\x64\Debug\game.exe
+﻿  Engine.cpp
+F:\IFP\GitHub\Actividad2\game\game\Engine.cpp(74,46): warning C4244: '=': conversión de 'double' a 'float'; posible pérdida de datos
+F:\IFP\GitHub\Actividad2\game\game\Engine.cpp(75,47): warning C4244: '=': conversión de 'double' a 'float'; posible pérdida de datos
+F:\IFP\GitHub\Actividad2\game\game\Engine.cpp(79,58): warning C4244: '=': conversión de 'int' a 'float'; posible pérdida de datos
+F:\IFP\GitHub\Actividad2\game\game\Engine.cpp(91,72): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
+F:\IFP\GitHub\Actividad2\game\game\Engine.cpp(91,42): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
+F:\IFP\GitHub\Actividad2\game\game\Engine.cpp(94,55): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
+F:\IFP\GitHub\Actividad2\game\game\Engine.cpp(95,55): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
+F:\IFP\GitHub\Actividad2\game\game\Engine.cpp(100,55): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
+F:\IFP\GitHub\Actividad2\game\game\Engine.cpp(101,55): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
+F:\IFP\GitHub\Actividad2\game\game\Engine.cpp(106,55): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
+F:\IFP\GitHub\Actividad2\game\game\Engine.cpp(107,55): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
+F:\IFP\GitHub\Actividad2\game\game\Engine.cpp(111,55): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
+F:\IFP\GitHub\Actividad2\game\game\Engine.cpp(112,55): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
+F:\IFP\GitHub\Actividad2\game\game\Engine.cpp(140,43): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
+  game.vcxproj -> F:\IFP\GitHub\Actividad2\game\x64\Debug\game.exe
