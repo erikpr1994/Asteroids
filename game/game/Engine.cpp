@@ -191,6 +191,7 @@ void MiColision(std::string tag1, std::string tag2) {
 				float puntuation = GetPuntuation() + GetEnemyPoints(i);
 				SetPuntuation(puntuation);
 				SetCoolDownBetweenShoots(5.f);
+				SetActiveEnemies(i, false);
 			}
 		}
 	}

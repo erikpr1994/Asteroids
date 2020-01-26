@@ -31,3 +31,4 @@ int GetMaxNumberOfEnemies();
 void SetEnemyLocation(float x, float y, int number);
 float GetEnemyPoints(int number);
 void SetCoolDownBetweenShoots(float number);
+void SetActiveEnemies(int number, bool life);

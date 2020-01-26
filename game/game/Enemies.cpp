@@ -95,6 +95,10 @@ void Enemies() {
 	EnemiesShoots();
 }
 
+void SetActiveEnemies(int number, bool life) {
+	activeEnemies[number] = life;
+}
+
 int SetSpriteRandomlyAndReturnType(int number) {
 	int spriteType = rand() % 3;
 	switch (spriteType) {
