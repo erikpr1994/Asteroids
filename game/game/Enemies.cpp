@@ -8,7 +8,7 @@ float coolDownBetweenEnemies = 0.f;
 Enemy enemy[MAX_NUMBER_ENEMIES];
 bool activeEnemies[MAX_NUMBER_ENEMIES];
 
-int const NUMERO_DISPAROS_A_LA_VEZ_MAX = 2;
+int const NUMERO_DISPAROS_A_LA_VEZ_MAX = 10;
 Shoot shoot[NUMERO_DISPAROS_A_LA_VEZ_MAX];
 float TIEMPO_ENTRE_DISPAROS = 0.1f;
 float coolDownBetweenShoots = 5.f;
@@ -44,7 +44,8 @@ void InitEnemies() {
 		activeEnemies[i] = false;
 		enemy[i].sprite.Location.y = rand() % 10000 + 100000;
 		enemy[i].sprite.Location.x = rand() % 10000 + 100000;
-		coolDownBetweenShoots = 5.f;
+		coolDownBetweenShoots = 10.f;
+		coolDownBetweenEnemies = 5.f;
 	}
 }
 
