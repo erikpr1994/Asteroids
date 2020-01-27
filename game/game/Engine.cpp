@@ -42,6 +42,15 @@ void SetPuntuation(float value) {
 	game.puntuacion = value;
 }
 
+bool gameSongLoaded = false;
+bool gameSongPlay = false;
+
+FASG::MIDISound gameSong;
+
+FASG::MIDISound deathSong;
+bool gameDeathSongLoaded = false;
+bool gameDeathSongPlay = false;
+
 void InitGame() {
     srand((unsigned)time(NULL)); // Necesario para hacer el mapa y mostrar las "piedras"
     FASG::InitConsole(game.CONSOLE_WIDTH, game.CONSOLE_HEIGHT);
@@ -58,6 +67,15 @@ void InitGame() {
 
 	while (!GetIsGameClosed()) {
 		ShowMenu();
+		if (!gameSongLoaded) {
+			gameSong.LoadSound("SWM.mid");
+			gameSongLoaded = true;
+		}
+		if (!gameSongPlay) {
+			gameSong.Play();
+			gameSongPlay = true;
+		}
+
 		Outside();
 		IsPlayerDeath();
 
@@ -82,6 +100,15 @@ void InitGame() {
 		FASG::RenderFrame();
 
 		while (IsPlayerDead()) {
+ 			gameSong.Stop();
+			gameSongPlay = false;
+			if (!gameDeathSongLoaded) {
+				deathSong.LoadSound("SWIM.mid");
+			}
+			if (!gameDeathSongPlay) {
+				deathSong.Play();
+			}
+
 			paintDeath();
 			
 			FASG::RenderFrame();
@@ -94,12 +121,13 @@ void InitGame() {
 					SetPlayerDeadByGoOutsideScreen(false);
 					SetPlayerDeadByShip(false);
 					SetPuntuation(0);
+					deathSong.Stop();
+					gameDeathSongPlay = false;
 				}
 			}
 		}
-	} 
+	}
 }
-
 
 void EndGame() {
     FASG::DestroyConsole();
@@ -150,16 +178,23 @@ void ZoneSpawn() {
 
 void paintDeath() {
 	if (IsPlayerDeadByGoOutsideScreen()) {
-		FASG::WriteStringBuffer(GetScreenEndConsoleY() * 0.5f - 5, FASG::EAligned::CENTER, "GAME OVER: Te has perdido en el espacio", FASG::EForeColor::LightRed);
-		FASG::WriteStringBuffer(GetScreenEndConsoleY() * 0.5f - 4, FASG::EAligned::CENTER, "PRESIONA ESPACIO PARA VOLVER AL MENU", FASG::EForeColor::LightCyan);
+		FASG::WriteStringBuffer(GetScreenEndConsoleY() * 0.5f - 5, FASG::EAligned::CENTER, "GAME OVER", FASG::EForeColor::LightRed);
+		FASG::WriteStringBuffer(GetScreenEndConsoleY() * 0.5f - 4, FASG::EAligned::CENTER, "Te has perdido en el espacio", FASG::EForeColor::LightRed);
+		FASG::WriteStringBuffer(GetScreenEndConsoleY() * 0.5f - 2, FASG::EAligned::CENTER, "PUNTUACION FINAL: " + std::to_string(GetPuntuation()), FASG::EForeColor::LightYellow);
+		FASG::WriteStringBuffer(GetScreenEndConsoleY() * 0.5f, FASG::EAligned::CENTER, "PRESIONA ESPACIO PARA VOLVER AL MENU", FASG::EForeColor::LightCyan);
+
 	}
 	if (IsPlayerDeadByCollisionWithAsteroid()) {
-		FASG::WriteStringBuffer(GetScreenEndConsoleY() * 0.5f - 5, FASG::EAligned::CENTER, "GAME OVER: Te has chocado con un meteorito", FASG::EForeColor::LightRed);
-		FASG::WriteStringBuffer(GetScreenEndConsoleY() * 0.5f - 4, FASG::EAligned::CENTER, "PRESIONA 2 VECES ESPACIO PARA VOLVER AL MENU", FASG::EForeColor::LightCyan);
+		FASG::WriteStringBuffer(GetScreenEndConsoleY() * 0.5f - 5, FASG::EAligned::CENTER, "GAME OVER", FASG::EForeColor::LightRed);
+		FASG::WriteStringBuffer(GetScreenEndConsoleY() * 0.5f - 4, FASG::EAligned::CENTER, "Te has chocado con un meteorito", FASG::EForeColor::LightRed);
+		FASG::WriteStringBuffer(GetScreenEndConsoleY() * 0.5f - 2, FASG::EAligned::CENTER, "PUNTUACION FINAL: " + std::to_string(GetPuntuation()), FASG::EForeColor::LightYellow);
+		FASG::WriteStringBuffer(GetScreenEndConsoleY() * 0.5f, FASG::EAligned::CENTER, "PRESIONA ESPACIO PARA VOLVER AL MENU", FASG::EForeColor::LightCyan);
 	}
- 	if(IsPlayerDeadByShip()){
-		FASG::WriteStringBuffer(GetScreenEndConsoleY() * 0.5f - 5, FASG::EAligned::CENTER, "GAME OVER: Una nave te ha destruido", FASG::EForeColor::LightRed);
-		FASG::WriteStringBuffer(GetScreenEndConsoleY() * 0.5f - 4, FASG::EAligned::CENTER, "PRESIONA ESPACIO PARA VOLVER AL MENU", FASG::EForeColor::LightCyan);
+	if (IsPlayerDeadByShip()) {
+		FASG::WriteStringBuffer(GetScreenEndConsoleY() * 0.5f - 5, FASG::EAligned::CENTER, "GAME OVER", FASG::EForeColor::LightRed);
+		FASG::WriteStringBuffer(GetScreenEndConsoleY() * 0.5f - 4, FASG::EAligned::CENTER, "Una nave te ha destruido", FASG::EForeColor::LightRed);
+		FASG::WriteStringBuffer(GetScreenEndConsoleY() * 0.5f - 2, FASG::EAligned::CENTER, "PUNTUACION FINAL: " + std::to_string(GetPuntuation()), FASG::EForeColor::LightYellow);
+		FASG::WriteStringBuffer(GetScreenEndConsoleY() * 0.5f, FASG::EAligned::CENTER, "PRESIONA ESPACIO PARA VOLVER AL MENU", FASG::EForeColor::LightCyan);
 	}
 }
 
@@ -168,6 +203,7 @@ void MiColision(std::string tag1, std::string tag2) {
 		if(tag1 == "asteroid"+i && tag2 == "nave" || tag1 == "nave" && tag2 == "asteroid"+i){
 			SetPlayerDead(true);
 			SetPlayerDeadByCollisionWithAsteroid(true);
+			SetAsteroidLocation(9452, 9452, i);
 			SetLastInputPlayer(EInputPlayer::DEATH);
 		}
 	}
@@ -198,30 +234,44 @@ void MiColision(std::string tag1, std::string tag2) {
 
 	for (int i = 0; i < GetMaxNumberOfEnemiesShoots(); i++) {
 		for(int j = 0; j < GetMaxNumberOfEnemies();j++){
-			int shipWhoShoot = getWhoShoot(i, j);
 			if (tag1 == "nave" && tag2 == "enemyShoot" + i || tag1 == "enemyShoot" + i && tag2 == "nave") {
-			switch (shipWhoShoot)
+				int shipWhoShoot = getWhoShoot(i, j);
+				switch (shipWhoShoot)
 				{
 				case 0:
 					SetPlayerLife(GetPlayerLife() - GetDamage(0));
+					SetShootEnemyLocation(8000, 8000, i);
 					break;
 				case 1:
 					SetPlayerLife(GetPlayerLife() - GetDamage(1));
+					SetShootEnemyLocation(8000, 8000, i);
 					break;
 				case 2:
 					SetPlayerLife(GetPlayerLife() - GetDamage(2));
+					SetShootEnemyLocation(8000, 8000, i);
 					break;
 				}
-				SetShootEnemyLocation(8000, 8000, i);
+			}
+		} 
+	}
+
+	for (int i = 0; i < GetMaxNumberOfEnemies(); i++) {
+		for(int j = 0; j<GetMaxNumberOfEnemies();j++){
+			if (tag1 == "enemy" + i && tag2 == "enemy" + j) {
+				float velocidad = GetEnemySpeed(i);
+				float movimientoX = velocidad * FASG::GetDeltaTime();
+				MoveEnemyIfCollision(movimientoX, i);
 			}
 		}
-		break;
 	}
 }
 
 // Lo queremos mostrar así o diferente?
 void DrawHUD()
 {
-	FASG::WriteStringBuffer(0, 0, "Puntuacion: " + std::to_string(GetPuntuation()), FASG::EForeColor::LightRed);
-	FASG::WriteStringBuffer(0, 1, "Vida: " + std::to_string(GetPlayerLife()), FASG::EForeColor::LightRed);
+	FASG::WriteStringBuffer(game.CONSOLE_WIDTH - 24, game.CONSOLE_HEIGHT - 7, "PUNTUACION: " + std::to_string(GetPuntuation()), FASG::EForeColor::LightRed);
+	FASG::WriteStringBuffer(game.CONSOLE_WIDTH - 22, game.CONSOLE_HEIGHT - 5, "ESCUDO: " + std::to_string(GetPlayerLife()), FASG::EForeColor::LightYellow);
+
+	FASG::WriteStringBuffer(5, game.CONSOLE_HEIGHT - 7, "MOVIMIENTO: W A S D", FASG::EForeColor::LightBlue);
+	FASG::WriteStringBuffer(5, game.CONSOLE_HEIGHT - 5, "DISPARAR: ESPACIO", FASG::EForeColor::LightBlue);
 }

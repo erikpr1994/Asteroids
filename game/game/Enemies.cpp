@@ -17,6 +17,7 @@ int whoShoot[NUMERO_DISPAROS_A_LA_VEZ_MAX][MAX_NUMBER_ENEMIES];
 
 int SetSpriteRandomlyAndReturnType(int number);
 void EnemiesShoots();
+bool InMapRange(int x, int y);
 
 int getWhoShoot(int number, int ship) {
 	return whoShoot[number][ship];
@@ -119,6 +120,13 @@ int SetSpriteRandomlyAndReturnType(int number) {
 	}
 }
 
+bool InMapRange(int x, int y) {
+	if ((x >= 0) && (x < GetScreenEndConsoleX() - 15) && (y >= 0) && (y < GetScreenEndConsoleY() - 7)) {
+		return true;
+	}
+	return false;
+}
+
 void MoveEnemies() {
 	for (int i = 0; i < MAX_NUMBER_ENEMIES; i++) {
 		int movimiento = rand() % 4;
@@ -128,18 +136,15 @@ void MoveEnemies() {
 			switch (movimiento)
 			{
 			case 0:
-				enemy[i].sprite.Location.x += FASG::GetDeltaTime() * enemy[i].velocity;
+				if(InMapRange(enemy[i].sprite.Location.x, enemy[i].sprite.Location.y)){
+					enemy[i].sprite.Location.x += FASG::GetDeltaTime() * enemy[i].velocity;
+				}
 				break;
 			case 1:
-				enemy[i].sprite.Location.x -= FASG::GetDeltaTime() * enemy[i].velocity;
+				if (InMapRange(enemy[i].sprite.Location.x, enemy[i].sprite.Location.y)) {
+					enemy[i].sprite.Location.x -= FASG::GetDeltaTime() * enemy[i].velocity;
+				}
 				break;
-			}
-
-			if (enemy[i].sprite.Location.x <= 0) {
-				enemy[i].sprite.Location.x = 0;
-			}
-			if (enemy[i].sprite.Location.x >= GetScreenEndConsoleX()) {
-				enemy[i].sprite.Location.x = GetScreenEndConsoleX()-5;
 			}
 		}
 	}
@@ -159,32 +164,38 @@ void EnemiesShoots() {
 		coolDownBetweenShoots = TIEMPO_ENTRE_DISPAROS;
 		for (int x = 0; x < NUMERO_DISPAROS_A_LA_VEZ_MAX; x++) {
 			if (!activeShoots[x]) {
-				int EnemyWhoShoot = rand() % 3;
+				int EnemyWhoShoot = rand() % 10;
 				switch (EnemyWhoShoot)
 				{
 				case 0:
-					shoot[x].sprite.LoadSprite("Shoot.txt");
-					shoot[x].sprite.Location.x = enemy[0].sprite.Location.x + 6;
-					shoot[x].sprite.Location.y = enemy[0].sprite.Location.y + 7;
-					shoot[x].shootSpeed = 75.f;
-					Sprite::AddToCollisionSystem(shoot[x].sprite, "enemyShoot" + x);
-					whoShoot[x][0] = 0;
+					if(activeEnemies[0]){
+						shoot[x].sprite.LoadSprite("Shoot.txt");
+						shoot[x].sprite.Location.x = enemy[0].sprite.Location.x + 6;
+						shoot[x].sprite.Location.y = enemy[0].sprite.Location.y + 7;
+						shoot[x].shootSpeed = 75.f;
+						Sprite::AddToCollisionSystem(shoot[x].sprite, "enemyShoot" + x);
+						whoShoot[x][0] = 0;
+					}
 					break;
 				case 1:
-					shoot[x].sprite.LoadSprite("Shoot.txt");
-					shoot[x].sprite.Location.x = enemy[1].sprite.Location.x + 6;
-					shoot[x].sprite.Location.y = enemy[1].sprite.Location.y + 7;
-					shoot[x].shootSpeed = 75.f;
-					Sprite::AddToCollisionSystem(shoot[x].sprite, "enemyShoot" + x);
-					whoShoot[x][1] = 1;
+					if (activeEnemies[0]) {
+						shoot[x].sprite.LoadSprite("Shoot.txt");
+						shoot[x].sprite.Location.x = enemy[1].sprite.Location.x + 6;
+						shoot[x].sprite.Location.y = enemy[1].sprite.Location.y + 7;
+						shoot[x].shootSpeed = 75.f;
+						Sprite::AddToCollisionSystem(shoot[x].sprite, "enemyShoot" + x);
+						whoShoot[x][1] = 1;
+					}
 					break;
 				case 2:
-					shoot[x].sprite.LoadSprite("Shoot.txt");
-					shoot[x].sprite.Location.x = enemy[2].sprite.Location.x + 6;
-					shoot[x].sprite.Location.y = enemy[2].sprite.Location.y + 7;
-					shoot[x].shootSpeed = 75.f;
-					Sprite::AddToCollisionSystem(shoot[x].sprite, "enemyShoot" + x);
-					whoShoot[x][2] = 2;
+					if (activeEnemies[0]) {
+						shoot[x].sprite.LoadSprite("Shoot.txt");
+						shoot[x].sprite.Location.x = enemy[2].sprite.Location.x + 6;
+						shoot[x].sprite.Location.y = enemy[2].sprite.Location.y + 7;
+						shoot[x].shootSpeed = 75.f;
+						Sprite::AddToCollisionSystem(shoot[x].sprite, "enemyShoot" + x);
+						whoShoot[x][2] = 2;
+					}
 					break;
 				}
 				activeShoots[x] = true;
@@ -221,6 +232,14 @@ void MoveEnemyShoots() {
 			}
 		}
 	}
+}
+
+void MoveEnemyIfCollision(float x, int number) {
+	enemy[number].sprite.Location.x += x;
+}
+
+float GetEnemySpeed(int number) {
+	return enemy[number].velocity;
 }
 
 void DrawEnemyShoots() {
