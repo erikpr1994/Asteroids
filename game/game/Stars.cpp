@@ -3,7 +3,7 @@
 #include <iostream>
 #include <conio.h>
 
-int const MAX_STARS = 100;
+int const MAX_STARS = 200;
 
 Stars star[MAX_STARS];
 
@@ -29,18 +29,18 @@ void MoveStars() {
 		int movimiento = rand() % 3;
 		switch(movimiento){
 			case 0:
-				star[i].posicion.y -= FASG::GetDeltaTime()*10;
+				star[i].posicion.y += FASG::GetDeltaTime()*10;
 				break;
 			case 1:
-				star[i].posicion.y -= FASG::GetDeltaTime() * 10;
-				star[i].posicion.x -= FASG::GetDeltaTime() * 5;
+				star[i].posicion.y += FASG::GetDeltaTime() * 10;
+				star[i].posicion.x += FASG::GetDeltaTime() * 5;
 				break;
 			case 2:
-				star[i].posicion.y -= FASG::GetDeltaTime() * 10;
+				star[i].posicion.y += FASG::GetDeltaTime() * 10;
 				star[i].posicion.x += FASG::GetDeltaTime() * 5;
 				break;
 		}
-		if (star[i].posicion.y <= 0) {
+		if (star[i].posicion.y >= GetScreenEndConsoleY()) {
 			int yAleatoria = GetScreenEndConsoleY();
 			star[i].posicion.y = rand() % yAleatoria;
 		}

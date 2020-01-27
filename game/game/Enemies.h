@@ -32,3 +32,5 @@ void SetEnemyLocation(float x, float y, int number);
 float GetEnemyPoints(int number);
 void SetCoolDownBetweenShoots(float number);
 void SetActiveEnemies(int number, bool life);
+void MoveEnemyIfCollision(float x, int number);
+float GetEnemySpeed(int number);

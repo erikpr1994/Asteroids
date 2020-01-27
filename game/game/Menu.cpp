@@ -16,6 +16,9 @@ void UpdateMenu();
 
 void DrawMenu();
 
+bool sonidoCargado = false;
+bool sonidoPlay = false;
+FASG::MIDISound song;
 
 void InitMenu() {
 	menu.sprite.LoadSprite("Menu.txt");
@@ -31,14 +34,23 @@ void SetInMenu(bool value) {
 	menu.inMenu = value;
 }
 
-void ShowMenu() {;
+void ShowMenu() {
 	if (menu.inMenu) {
+		if(!sonidoCargado){
+			song.LoadSound("SW.mid");
+			sonidoCargado = true;
+		}
+		if (!sonidoPlay) {
+			song.Play();
+			sonidoPlay = true;
+		}
 		InitPlayer();
 		InitAsteroids();
 		InitShoots();
 		InitStars();
 		InitEnemies();
 		InitEnemyShoots();
+		InitShootsSounds();
 	}
 	while (menu.inMenu) {
 		menu.lastInputMenu = EInputMenu::NONE;
@@ -67,6 +79,8 @@ void InputMenu() { // Que estado genera según lo que recibe de la tecla presiona
 	{
 	case 'Z':
 		menu.lastInputMenu = EInputMenu::PLAY;
+		song.Stop();
+		sonidoPlay = false;
 		break;
 	case 'X':
 		menu.lastInputMenu = EInputMenu::EXIT;

@@ -38,24 +38,38 @@ void InitPlayer() {
 	player.lastInputPlayer = EInputPlayer::STILL;
 }
 
+FASG::WAVESound shootSound[NUMERO_DISPAROS_A_LA_VEZ];
+bool shootSoundLoad[NUMERO_DISPAROS_A_LA_VEZ];
+
+void InitShootsSounds() {
+	for (int i = 0; i < NUMERO_DISPAROS_A_LA_VEZ; i++) {
+		if (!shootSoundLoad[i]) {
+			shootSound[i].LoadSound("blaster.wav");
+			shootSoundLoad[i] = true;
+		}
+	}
+}
+
 void disparos() {
+	for (int i = 0; i < NUMERO_DISPAROS_A_LA_VEZ; i++) {
+		if (disparo[i].sprite.Location.y <= 0) {
+			disparosActivos[i] = false;
+			shootSound[i].Stop();
+		}
+	}
 	if (coolDownBetweenDisparos <= 0) {
 		coolDownBetweenDisparos = MIN_TIEMPO_ENTRE_DISPAROS;
 		for (int i = 0; i < NUMERO_DISPAROS_A_LA_VEZ; i++) {
 			if (!disparosActivos[i]) {
-				disparo[i].sprite.LoadSprite("Shoot.txt");
+				disparo[i].sprite.LoadSprite("Disparo.txt");
 				disparo[i].sprite.Location.x = player.sprite1.Location.x + 6;
-				disparo[i].sprite.Location.y = player.sprite1.Location.y+1;
+				disparo[i].sprite.Location.y = player.sprite1.Location.y-2;
 				disparo[i].shootSpeed = 100.f;
 				Sprite::AddToCollisionSystem(disparo[i].sprite, "disparo" + i);
 				disparosActivos[i] = true;
+				shootSound[i].Play();
 				break;
 			}
-		}
-	}
-	for (int i = 0; i < NUMERO_DISPAROS_A_LA_VEZ; i++) {
-		if (disparo[i].sprite.Location.y <= 0) {
-			disparosActivos[i] = false;
 		}
 	}
 }
@@ -289,7 +303,7 @@ void DrawPlayer(){
 }
 
 bool InMapRanged(int x, int y) {
-	if ((x >= 0) && (x < GetScreenEndConsoleX()) && (y >= 0) && (y < GetScreenEndConsoleY())) {
+	if ((x >= 0) && (x < GetScreenEndConsoleX() - 12) && (y >= 0) && (y < GetScreenEndConsoleY()-7)) {
 		return true;
 	}
 	return false;
