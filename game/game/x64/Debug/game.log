@@ -1,22 +1,7 @@
-﻿  Engine.cpp
-C:\Users\Alumno\Desktop\Actividad2\game\game\Stars.h(2,10): warning C4067:  símbolos (token) inesperados después de la directiva del preprocesador; se esperaba una nueva línea
-C:\Users\Alumno\Desktop\Actividad2\game\game\Engine.cpp(137,46): warning C4244:  '=': conversión de 'double' a 'float'; posible pérdida de datos
-C:\Users\Alumno\Desktop\Actividad2\game\game\Engine.cpp(138,47): warning C4244:  '=': conversión de 'double' a 'float'; posible pérdida de datos
-C:\Users\Alumno\Desktop\Actividad2\game\game\Engine.cpp(142,26): warning C4244:  'return': conversión de 'float' a 'int'; posible pérdida de datos
-C:\Users\Alumno\Desktop\Actividad2\game\game\Engine.cpp(146,26): warning C4244:  'return': conversión de 'float' a 'int'; posible pérdida de datos
-C:\Users\Alumno\Desktop\Actividad2\game\game\Engine.cpp(166,23): warning C4244:  'return': conversión de 'float' a 'int'; posible pérdida de datos
-C:\Users\Alumno\Desktop\Actividad2\game\game\Engine.cpp(170,23): warning C4244:  'return': conversión de 'float' a 'int'; posible pérdida de datos
-C:\Users\Alumno\Desktop\Actividad2\game\game\Engine.cpp(174,58): warning C4244:  '=': conversión de 'int' a 'float'; posible pérdida de datos
-C:\Users\Alumno\Desktop\Actividad2\game\game\Engine.cpp(181,57): warning C4244:  'argumento': conversión de 'float' a 'int'; posible pérdida de datos
-C:\Users\Alumno\Desktop\Actividad2\game\game\Engine.cpp(182,57): warning C4244:  'argumento': conversión de 'float' a 'int'; posible pérdida de datos
-C:\Users\Alumno\Desktop\Actividad2\game\game\Engine.cpp(183,57): warning C4244:  'argumento': conversión de 'float' a 'int'; posible pérdida de datos
-C:\Users\Alumno\Desktop\Actividad2\game\game\Engine.cpp(184,50): warning C4244:  'argumento': conversión de 'float' a 'int'; posible pérdida de datos
-C:\Users\Alumno\Desktop\Actividad2\game\game\Engine.cpp(188,57): warning C4244:  'argumento': conversión de 'float' a 'int'; posible pérdida de datos
-C:\Users\Alumno\Desktop\Actividad2\game\game\Engine.cpp(189,57): warning C4244:  'argumento': conversión de 'float' a 'int'; posible pérdida de datos
-C:\Users\Alumno\Desktop\Actividad2\game\game\Engine.cpp(190,57): warning C4244:  'argumento': conversión de 'float' a 'int'; posible pérdida de datos
-C:\Users\Alumno\Desktop\Actividad2\game\game\Engine.cpp(191,50): warning C4244:  'argumento': conversión de 'float' a 'int'; posible pérdida de datos
-C:\Users\Alumno\Desktop\Actividad2\game\game\Engine.cpp(194,57): warning C4244:  'argumento': conversión de 'float' a 'int'; posible pérdida de datos
-C:\Users\Alumno\Desktop\Actividad2\game\game\Engine.cpp(195,57): warning C4244:  'argumento': conversión de 'float' a 'int'; posible pérdida de datos
-C:\Users\Alumno\Desktop\Actividad2\game\game\Engine.cpp(196,57): warning C4244:  'argumento': conversión de 'float' a 'int'; posible pérdida de datos
-C:\Users\Alumno\Desktop\Actividad2\game\game\Engine.cpp(197,50): warning C4244:  'argumento': conversión de 'float' a 'int'; posible pérdida de datos
-  game.vcxproj -> C:\Users\Alumno\Desktop\Actividad2\game\x64\Debug\game.exe
+﻿  Asteroid.cpp
+D:\Juego\Actividad2\game\game\Asteroid.cpp(45,55): warning C4244:  'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+D:\Juego\Actividad2\game\game\Asteroid.cpp(66,86): warning C4244:  'argumento': conversión de 'float' a 'int'; posible pérdida de datos
+D:\Juego\Actividad2\game\game\Asteroid.cpp(66,48): warning C4244:  'argumento': conversión de 'float' a 'int'; posible pérdida de datos
+D:\Juego\Actividad2\game\game\Asteroid.cpp(162,16): warning C4244:  'inicializando': conversión de 'int' a 'float'; posible pérdida de datos
+D:\Juego\Actividad2\game\game\Asteroid.cpp(171,24): warning C4244:  'return': conversión de 'int' a 'float'; posible pérdida de datos
+  game.vcxproj -> D:\Juego\Actividad2\game\x64\Debug\game.exe

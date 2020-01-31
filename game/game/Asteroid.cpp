@@ -19,7 +19,13 @@ float GenerateCurrentSpeed() {
 	return float(rand() % MAX_ASTEROID_SPEED + MIN_ASTEROID_SPEED);
 }
 
+void SetActualCoolDownBetweenAsteroids(float coolDownTime);
+
 /* FUNCIONES DE USO EXTERNO */
+float GenerateRandomXPositionInsideMap();
+float GenerateRandomYPositionInScreenInsideMap();
+float GenerateRandomOutsideMapPosition();
+
 void InitAsteroids() {
 	for (int asteroidNumber = 0; asteroidNumber < MAX_NUMBER_OF_ASTEROIDS; asteroidNumber++) {
 		SetActiveAsteroids(asteroidNumber, false);
@@ -35,12 +41,12 @@ void Asteroids() {
 		for (int asteroidNumber = 0; asteroidNumber < GetMaxNumberOfAsteroids(); asteroidNumber++) {
 			if(!GetActiveAsteroids(asteroidNumber)){
 				SetAsteroidSprite(asteroidNumber);
-				SetAsteroidXLocation(asteroidNumber, GenerateRandomXPosition());
-				SetAsteroidYLocation(asteroidNumber, GetZoneSpawnY());
-				SetActiveAsteroids(asteroidNumber, GenerateCurrentSpeed());
+				SetAsteroidXLocation(asteroidNumber, GenerateRandomXPositionInsideMap());
+				SetAsteroidYLocation(asteroidNumber, GetZoneSpawnY()); //Revisar que hace GetZoneSpawnY y cambiar por GenerateRandomYPositionInScreenInsideMap()
+				SetAsteroidSpeed(asteroidNumber, GenerateCurrentSpeed());
 				SetAsteroidPuntuation(asteroidNumber, GetAsteroidSpeed(asteroidNumber));
 				SetAsteroidTagName(asteroidNumber);
-				Sprite::AddToCollisionSystem(asteroid[asteroidNumber].sprite, GetAsteroidTagName(asteroidNumber));
+				Sprite::AddToCollisionSystem(asteroid[asteroidNumber].sprite, GetAsteroidTagName(asteroidNumber)); // Si da tiempo, crear un sistema de colisiones nuevo
 				SetActiveAsteroids(asteroidNumber, true);
 				break;
 			}
@@ -101,7 +107,7 @@ void SetAsteroidSprite(int asteroidNumber) {
 }
 
 void SetAsteroidTagName(int asteroidNumber) {
-	asteroid[asteroidNumber].tagName = "asteroid" + asteroidNumber;
+	asteroid[asteroidNumber].tagName = "asteroid" + std::to_string(asteroidNumber);
 }
 
 /* La puntuación se calcula según la velocidad del asteroid. A más velocidad, más puntuación */
@@ -109,7 +115,7 @@ void SetAsteroidPuntuation(int asteroidNumber, float speed) {
 	asteroid[asteroidNumber].puntuation = speed / PUNTUATION_DIVISOR;
 }
 
-void SetActualCoolDownBetweenAsteroids(int coolDownTime) {
+void SetActualCoolDownBetweenAsteroids(float coolDownTime) {
 	coolDownBetweenAsteroids = coolDownTime;
 }
 
@@ -131,11 +137,11 @@ float GetAsteroidYLocation(int asteroidNumber) {
 }
 
 float GetAsteroidXLocation(int asteroidNumber) {
-	return asteroid[asteroidNumber].sprite.Location.y;
+	return asteroid[asteroidNumber].sprite.Location.x;
 }
 
 float GetAsteroidSpeed(int asteroidNumber) {
-	return asteroid[asteroidNumber].puntuation;
+	return asteroid[asteroidNumber].currentSpeed;
 }
 
 float GetAsteroidPuntuation(int asteroidNumber) {
@@ -152,8 +158,13 @@ float GetActualCoolDownBetweenAsteroids() {
 
 
 /* PASAR AL ENGINE */
-float GenerateRandomXPosition() {
-	return float(rand() % (GetScreenEndConsoleX() - 10));
+float GenerateRandomXPositionInsideMap() {
+	float randomX = rand() % (GetScreenEndConsoleX() - 10);
+	return randomX;
+}
+
+float GenerateRandomYPositionInScreenInsideMap() {
+	return float(rand() % (GetScreenEndConsoleY() - 10));
 }
 
 float GenerateRandomOutsideMapPosition() {

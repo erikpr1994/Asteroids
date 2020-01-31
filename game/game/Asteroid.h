@@ -22,10 +22,13 @@ void DrawAsteroid();
 void InitAsteroids();
 
 // SETTERS
+void SetAsteroidSprite(int asteroidNumber);
 void SetAsteroidYLocation(int number, float y);
 void SetAsteroidXLocation(int number, float x);
 void SetAsteroidLocation(int number, float x, float y);
 void SetAsteroidSpeed(int asteroidNumber, float speed);
+void SetAsteroidPuntuation(int asteroidNumber, float speed);
+void SetAsteroidTagName(int asteroidNumber);
 void SetActiveAsteroids(int number, bool value);
 
 // GETTERS
