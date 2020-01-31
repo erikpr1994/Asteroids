@@ -1,3 +1,7 @@
 
 *.opendb
 /game/.vs
+/Visual Studio 2019
+/Visual Studio 2019Templates
+/Debug
+/x64
