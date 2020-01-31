@@ -112,7 +112,7 @@ void InitGame() {
 			paintDeath();
 			
 			FASG::RenderFrame();
-			while (_kbhit()){
+			while (_kbhit()) {
 				_getch();
 
 				if(FASG::IsKeyDown(' ')){

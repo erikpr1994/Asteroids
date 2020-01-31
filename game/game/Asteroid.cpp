@@ -15,22 +15,17 @@ int const MIN_ASTEROID_SPEED = 10;
 float const PUNTUATION_DIVISOR = 10.f;
 
 /* FUNCIONES DE USO INTERNO */
-float GenerateCurrentSpeed() {
-	return float(rand() % MAX_ASTEROID_SPEED + MIN_ASTEROID_SPEED);
-}
+void GenerateNewAsteroids();
+void MoveAsteroid();
+void IsAsteroidOutside();
+void DrawAsteroid();
 
 void SetActualCoolDownBetweenAsteroids(float coolDownTime);
 
-/* FUNCIONES DE USO EXTERNO */
+float GenerateSpeed(int maxSpeed, int minSpeed);
 float GenerateRandomXPositionInsideMap();
-float GenerateRandomYPositionInScreenInsideMap();
+float GenerateRandomYPositionInsideMap();
 float GenerateRandomOutsideMapPosition();
-
-void AsteroidsProcess() {
-	GenerateNewAsteroids();
-	MoveAsteroid();
-	DrawAsteroid();
-}
 
 void InitAsteroids() {
 	for (int asteroidNumber = 0; asteroidNumber < MAX_NUMBER_OF_ASTEROIDS; asteroidNumber++) {
@@ -48,8 +43,8 @@ void GenerateNewAsteroids() {
 			if(!GetActiveAsteroids(asteroidNumber)){
 				SetAsteroidSprite(asteroidNumber);
 				SetAsteroidXLocation(asteroidNumber, GenerateRandomXPositionInsideMap());
-				SetAsteroidYLocation(asteroidNumber, GetZoneSpawnY()); //Revisar que hace GetZoneSpawnY y cambiar por GenerateRandomYPositionInScreenInsideMap()
-				SetAsteroidSpeed(asteroidNumber, GenerateCurrentSpeed());
+				SetAsteroidYLocation(asteroidNumber, GetZoneSpawnY()); //Revisar que hace GetZoneSpawnY y cambiar por GenerateRandomYPositionInsideMap()
+				SetAsteroidSpeed(asteroidNumber, GenerateSpeed(MAX_ASTEROID_SPEED, MIN_ASTEROID_SPEED));
 				SetAsteroidPuntuation(asteroidNumber, GetAsteroidSpeed(asteroidNumber));
 				SetAsteroidTagName(asteroidNumber);
 				Sprite::AddToCollisionSystem(asteroid[asteroidNumber].sprite, GetAsteroidTagName(asteroidNumber)); // Si da tiempo, crear un sistema de colisiones nuevo
@@ -58,7 +53,9 @@ void GenerateNewAsteroids() {
 			}
 		}
 	}
+}
 
+void IsAsteroidOutside() {
 	for (int asteroidNumber = 0; asteroidNumber < GetMaxNumberOfAsteroids(); asteroidNumber++) {
 		if (GetAsteroidYLocation(asteroidNumber) >= GetScreenEndConsoleY()) {
 			SetActiveAsteroids(asteroidNumber, false);
@@ -84,6 +81,15 @@ void MoveAsteroid() {
 			}
 		}
 	}
+}
+
+/* FUNCIONES DE USO EXTERNO */
+
+void AsteroidsProcess() {
+	GenerateNewAsteroids();
+	MoveAsteroid();
+	IsAsteroidOutside();
+	DrawAsteroid();
 }
 
 /* SETTERS */
@@ -185,10 +191,14 @@ float GenerateRandomXPositionInsideMap() {
 	return randomX;
 }
 
-float GenerateRandomYPositionInScreenInsideMap() {
+float GenerateRandomYPositionInsideMap() {
 	return float(rand() % (GetScreenEndConsoleY() - 10));
 }
 
 float GenerateRandomOutsideMapPosition() {
 	return rand() % 10000 + 100000;
+}
+
+float GenerateSpeed(int maxSpeed, int minSpeed) {
+	return float(rand() % maxSpeed + minSpeed);
 }

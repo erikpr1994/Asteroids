@@ -9,18 +9,13 @@ struct Game {
 	Vector2 screenCenter;
 	Vector2 zoneSpawn;
 	float puntuacion;
-	float gravity = 10.f;
 };
-
-bool GetIsGameClosed();
-
-void SetIsGameClosed(bool value);
 
 void InitGame();
 
 void EndGame();
 
-// GETTERS Y SETTERS
+/* GETTERS */
 int GetScreenCenterX();
 int GetScreenCenterY();
 int GetScreenEndConsoleX();
@@ -30,4 +25,8 @@ int GetScreenStartConsoleY();
 int GetZoneSpawnX();
 int GetZoneSpawnY();
 float GetPuntuation();
+bool GetIsGameClosed();
+
+/* SETTERS */
 void SetPuntuation(float value);
+void SetIsGameClosed(bool value);
