@@ -9,16 +9,7 @@ struct Asteroid {
 	std::string tagName;
 }; 
 
-void Asteroids();
-
-//void CreateAsteroid();
-
-void MoveAsteroid();
-
-void DrawAsteroid();
-
-//void GravityForce();
-
+void AsteroidsProcess();
 void InitAsteroids();
 
 // SETTERS

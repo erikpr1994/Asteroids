@@ -82,9 +82,9 @@ void InitGame() {
 		InputPlayer();
 		UpdatePlayer();
 		DrawPlayer();
-		Asteroids();
-		MoveAsteroid();
-		DrawAsteroid();
+
+		AsteroidsProcess();
+
 		Enemies();
 		MoveEnemies();
 		DrawEnemies();
@@ -200,18 +200,18 @@ void paintDeath() {
 
 void MiColision(std::string tag1, std::string tag2) {
 	for(int i = 0; i < GetMaxNumberOfAsteroids() ;i++){
-		if(tag1 == "asteroid"+i && tag2 == "nave" || tag1 == "nave" && tag2 == "asteroid"+i){
+		if(tag1 == GetAsteroidTagName(i) && tag2 == "nave" || tag1 == "nave" && tag2 == GetAsteroidTagName(i)){
 			SetPlayerDead(true);
 			SetPlayerDeadByCollisionWithAsteroid(true);
-			SetAsteroidLocation(9452, 9452, i);
+			SetAsteroidLocation(i, 9452, 9452);
 			SetLastInputPlayer(EInputPlayer::DEATH);
 		}
 	}
 
 	for (int i = 0; i < GetMaxNumberOfAsteroids(); i++) {
 		for(int j = 0; j < GetMaxNumberOfShoots();j++){
-			if (tag1 == "asteroid" + i && tag2 == "disparo"+j || tag1 == "disparo"+j && tag2 == "asteroid" + i) {
-				SetAsteroidLocation(9452, 9452, i);
+			if (tag1 == GetAsteroidTagName(i) && tag2 == "disparo"+j || tag1 == "disparo"+j && tag2 == GetAsteroidTagName(i)) {
+				SetAsteroidLocation(i, 9452, 9452);
 				SetShootLocation(-8000, -8000, j);
 				float puntuation = GetPuntuation() + GetAsteroidDeadPuntuation(i);
 				SetPuntuation(puntuation);

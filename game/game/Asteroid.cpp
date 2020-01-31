@@ -26,6 +26,12 @@ float GenerateRandomXPositionInsideMap();
 float GenerateRandomYPositionInScreenInsideMap();
 float GenerateRandomOutsideMapPosition();
 
+void AsteroidsProcess() {
+	GenerateNewAsteroids();
+	MoveAsteroid();
+	DrawAsteroid();
+}
+
 void InitAsteroids() {
 	for (int asteroidNumber = 0; asteroidNumber < MAX_NUMBER_OF_ASTEROIDS; asteroidNumber++) {
 		SetActiveAsteroids(asteroidNumber, false);
@@ -34,7 +40,7 @@ void InitAsteroids() {
 	}
 }
 
-void Asteroids() {
+void GenerateNewAsteroids() {
 	SetActualCoolDownBetweenAsteroids(GetActualCoolDownBetweenAsteroids() - FASG::GetDeltaTime());
 	if (GetActualCoolDownBetweenAsteroids() <= 0) {
 		SetActualCoolDownBetweenAsteroids(TIME_BETWEEN_ASTEROIDS);
@@ -103,7 +109,23 @@ void SetAsteroidSpeed(int asteroidNumber, float speed) {
 }
 
 void SetAsteroidSprite(int asteroidNumber) {
-	asteroid[asteroidNumber].sprite.LoadSprite("Asteroid.txt");
+	// Queda preparado para si hacemos más sprites de asteroides
+	// Solo hay que copiar el case y poner el siguiente numero
+	int typeOfAsteroid = rand() % 1; // Cambiar por el numero de sprites que tengamos
+	std::string asteroidTypeName;
+	switch (typeOfAsteroid)
+	{
+	case 0:
+		asteroidTypeName = "Asteroid" + std::to_string(typeOfAsteroid) + ".txt";
+		asteroid[asteroidNumber].sprite.LoadSprite(asteroidTypeName);
+		break;
+	/*Ejemplo de siguiente asteroide
+	case 1:
+		asteroidTypeName = "Asteroid" + std::to_string(typeOfAsteroid) + ".txt";
+		asteroid[asteroidNumber].sprite.LoadSprite(asteroidTypeName);
+		break;
+	*/
+	}
 }
 
 void SetAsteroidTagName(int asteroidNumber) {
