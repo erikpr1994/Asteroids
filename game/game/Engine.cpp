@@ -42,10 +42,9 @@ void SetPuntuation(float value) {
 	game.puntuacion = value;
 }
 
+FASG::MIDISound gameSong;
 bool gameSongLoaded = false;
 bool gameSongPlay = false;
-
-FASG::MIDISound gameSong;
 
 FASG::MIDISound deathSong;
 bool gameDeathSongLoaded = false;
@@ -68,62 +67,65 @@ void InitGame() {
 	while (!GetIsGameClosed()) {
 		ShowMenu();
 		if (!gameSongLoaded) {
-			gameSong.LoadSound("SWM.mid");
-			gameSongLoaded = true;
+			// gameSong.LoadSound("SWM.mid");
+			// gameSongLoaded = true;
 		}
 		if (!gameSongPlay) {
-			gameSong.Play();
-			gameSongPlay = true;
+			// gameSong.Play();
+			// gameSongPlay = true;
 		}
 
-		Outside();
-		IsPlayerDeath();
+		while (!IsPlayerDead()) {
 
-		InputPlayer();
-		UpdatePlayer();
-		DrawPlayer();
+			Outside();
+			IsPlayerDeath();
 
-		AsteroidsProcess();
+			InputPlayer();
+			UpdatePlayer();
+			DrawPlayer();
 
-		Enemies();
-		MoveEnemies();
-		DrawEnemies();
-		MoveEnemyShoots();
-		DrawEnemyShoots();
-		MoveShoot();
-		DrawShoots();
-		MoveStars();
-		DrawStars();
-		UpdatePuntuation();
-		DrawHUD();
+			AsteroidsProcess();
 
-		FASG::RenderFrame();
+			Enemies();
+			MoveEnemies();
+			DrawEnemies();
+			MoveEnemyShoots();
+			DrawEnemyShoots();
+			MoveShoot();
+			DrawShoots();
+			MoveStars();
+			DrawStars();
+			UpdatePuntuation();
+			DrawHUD();
+
+			FASG::RenderFrame();
+		}
 
 		while (IsPlayerDead()) {
- 			gameSong.Stop();
-			gameSongPlay = false;
+ 			// gameSong.Stop();
+			// gameSongPlay = false;
 			if (!gameDeathSongLoaded) {
-				deathSong.LoadSound("SWIM.mid");
+				// deathSong.LoadSound("SWIM.mid");
 			}
 			if (!gameDeathSongPlay) {
-				deathSong.Play();
+				// deathSong.Play();
 			}
 
 			paintDeath();
 			
 			FASG::RenderFrame();
-			while (_kbhit()) {
+			while (_kbhit())
 				_getch();
 
-				if(FASG::IsKeyDown(' ')){
-					SetPlayerDead(false);
-					SetPlayerDeadByCollisionWithAsteroid(false);
-					SetPlayerDeadByGoOutsideScreen(false);
-					SetPlayerDeadByShip(false);
-					SetPuntuation(0);
-					deathSong.Stop();
-					gameDeathSongPlay = false;
-				}
+			if(FASG::IsKeyDown(' ')){
+				SetPlayerDead(false);
+				SetPlayerDeadByCollisionWithAsteroid(false);
+				SetPlayerDeadByGoOutsideScreen(false);
+				SetPlayerDeadByShip(false);
+				SetInMenu(true);
+				SetPuntuation(0);
+				// deathSong.Stop();
+				// gameDeathSongPlay = false;
 			}
 		}
 	}

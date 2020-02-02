@@ -37,11 +37,11 @@ void SetInMenu(bool value) {
 void ShowMenu() {
 	if (menu.inMenu) {
 		if(!sonidoCargado){
-			song.LoadSound("SW.mid");
+			// song.LoadSound("SW.mid");
 			sonidoCargado = true;
 		}
 		if (!sonidoPlay) {
-			song.Play();
+			// song.Play();
 			sonidoPlay = true;
 		}
 		InitPlayer();
