@@ -76,20 +76,22 @@ void InitGame() {
 	
 	Sprite::SetCollisionCallback(MiColision);
 
-	FASG::WriteStringBuffer(50, 50, "Quieres cargar el sonido? S/N", FASG::EForeColor::Blue);
 	while (!isSoundDecided) {
-		FASG::RenderFrame();
+		FASG::WriteStringBuffer(50, 50, "Quieres cargar el sonido? S/N", FASG::EForeColor::Blue);
 		while (_kbhit())
 			_getch();
 
-		if (FASG::IsKeyDown('S')) {
+		if (FASG::IsKeyDown('s')) {
 			SetSoundEnabled(true);
 			isSoundDecided = true;
 		}
-		if (FASG::IsKeyDown('N')) {
+
+		if (FASG::IsKeyDown('n')) {
 			SetSoundEnabled(false);
 			isSoundDecided = true;
 		}
+
+		FASG::RenderFrame();
 	}
 	
 

@@ -36,13 +36,15 @@ void SetInMenu(bool value) {
 
 void ShowMenu() {
 	if (menu.inMenu) {
-		if(!sonidoCargado){
-			song.LoadSound("SW.mid");
-			sonidoCargado = true;
-		}
-		if (!sonidoPlay) {
-			song.Play();
-			sonidoPlay = true;
+		if(IsSoundEnabled()){
+			if(!sonidoCargado){
+				song.LoadSound("SW.mid");
+				sonidoCargado = true;
+			}
+			if (!sonidoPlay) {
+				song.Play();
+				sonidoPlay = true;
+			}
 		}
 		InitPlayer();
 		InitAsteroids();
