@@ -26,7 +26,9 @@ int GetZoneSpawnX();
 int GetZoneSpawnY();
 float GetPuntuation();
 bool GetIsGameClosed();
+bool IsSoundEnabled();
 
 /* SETTERS */
 void SetPuntuation(float value);
 void SetIsGameClosed(bool value);
+void SetSoundEnabled(bool option);

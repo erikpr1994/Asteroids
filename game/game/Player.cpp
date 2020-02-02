@@ -44,8 +44,10 @@ bool shootSoundLoad[NUMERO_DISPAROS_A_LA_VEZ];
 void InitShootsSounds() {
 	for (int i = 0; i < NUMERO_DISPAROS_A_LA_VEZ; i++) {
 		if (!shootSoundLoad[i]) {
-			// shootSound[i].LoadSound("blaster.wav");
-			shootSoundLoad[i] = true;
+			if (IsSoundEnabled()) {
+				shootSound[i].LoadSound("blaster.wav");
+				shootSoundLoad[i] = true;
+			}
 		}
 	}
 }
@@ -54,7 +56,9 @@ void disparos() {
 	for (int i = 0; i < NUMERO_DISPAROS_A_LA_VEZ; i++) {
 		if (disparo[i].sprite.Location.y <= 0) {
 			disparosActivos[i] = false;
-			// shootSound[i].Stop();
+			if (IsSoundEnabled()) {
+				shootSound[i].Stop();
+			}
 		}
 	}
 	if (coolDownBetweenDisparos <= 0) {
@@ -67,7 +71,9 @@ void disparos() {
 				disparo[i].shootSpeed = 100.f;
 				Sprite::AddToCollisionSystem(disparo[i].sprite, "disparo" + i);
 				disparosActivos[i] = true;
-				// shootSound[i].Play();
+				if (IsSoundEnabled()) {
+					shootSound[i].Play();
+				}
 				break;
 			}
 		}

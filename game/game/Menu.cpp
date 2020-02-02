@@ -37,11 +37,11 @@ void SetInMenu(bool value) {
 void ShowMenu() {
 	if (menu.inMenu) {
 		if(!sonidoCargado){
-			// song.LoadSound("SW.mid");
+			song.LoadSound("SW.mid");
 			sonidoCargado = true;
 		}
 		if (!sonidoPlay) {
-			// song.Play();
+			song.Play();
 			sonidoPlay = true;
 		}
 		InitPlayer();
@@ -97,6 +97,8 @@ void UpdateMenu() { // Que hace cada estado
 	case EInputMenu::EXIT:
 		SetInMenu(false);
 		SetIsGameClosed(true);
+		SetPlayerDead(true);
+
 		break;
 	case EInputMenu::NONE:
 		break;

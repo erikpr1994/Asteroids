@@ -50,6 +50,18 @@ FASG::MIDISound deathSong;
 bool gameDeathSongLoaded = false;
 bool gameDeathSongPlay = false;
 
+bool soundEnabled = true;
+
+bool isSoundDecided = false;
+
+bool IsSoundEnabled() {
+	return soundEnabled;
+}
+
+void SetSoundEnabled(bool option) {
+	soundEnabled = option;
+}
+
 void InitGame() {
     srand((unsigned)time(NULL)); // Necesario para hacer el mapa y mostrar las "piedras"
     FASG::InitConsole(game.CONSOLE_WIDTH, game.CONSOLE_HEIGHT);
@@ -64,15 +76,35 @@ void InitGame() {
 	
 	Sprite::SetCollisionCallback(MiColision);
 
+	FASG::WriteStringBuffer(50, 50, "Quieres cargar el sonido? S/N", FASG::EForeColor::Blue);
+	while (!isSoundDecided) {
+		FASG::RenderFrame();
+		while (_kbhit())
+			_getch();
+
+		if (FASG::IsKeyDown('S')) {
+			SetSoundEnabled(true);
+			isSoundDecided = true;
+		}
+		if (FASG::IsKeyDown('N')) {
+			SetSoundEnabled(false);
+			isSoundDecided = true;
+		}
+	}
+	
+
+
 	while (!GetIsGameClosed()) {
 		ShowMenu();
-		if (!gameSongLoaded) {
-			// gameSong.LoadSound("SWM.mid");
-			// gameSongLoaded = true;
-		}
-		if (!gameSongPlay) {
-			// gameSong.Play();
-			// gameSongPlay = true;
+		if (IsSoundEnabled()) {
+			if (!gameSongLoaded) {
+				gameSong.LoadSound("SWM.mid");
+				gameSongLoaded = true;
+			}
+			if (!gameSongPlay) {
+				gameSong.Play();
+				gameSongPlay = true;
+			}
 		}
 
 		while (!IsPlayerDead()) {
@@ -101,14 +133,16 @@ void InitGame() {
 			FASG::RenderFrame();
 		}
 
-		while (IsPlayerDead()) {
- 			// gameSong.Stop();
-			// gameSongPlay = false;
-			if (!gameDeathSongLoaded) {
-				// deathSong.LoadSound("SWIM.mid");
-			}
-			if (!gameDeathSongPlay) {
-				// deathSong.Play();
+		while (IsPlayerDead() && !GetIsGameClosed()) {
+			if (IsSoundEnabled()) {
+				gameSong.Stop();
+				gameSongPlay = false;
+				if (!gameDeathSongLoaded) {
+					deathSong.LoadSound("SWIM.mid");
+				}
+				if (!gameDeathSongPlay) {
+					deathSong.Play();
+				}
 			}
 
 			paintDeath();
@@ -124,8 +158,10 @@ void InitGame() {
 				SetPlayerDeadByShip(false);
 				SetInMenu(true);
 				SetPuntuation(0);
-				// deathSong.Stop();
-				// gameDeathSongPlay = false;
+				if (IsSoundEnabled()) {
+					// deathSong.Stop();
+					// gameDeathSongPlay = false;
+				}
 			}
 		}
 	}
