@@ -68,21 +68,21 @@ void Enemies() {
 				case 0:
 					enemy[i].velocity = 10.f;
 					enemy[i].diagonalVelocity = enemy[i].velocity / (sqrt(2));
-					enemy[i].damage = 10.f;
+					enemy[i].damage = 1;
 					enemy[i].points = 10.f;
 					Sprite::AddToCollisionSystem(enemy[i].sprite, "enemy" + i);
 					break;
 				case 1:
 					enemy[i].velocity = 50.f;
 					enemy[i].diagonalVelocity = enemy[i].velocity / (sqrt(2));
-					enemy[i].damage = 20.f;
+					enemy[i].damage = 2;
 					enemy[i].points = 20.f;
 					Sprite::AddToCollisionSystem(enemy[i].sprite, "enemy" + i);
 					break;
 				case 2:
 					enemy[i].velocity = 100.f;
 					enemy[i].diagonalVelocity = enemy[i].velocity / (sqrt(2));
-					enemy[i].damage = 30.f;
+					enemy[i].damage = 3;
 					enemy[i].points = 30.f;
 					Sprite::AddToCollisionSystem(enemy[i].sprite, "enemy" + i);
 					break;

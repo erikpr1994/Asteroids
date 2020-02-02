@@ -13,7 +13,7 @@ struct Player {
 	EInputPlayer lastInputPlayer;
 	float velocity;
 	float diagonalVelocity;
-	float life;
+	int life; //---
 
 	bool isDeath;
 	bool isDeathByOutside;
@@ -26,6 +26,11 @@ struct Disparo{
 	float shootSpeed;
 };
 
+struct Vida { 
+	FASG::Sprite sprite; //---
+
+};
+
 void InitPlayer();
 
 void InputPlayer();
@@ -33,6 +38,14 @@ void InputPlayer();
 void UpdatePlayer();
 
 void DrawPlayer();
+
+//---------------------------------------------------------------//
+
+void Health();
+
+void DrawHealth();
+
+//---------------------------------------------------------------//
 
 void IsPlayerDeath();
 
@@ -59,3 +72,5 @@ void SetShootLocation(float x, float y, int number);
 void SetPlayerLife(float life);
 void InitShootsSounds();
 float GetPlayerLife();
+
+FASG::Sprite GetLifeSprite(int numVida);

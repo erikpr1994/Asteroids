@@ -14,6 +14,12 @@ Disparo disparo[NUMERO_DISPAROS_A_LA_VEZ];
 float coolDownBetweenDisparos = 0.f;
 bool disparosActivos[NUMERO_DISPAROS_A_LA_VEZ];
 
+//---------------------------------------------------------------//
+int const VIDA_MAXIMA = 5;
+Vida vida[VIDA_MAXIMA];
+bool vidaActiva[VIDA_MAXIMA]; 
+//---------------------------------------------------------------//
+
 char GetAnyKeyPressed();
 
 void InitPlayer() {
@@ -29,7 +35,7 @@ void InitPlayer() {
 
 	Sprite::AddToCollisionSystem(player.sprite1, "nave");
 
-	player.life = 100.f;
+	player.life = VIDA_MAXIMA; //---
 
 	player.isDeath = false;
 	player.isDeathByOutside = false;
@@ -37,6 +43,32 @@ void InitPlayer() {
 	player.isDeadByShip = false;
 	player.lastInputPlayer = EInputPlayer::STILL;
 }
+//---------------------------------------------------------------//---------------------------------------------------------------//
+void Health() {
+	for (int i = 0; i < VIDA_MAXIMA; i++) {
+		if (!vidaActiva[i]) {
+			vida[i].sprite.LoadSprite("Life.txt");
+			if (i == 0) {
+				vida[i].sprite.Location.x = 120;
+			} else {
+				vida[i].sprite.Location.x = vida[i-1].sprite.Location.x +2;
+			}
+			vida[i].sprite.Location.y = GetScreenEndConsoleY() - 22;
+			
+			
+			vidaActiva[i] = true;
+		}
+	}
+}
+
+void DrawHealth() { 
+	for (int i = player.life; i > 0; i--) {
+		if (vidaActiva[i]) {
+			FASG::WriteSpriteBuffer(vida[i].sprite.Location.x, vida[i].sprite.Location.y, GetLifeSprite(i));
+		}
+	}
+}
+//---------------------------------------------------------------//---------------------------------------------------------------//
 
 FASG::WAVESound shootSound[NUMERO_DISPAROS_A_LA_VEZ];
 bool shootSoundLoad[NUMERO_DISPAROS_A_LA_VEZ];
@@ -130,6 +162,10 @@ int GetMaxNumberOfShoots() {
 
 float GetPlayerLife() {
 	return player.life;
+}
+
+FASG::Sprite GetLifeSprite(int numVida) {
+	return vida[numVida].sprite;
 }
 
 // SETTERS
@@ -275,7 +311,7 @@ void UpdatePlayer() {
 }
 
 void IsPlayerDeath() {
-	if (player.life <= 0.f) {
+	if (player.life <= 0) {
 		player.isDeadByShip = true;
 		player.isDeath = true;
 		SetLastInputPlayer(EInputPlayer::DEATH);

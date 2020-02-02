@@ -55,7 +55,7 @@ void InitGame() {
     srand((unsigned)time(NULL)); // Necesario para hacer el mapa y mostrar las "piedras"
     FASG::InitConsole(game.CONSOLE_WIDTH, game.CONSOLE_HEIGHT);
 	FASG::ShowConsoleCursor(false);
-	// FASG::SetFontSizeRatio(FASG::ConsoleFontRatios::_8x8);
+		FASG::SetFontSizeRatio(FASG::ConsoleFontRatios::_8x8);
     CalcConsoleCenter();
 	SetIsGameClosed(false);
 
@@ -83,6 +83,10 @@ void InitGame() {
 		UpdatePlayer();
 		DrawPlayer();
 		Asteroids();
+		
+		Health(); //---
+		//DrawHealth();//---
+		
 		MoveAsteroid();
 		DrawAsteroid();
 		Enemies();
@@ -270,7 +274,11 @@ void MiColision(std::string tag1, std::string tag2) {
 void DrawHUD()
 {
 	FASG::WriteStringBuffer(game.CONSOLE_WIDTH - 24, game.CONSOLE_HEIGHT - 7, "PUNTUACION: " + std::to_string(GetPuntuation()), FASG::EForeColor::LightRed);
-	FASG::WriteStringBuffer(game.CONSOLE_WIDTH - 22, game.CONSOLE_HEIGHT - 5, "ESCUDO: " + std::to_string(GetPlayerLife()), FASG::EForeColor::LightYellow);
+	//FASG::WriteStringBuffer(game.CONSOLE_WIDTH - 22, game.CONSOLE_HEIGHT - 5, "ESCUDO: " + std::to_string(GetPlayerLife()), FASG::EForeColor::LightYellow);
+	FASG::WriteStringBuffer(game.CONSOLE_WIDTH - 22, game.CONSOLE_HEIGHT - 5, "ESCUDO: ", FASG::EForeColor::LightYellow);
+
+	DrawHealth();
+
 
 	FASG::WriteStringBuffer(5, game.CONSOLE_HEIGHT - 7, "MOVIMIENTO: W A S D", FASG::EForeColor::LightBlue);
 	FASG::WriteStringBuffer(5, game.CONSOLE_HEIGHT - 5, "DISPARAR: ESPACIO", FASG::EForeColor::LightBlue);
