@@ -14,10 +14,10 @@ Disparo disparo[NUMERO_DISPAROS_A_LA_VEZ];
 float coolDownBetweenDisparos = 0.f;
 bool disparosActivos[NUMERO_DISPAROS_A_LA_VEZ];
 
-int const VIDA_MAXIMA = 5;
+int const VIDA_MAXIMA = 10;
 Vida vida[VIDA_MAXIMA];
 bool vidaActiva[VIDA_MAXIMA];
-int vidaActual = 5;
+int vidaActual = 10;
 
 char GetAnyKeyPressed();
 
@@ -341,30 +341,19 @@ void Outside() {
 void Health() {
 	vidaActual = player.life / 10;
 	int positionXLife = GetScreenEndConsoleX() - 14;
-	/*
-	for (int i = 0; i < vidaActual; i++) {
-		if (!vidaActiva[i]) {
-			vida[i].sprite.LoadSprite("Life.txt");
-			vida[i].sprite.Location.x = positionXLife;
-			vida[i].sprite.Location.y = GetScreenEndConsoleY() - 5;
-			positionXLife++;
-			vidaActiva[i] = true;
-		}
-	}
-	*/
 
 	for (int i = 0; i < vidaActual; i++) {
 		if (!vidaActiva[i]) {
 			vida[i].sprite.Location.x = positionXLife;
 			vida[i].sprite.Location.y = GetScreenEndConsoleY() - 5;
 			vida[i].sprite.LoadSprite("Life.txt");
-			positionXLife+=2;
+			positionXLife++;
 			vidaActiva[i] = true;
 		}
 	}
 
 	if (vidaActual < VIDA_MAXIMA) {
-		for (int vida = vidaActual; vidaActual < VIDA_MAXIMA; vidaActual++) {
+		for (int vida = VIDA_MAXIMA -1; vida > vidaActual; vida--) {
 			vidaActiva[vida] = false;
 		}
 	}
