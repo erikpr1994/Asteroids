@@ -1,22 +1,24 @@
-﻿  Enemies.cpp
-C:\Users\erikp\Documents\GitHub\Actividad2\game\game\Enemies.cpp(26,20): warning C4244: 'return': conversión de 'float' a 'int'; posible pérdida de datos
-C:\Users\erikp\Documents\GitHub\Actividad2\game\game\Enemies.cpp(45,47): warning C4244: '=': conversión de 'int' a 'float'; posible pérdida de datos
-C:\Users\erikp\Documents\GitHub\Actividad2\game\game\Enemies.cpp(46,47): warning C4244: '=': conversión de 'int' a 'float'; posible pérdida de datos
-C:\Users\erikp\Documents\GitHub\Actividad2\game\game\Enemies.cpp(63,41): warning C4244: '=': conversión de 'int' a 'float'; posible pérdida de datos
-C:\Users\erikp\Documents\GitHub\Actividad2\game\game\Enemies.cpp(69,52): warning C4244: '=': conversión de 'double' a 'float'; posible pérdida de datos
-C:\Users\erikp\Documents\GitHub\Actividad2\game\game\Enemies.cpp(76,52): warning C4244: '=': conversión de 'double' a 'float'; posible pérdida de datos
-C:\Users\erikp\Documents\GitHub\Actividad2\game\game\Enemies.cpp(83,52): warning C4244: '=': conversión de 'double' a 'float'; posible pérdida de datos
-C:\Users\erikp\Documents\GitHub\Actividad2\game\game\Enemies.cpp(139,71): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
-C:\Users\erikp\Documents\GitHub\Actividad2\game\game\Enemies.cpp(139,43): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
-C:\Users\erikp\Documents\GitHub\Actividad2\game\game\Enemies.cpp(144,72): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
-C:\Users\erikp\Documents\GitHub\Actividad2\game\game\Enemies.cpp(144,44): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
-C:\Users\erikp\Documents\GitHub\Actividad2\game\game\Enemies.cpp(164,80): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
-C:\Users\erikp\Documents\GitHub\Actividad2\game\game\Enemies.cpp(164,52): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
-C:\Users\erikp\Documents\GitHub\Actividad2\game\game\Enemies.cpp(228,47): warning C4244: '=': conversión de 'int' a 'float'; posible pérdida de datos
-C:\Users\erikp\Documents\GitHub\Actividad2\game\game\Enemies.cpp(229,47): warning C4244: '=': conversión de 'int' a 'float'; posible pérdida de datos
-C:\Users\erikp\Documents\GitHub\Actividad2\game\game\Enemies.cpp(238,49): warning C4244: '=': conversión de 'int' a 'float'; posible pérdida de datos
-C:\Users\erikp\Documents\GitHub\Actividad2\game\game\Enemies.cpp(239,49): warning C4244: '=': conversión de 'int' a 'float'; posible pérdida de datos
-C:\Users\erikp\Documents\GitHub\Actividad2\game\game\Enemies.cpp(256,80): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
-C:\Users\erikp\Documents\GitHub\Actividad2\game\game\Enemies.cpp(256,52): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
-C:\Users\erikp\Documents\GitHub\Actividad2\game\game\Enemies.cpp(120): warning C4715: 'SetSpriteRandomlyAndReturnType': no todas las rutas de acceso de control devuelven un valor
+﻿  Player.cpp
+C:\Users\erikp\Documents\GitHub\Actividad2\game\game\Player.cpp(29,102): warning C4244: '=': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\erikp\Documents\GitHub\Actividad2\game\game\Player.cpp(30,102): warning C4244: '=': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\erikp\Documents\GitHub\Actividad2\game\game\Player.cpp(33,44): warning C4244: '=': conversión de 'double' a 'float'; posible pérdida de datos
+C:\Users\erikp\Documents\GitHub\Actividad2\game\game\Player.cpp(91,49): warning C4244: '=': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\erikp\Documents\GitHub\Actividad2\game\game\Player.cpp(92,49): warning C4244: '=': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\erikp\Documents\GitHub\Actividad2\game\game\Player.cpp(101,51): warning C4244: '=': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\erikp\Documents\GitHub\Actividad2\game\game\Player.cpp(102,51): warning C4244: '=': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\erikp\Documents\GitHub\Actividad2\game\game\Player.cpp(111,84): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
+C:\Users\erikp\Documents\GitHub\Actividad2\game\game\Player.cpp(111,54): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
+C:\Users\erikp\Documents\GitHub\Actividad2\game\game\Player.cpp(305,77): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
+C:\Users\erikp\Documents\GitHub\Actividad2\game\game\Player.cpp(305,50): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
+C:\Users\erikp\Documents\GitHub\Actividad2\game\game\Player.cpp(308,77): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
+C:\Users\erikp\Documents\GitHub\Actividad2\game\game\Player.cpp(308,50): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
+C:\Users\erikp\Documents\GitHub\Actividad2\game\game\Player.cpp(311,77): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
+C:\Users\erikp\Documents\GitHub\Actividad2\game\game\Player.cpp(311,50): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
+C:\Users\erikp\Documents\GitHub\Actividad2\game\game\Player.cpp(324,69): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
+C:\Users\erikp\Documents\GitHub\Actividad2\game\game\Player.cpp(324,42): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
+C:\Users\erikp\Documents\GitHub\Actividad2\game\game\Player.cpp(342,27): warning C4244: '=': conversión de 'float' a 'int'; posible pérdida de datos
+C:\Users\erikp\Documents\GitHub\Actividad2\game\game\Player.cpp(358,32): warning C4244: '=': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\erikp\Documents\GitHub\Actividad2\game\game\Player.cpp(359,55): warning C4244: '=': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\erikp\Documents\GitHub\Actividad2\game\game\Player.cpp(376,78): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
+C:\Users\erikp\Documents\GitHub\Actividad2\game\game\Player.cpp(376,51): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
   game.vcxproj -> C:\Users\erikp\Documents\GitHub\Actividad2\game\x64\Debug\game.exe

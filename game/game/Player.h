@@ -26,6 +26,10 @@ struct Disparo{
 	float shootSpeed;
 };
 
+struct Vida {
+	FASG::Sprite sprite;
+};
+
 void InitPlayer();
 
 void InputPlayer();
@@ -59,3 +63,7 @@ void SetShootLocation(float x, float y, int number);
 void SetPlayerLife(float life);
 void InitShootsSounds();
 float GetPlayerLife();
+
+
+void Health();
+void DrawHealth();

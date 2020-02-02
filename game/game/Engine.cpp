@@ -77,7 +77,7 @@ void InitGame() {
 	Sprite::SetCollisionCallback(MiColision);
 
 	while (!isSoundDecided) {
-		FASG::WriteStringBuffer(GetScreenCenterY(), GetScreenCenterX(), "Quieres cargar el sonido? S/N", FASG::EForeColor::Blue);
+		FASG::WriteStringBuffer(60, 35, "Quieres cargar el sonido? S/N", FASG::EForeColor::Blue);
 		while (_kbhit())
 			_getch();
 
@@ -110,6 +110,7 @@ void InitGame() {
 		}
 
 		while (!IsPlayerDead()) {
+			Health();
 
 			Outside();
 			IsPlayerDeath();
@@ -315,8 +316,8 @@ void MiColision(std::string tag1, std::string tag2) {
 void DrawHUD()
 {
 	FASG::WriteStringBuffer(game.CONSOLE_WIDTH - 24, game.CONSOLE_HEIGHT - 7, "PUNTUACION: " + std::to_string(GetPuntuation()), FASG::EForeColor::LightRed);
-	FASG::WriteStringBuffer(game.CONSOLE_WIDTH - 22, game.CONSOLE_HEIGHT - 5, "ESCUDO: " + std::to_string(GetPlayerLife()), FASG::EForeColor::LightYellow);
-
+	FASG::WriteStringBuffer(game.CONSOLE_WIDTH - 22, game.CONSOLE_HEIGHT - 5, "ESCUDO: ", FASG::EForeColor::LightYellow);
+	DrawHealth();
 	FASG::WriteStringBuffer(5, game.CONSOLE_HEIGHT - 7, "MOVIMIENTO: W A S D", FASG::EForeColor::LightBlue);
 	FASG::WriteStringBuffer(5, game.CONSOLE_HEIGHT - 5, "DISPARAR: ESPACIO", FASG::EForeColor::LightBlue);
 }

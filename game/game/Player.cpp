@@ -14,6 +14,11 @@ Disparo disparo[NUMERO_DISPAROS_A_LA_VEZ];
 float coolDownBetweenDisparos = 0.f;
 bool disparosActivos[NUMERO_DISPAROS_A_LA_VEZ];
 
+int const VIDA_MAXIMA = 5;
+Vida vida[VIDA_MAXIMA];
+bool vidaActiva[VIDA_MAXIMA];
+int vidaActual = 5;
+
 char GetAnyKeyPressed();
 
 void InitPlayer() {
@@ -329,6 +334,46 @@ void Outside() {
 			SetPlayerDead(true); // USAR SETTER
 			SetPlayerDeadByGoOutsideScreen(true); // USAR SETTER
 			player.lastInputPlayer = EInputPlayer::DEATH;
+		}
+	}
+}
+
+void Health() {
+	vidaActual = player.life / 10;
+	int positionXLife = GetScreenEndConsoleX() - 14;
+	/*
+	for (int i = 0; i < vidaActual; i++) {
+		if (!vidaActiva[i]) {
+			vida[i].sprite.LoadSprite("Life.txt");
+			vida[i].sprite.Location.x = positionXLife;
+			vida[i].sprite.Location.y = GetScreenEndConsoleY() - 5;
+			positionXLife++;
+			vidaActiva[i] = true;
+		}
+	}
+	*/
+
+	for (int i = 0; i < vidaActual; i++) {
+		if (!vidaActiva[i]) {
+			vida[i].sprite.Location.x = positionXLife;
+			vida[i].sprite.Location.y = GetScreenEndConsoleY() - 5;
+			vida[i].sprite.LoadSprite("Life.txt");
+			positionXLife+=2;
+			vidaActiva[i] = true;
+		}
+	}
+
+	if (vidaActual < VIDA_MAXIMA) {
+		for (int vida = vidaActual; vidaActual < VIDA_MAXIMA; vidaActual++) {
+			vidaActiva[vida] = false;
+		}
+	}
+}
+
+void DrawHealth() {
+	for (int i = 0; i < VIDA_MAXIMA; i++) {
+		if (vidaActiva[i]) {
+			FASG::WriteSpriteBuffer(vida[i].sprite.Location.x, vida[i].sprite.Location.y, vida[i].sprite);
 		}
 	}
 }

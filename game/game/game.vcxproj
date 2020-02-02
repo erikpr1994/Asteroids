@@ -168,6 +168,7 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="Asteroid.txt" />
+    <Text Include="Life.txt" />
     <Text Include="Menu.txt" />
     <Text Include="Player.txt" />
     <Text Include="Player_down.txt" />
