@@ -17,7 +17,6 @@ int whoShoot[NUMERO_DISPAROS_A_LA_VEZ_MAX][MAX_NUMBER_ENEMIES];
 
 int SetSpriteRandomlyAndReturnType(int number);
 void EnemiesShoots();
-bool InMapRange(int x, int y);
 
 int getWhoShoot(int number, int ship) {
 	return whoShoot[number][ship];
@@ -129,9 +128,10 @@ bool InMapRange(int x, int y) {
 
 void MoveEnemies() {
 	for (int i = 0; i < MAX_NUMBER_ENEMIES; i++) {
-		int movimiento = rand() % 4;
+	int movimiento = rand() % 4;
 		if (enemy[i].sprite.Location.y < 5) {
-			enemy[i].sprite.Location.y += FASG::GetDeltaTime() * enemy[i].velocity;
+ 			enemy[i].sprite.Location.y += FASG::GetDeltaTime() * enemy[i].velocity;
+
 		} else {
 			switch (movimiento)
 			{
@@ -146,6 +146,14 @@ void MoveEnemies() {
 				}
 				break;
 			}
+		}
+
+		if (enemy[i].sprite.Location.x < 5 && (enemy[i].sprite.Location.y > 0 && enemy[i].sprite.Location.y < 70)) {
+ 			enemy[i].sprite.Location.x += FASG::GetDeltaTime() * enemy[i].velocity;
+		}
+
+		if (enemy[i].sprite.Location.x > 130 && (enemy[i].sprite.Location.y > 0 && enemy[i].sprite.Location.y < 70)) {
+			enemy[i].sprite.Location.x -= FASG::GetDeltaTime() * (enemy[i].velocity *10);
 		}
 	}
 }
@@ -257,4 +265,11 @@ int GetMaxNumberOfEnemiesShoots() {
 void SetShootEnemyLocation(float x, float y, int number) {
 	shoot[number].sprite.Location.x = x;
 	shoot[number].sprite.Location.y = y;
+}
+
+float GetEnemyLocationX(int enemyNumber) {
+	return enemy[enemyNumber].sprite.Location.x;
+}
+float GetEnemyLocationY(int enemyNumber) {
+	return enemy[enemyNumber].sprite.Location.y;
 }

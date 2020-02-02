@@ -77,7 +77,7 @@ void InitGame() {
 	Sprite::SetCollisionCallback(MiColision);
 
 	while (!isSoundDecided) {
-		FASG::WriteStringBuffer(50, 50, "Quieres cargar el sonido? S/N", FASG::EForeColor::Blue);
+		FASG::WriteStringBuffer(GetScreenCenterY(), GetScreenCenterX(), "Quieres cargar el sonido? S/N", FASG::EForeColor::Blue);
 		while (_kbhit())
 			_getch();
 
@@ -298,9 +298,14 @@ void MiColision(std::string tag1, std::string tag2) {
 	for (int i = 0; i < GetMaxNumberOfEnemies(); i++) {
 		for(int j = 0; j<GetMaxNumberOfEnemies();j++){
 			if (tag1 == "enemy" + i && tag2 == "enemy" + j) {
-				float velocidad = GetEnemySpeed(i);
-				float movimientoX = velocidad * FASG::GetDeltaTime();
-				MoveEnemyIfCollision(movimientoX, i);
+				float velocidad1 = GetEnemySpeed(i);
+				float velocidad2 = GetEnemySpeed(j);
+				float movimientoX1 = velocidad1 * FASG::GetDeltaTime();
+				float movimientoX2 = velocidad2 * FASG::GetDeltaTime();
+				if (InMapRange(GetEnemyLocationX(i) + movimientoX1, GetEnemyLocationY(i)) && InMapRange(GetEnemyLocationX(j) + movimientoX2, GetEnemyLocationY(j))) {
+					MoveEnemyIfCollision(movimientoX1, i);
+					MoveEnemyIfCollision(movimientoX2, j);
+				}
 			}
 		}
 	}

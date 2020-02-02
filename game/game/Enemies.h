@@ -34,3 +34,6 @@ void SetCoolDownBetweenShoots(float number);
 void SetActiveEnemies(int number, bool life);
 void MoveEnemyIfCollision(float x, int number);
 float GetEnemySpeed(int number);
+bool InMapRange(int x, int y);
+float GetEnemyLocationX(int enemyNumber);
+float GetEnemyLocationY(int enemyNumber);
