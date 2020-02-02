@@ -136,15 +136,19 @@ void InitGame() {
 			FASG::RenderFrame();
 		}
 
+		if (IsSoundEnabled()) {
+			gameSong.Stop();
+			gameSongPlay = false;
+		}
+
 		while (IsPlayerDead() && !GetIsGameClosed()) {
 			if (IsSoundEnabled()) {
-				gameSong.Stop();
-				gameSongPlay = false;
 				if (!gameDeathSongLoaded) {
 					deathSong.LoadSound("SWIM.mid");
 				}
 				if (!gameDeathSongPlay) {
 					deathSong.Play();
+					gameDeathSongPlay = true;
 				}
 			}
 
@@ -162,8 +166,8 @@ void InitGame() {
 				SetInMenu(true);
 				SetPuntuation(0);
 				if (IsSoundEnabled()) {
-					// deathSong.Stop();
-					// gameDeathSongPlay = false;
+					deathSong.Stop();
+					gameDeathSongPlay = false;
 				}
 			}
 		}
